@@ -28,6 +28,10 @@ class F22Fighter : public BaseEntity, public EntityTriangleDraw {
   virtual ~F22Fighter();
 
   virtual void Initialize(const glm::vec2 &pos, float rot);
+  void MoveForward();
+  void MoveBack();
+  void MoveLeft();
+  void MoveRight();
   glm::vec2 GetShotPos(bool left) const;
 };
 

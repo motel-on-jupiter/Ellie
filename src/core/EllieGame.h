@@ -14,11 +14,12 @@ class EllieGameSceneInterface {
   virtual ~EllieGameSceneInterface() {
   }
 
-  virtual int Initialize(const glm::vec2 &window_size) = 0;
+  virtual int Initialize() = 0;
   virtual void Finalize() = 0;
-  virtual void Update(float elapsed_time, const glm::vec2 &window_size) = 0;
+  virtual void Update(float elapsed_time) = 0;
   virtual void Draw(const glm::vec2 &window_size) = 0;
   virtual int OnKeyDown(SDL_Keycode key) = 0;
+  virtual void OnKeyUp(SDL_Keycode key) = 0;
 };
 
 class EllieGame {
@@ -28,9 +29,10 @@ class EllieGame {
 
   int Initialize();
   void Finalize();
-  void Update(float elapsed_time, const glm::vec2 &window_size);
+  void Update(float elapsed_time);
   void Draw(const glm::vec2 &window_size);
-  int OnKeyDown(SDL_Keycode key, const glm::vec2 &window_size);
+  int OnKeyDown(SDL_Keycode key);
+  void OnKeyUp(SDL_Keycode key);
 
  private:
   std::vector<EllieGameSceneInterface *> scenes_;

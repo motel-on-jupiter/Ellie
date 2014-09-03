@@ -50,6 +50,22 @@ void F22Fighter::Initialize(const glm::vec2 &pos, float rot) {
   set_rot(rot);
 }
 
+void F22Fighter::MoveForward() {
+  Move(glm::vec2(0.0f, -1.0f));
+}
+
+void F22Fighter::MoveBack() {
+  Move(glm::vec2(0.0f, 1.0f));
+}
+
+void F22Fighter::MoveLeft() {
+  Move(glm::vec2(-1.0f, 0.0f));
+}
+
+void F22Fighter::MoveRight() {
+  Move( glm::vec2(1.0f, 0.0f));
+}
+
 glm::vec2 F22Fighter::GetShotPos(bool left) const {
   glm::vec2 offset = glm::vec2(2.0f, 0.0f);
   if (left) {

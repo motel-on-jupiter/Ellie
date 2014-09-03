@@ -146,9 +146,11 @@ int EllieMain() {
         case SDL_KEYDOWN:
           if (event.key.keysym.sym == SDLK_ESCAPE) {
             escape_loop = true;
-          } else {
-            game.OnKeyDown(event.key.keysym.sym, kWindowSize);
           }
+          game.OnKeyDown(event.key.keysym.sym);
+          break;
+        case SDL_KEYUP:
+          game.OnKeyUp(event.key.keysym.sym);
           break;
       }
     }
@@ -157,8 +159,7 @@ int EllieMain() {
     }
 
     // Update the game
-    game.Update(kGameLoopIntervalSec * tweaker_ctx.system_time_speed,
-                kWindowSize);
+    game.Update(kGameLoopIntervalSec * tweaker_ctx.system_time_speed);
 
     // Draw the objects
     game.Draw(kWindowSize);

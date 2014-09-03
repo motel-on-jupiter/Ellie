@@ -28,18 +28,22 @@ class EllieShooting2D : public EllieGameSceneInterface {
   EllieShooting2D();
   virtual ~EllieShooting2D();
 
-  virtual int Initialize(const glm::vec2 &window_size);
+  virtual int Initialize();
   virtual void Finalize();
-  virtual void Update(float elapsed_time, const glm::vec2 &window_size);
+  virtual void Update(float elapsed_time);
   virtual void Draw(const glm::vec2 &window_size);
   virtual int OnKeyDown(SDL_Keycode key);
+  virtual void OnKeyUp(SDL_Keycode key);
 
  private:
   static const float kShotInterval;
+  static const glm::vec2 kBulletVelocity;
 
   EllieShooting2DStage stage_;
   F22Fighter f22_;
   FighterBullet bullets_[100];
+  bool moving_[4];
+  bool shooting_;
   float shot_interval_;
 };
 
