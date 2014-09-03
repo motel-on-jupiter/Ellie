@@ -8,6 +8,7 @@
 #include <SDL_ttf.h>
 #include <SDL_video.h>
 
+#include "ellie/scene/EllieShooting2D.h"
 #include "util/logging/Logger.h"
 #include "util/macro_util.h"
 
@@ -28,6 +29,11 @@ int EllieGame::Initialize() {
     TTF_GetError());
     return -1;
   }
+  EllieGameSceneInterface *scene = new EllieShooting2D();
+  if (scene == nullptr) {
+    LOGGER.Error("Failed to create shooting 2d scene object");
+  }
+  scenes_.push_back(scene);
   return 0;
 }
 
@@ -60,8 +66,7 @@ void EllieGame::Draw(const glm::vec2 &window_size) {
   }
 }
 
-int EllieGame::OnKeyboardDown(SDL_Keycode key,
-                                 const glm::vec2 &window_size) {
+int EllieGame::OnKeyboardDown(SDL_Keycode key, const glm::vec2 &window_size) {
   if (active_scene_ == nullptr) {
     if ((key >= SDLK_1) && (key <= SDLK_9)) {
       size_t scene_idx = static_cast<size_t>(key - SDLK_1);
@@ -87,7 +92,7 @@ int EllieGame::OnKeyboardDown(SDL_Keycode key,
 }
 
 int EllieGame::OnMouseButtonDown(unsigned char button, int x, int y,
-                                    const glm::vec2 &window_size) {
+                                 const glm::vec2 &window_size) {
   if (active_scene_ != nullptr) {
     auto abs_cursor_pos = glm::vec2(static_cast<float>(x),
                                     static_cast<float>(y));

@@ -14,6 +14,7 @@
     <ClCompile Include="..\src\ellie\EllieGame.cc" />
     <ClCompile Include="..\src\ellie\EllieMain.cc" />
     <ClCompile Include="..\src\ellie\EllieTweakerContext.cc" />
+    <ClCompile Include="..\src\ellie\scene\EllieShooting2D.cc" />
     <ClCompile Include="..\src\main.cc" />
     <ClCompile Include="..\src\pch\precompile.cc">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
@@ -52,6 +53,7 @@
     <ClInclude Include="..\src\ellie\EllieGame.h" />
     <ClInclude Include="..\src\ellie\EllieMain.h" />
     <ClInclude Include="..\src\ellie\EllieTweakerContext.h" />
+    <ClInclude Include="..\src\ellie\scene\EllieShooting2D.h" />
     <ClInclude Include="..\src\pch\precompile.h" />
     <ClInclude Include="..\src\util\assert_util.h" />
     <ClInclude Include="..\src\util\catalogue\color_sample.h" />

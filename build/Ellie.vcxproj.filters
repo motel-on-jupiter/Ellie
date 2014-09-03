@@ -34,6 +34,9 @@
     <Filter Include="src\ellie">
       <UniqueIdentifier>{e00f54b6-07c3-4065-b3f3-8d975ff8c2f6}</UniqueIdentifier>
     </Filter>
+    <Filter Include="src\ellie\scene">
+      <UniqueIdentifier>{d361e5c0-619d-4c8e-ad07-09d7eac4dccb}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\src\util\logging\emitter\DebuggerConsoleLogEmitter.cc">
@@ -116,6 +119,9 @@
     </ClCompile>
     <ClCompile Include="..\src\ellie\EllieTweakerContext.cc">
       <Filter>src\ellie</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\ellie\scene\EllieShooting2D.cc">
+      <Filter>src\ellie\scene</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -214,6 +220,9 @@
     </ClInclude>
     <ClInclude Include="..\src\ellie\EllieTweakerContext.h">
       <Filter>src\ellie</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\ellie\scene\EllieShooting2D.h">
+      <Filter>src\ellie\scene</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
