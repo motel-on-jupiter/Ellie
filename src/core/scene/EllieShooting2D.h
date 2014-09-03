@@ -4,6 +4,7 @@
 #ifndef ELLIE_SHOOTING_2D_H_
 #define ELLIE_SHOOTING_2D_H_
 
+#include "core/actor/F22Fighter.h"
 #include "core/EllieGame.h"
 
 class EllieShooting2DStage {
@@ -35,6 +36,7 @@ class EllieShooting2D : public EllieGameSceneInterface {
 
  private:
   EllieShooting2DStage stage_;
+  F22Fighter f22_;
 };
 
 #endif /* ELLIE_SHOOTING_2D_H_ */

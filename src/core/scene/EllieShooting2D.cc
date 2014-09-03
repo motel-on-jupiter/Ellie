@@ -8,7 +8,7 @@
 
 const size_t EllieShooting2DStage::kNumXMappingStars = 10;
 const size_t EllieShooting2DStage::kNumYMappingStars = 10;
-const int EllieShooting2DStage::kRatioMappingStars = 10;
+const int EllieShooting2DStage::kRatioMappingStars = 3;
 
 EllieShooting2DStage::EllieShooting2DStage() {
   for (int i = 0; i < EllieShooting2DStage::kNumYMappingStars; ++i) {
@@ -51,7 +51,7 @@ void EllieShooting2DStage::Draw(const glm::vec2 &window_size) {
 }
 
 EllieShooting2D::EllieShooting2D()
-    : stage_() {
+    : stage_(), f22_() {
 }
 
 EllieShooting2D::~EllieShooting2D() {
@@ -59,6 +59,7 @@ EllieShooting2D::~EllieShooting2D() {
 
 int EllieShooting2D::Initialize(const glm::vec2 &window_size) {
   UNUSED(window_size);
+  f22_.Initialize(glm::vec2(1000.0f, 1000.0f), 0.0f);
   glSetClearingColor(0.0f, 0.0f, 0.0f, 0.0f);
   return 0;
 }
@@ -73,6 +74,7 @@ void EllieShooting2D::Update(float elapsed_time, const glm::vec2 &window_size) {
 
 void EllieShooting2D::Draw(const glm::vec2 &window_size) {
   glClearAll();
+
   glPushMatrix();
   glMatrixMode(GL_PROJECTION);
   glLoadMatrixf(
@@ -80,6 +82,15 @@ void EllieShooting2D::Draw(const glm::vec2 &window_size) {
           glm::ortho(0.0f, window_size.x, window_size.y, 0.0f, -1.0f, 1.0f)));
   glMatrixMode(GL_MODELVIEW);
   stage_.Draw(window_size);
+
+  glMatrixMode(GL_PROJECTION);
+  glm::vec2 focus_pos = glm::vec2(1000.0f, 900.0f);
+  float zoom_ratio = 2.0f;
+  glLoadMatrixf(
+      glm::value_ptr(
+          glm::ortho(focus_pos.x - window_size.x * 0.5f / zoom_ratio, focus_pos.x + window_size.x * 0.5f / zoom_ratio, focus_pos.y + window_size.y * 0.5f / zoom_ratio, focus_pos.y - window_size.y * 0.5f / zoom_ratio, -1.0f, 1.0f)));
+  glMatrixMode(GL_MODELVIEW);
+  f22_.Draw();
   glPopMatrix();
 }
 

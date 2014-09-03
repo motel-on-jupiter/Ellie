@@ -37,6 +37,12 @@
     <Filter Include="src\core\scene">
       <UniqueIdentifier>{f0297e15-5be3-4c91-a637-2b064f687ee7}</UniqueIdentifier>
     </Filter>
+    <Filter Include="src\core\actor">
+      <UniqueIdentifier>{1e0e4695-c039-4602-9eab-703a44762c8f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\entity">
+      <UniqueIdentifier>{3e79063d-b1f6-449d-af79-d145bdfad179}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\src\util\logging\emitter\DebuggerConsoleLogEmitter.cc">
@@ -122,6 +128,15 @@
     </ClCompile>
     <ClCompile Include="..\src\core\scene\EllieShooting2D.cc">
       <Filter>src\core\scene</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\core\actor\F22Fighter.cc">
+      <Filter>src\core\actor</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\entity\BaseEntity.cc">
+      <Filter>src\entity</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\entity\EntityDraw.cc">
+      <Filter>src\entity</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -223,6 +238,15 @@
     </ClInclude>
     <ClInclude Include="..\src\core\scene\EllieShooting2D.h">
       <Filter>src\core\scene</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\core\actor\F22Fighter.h">
+      <Filter>src\core\actor</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\entity\BaseEntity.h">
+      <Filter>src\entity</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\entity\EntityDraw.h">
+      <Filter>src\entity</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

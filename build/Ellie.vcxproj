@@ -11,10 +11,13 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\src\core\actor\F22Fighter.cc" />
     <ClCompile Include="..\src\core\EllieGame.cc" />
     <ClCompile Include="..\src\core\EllieMain.cc" />
     <ClCompile Include="..\src\core\EllieTweakerContext.cc" />
     <ClCompile Include="..\src\core\scene\EllieShooting2D.cc" />
+    <ClCompile Include="..\src\entity\BaseEntity.cc" />
+    <ClCompile Include="..\src\entity\EntityDraw.cc" />
     <ClCompile Include="..\src\main.cc" />
     <ClCompile Include="..\src\pch\precompile.cc">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
@@ -50,10 +53,13 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\src\core\actor\F22Fighter.h" />
     <ClInclude Include="..\src\core\EllieGame.h" />
     <ClInclude Include="..\src\core\EllieMain.h" />
     <ClInclude Include="..\src\core\EllieTweakerContext.h" />
     <ClInclude Include="..\src\core\scene\EllieShooting2D.h" />
+    <ClInclude Include="..\src\entity\BaseEntity.h" />
+    <ClInclude Include="..\src\entity\EntityDraw.h" />
     <ClInclude Include="..\src\pch\precompile.h" />
     <ClInclude Include="..\src\util\assert_util.h" />
     <ClInclude Include="..\src\util\catalogue\color_sample.h" />
