@@ -59,9 +59,10 @@ void EllieGame::Update(float elapsed_time, const glm::vec2 &window_size) {
 }
 
 void EllieGame::Draw(const glm::vec2 &window_size) {
-  glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-
-  if (active_scene_ != nullptr) {
+  if (active_scene_ == nullptr) {
+    glSetClearingColor(0.0f, 0.0f, 0.0f, 0.0f);
+    glClearAll();
+  } else {
     active_scene_->Draw(window_size);
   }
 }
