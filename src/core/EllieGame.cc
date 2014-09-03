@@ -14,7 +14,7 @@
 
 EllieGame::EllieGame()
     : scenes_(),
-      active_scene_(nullptr),
+      current_scene_(nullptr),
       font_(nullptr) {
 }
 
@@ -38,9 +38,9 @@ int EllieGame::Initialize() {
 }
 
 void EllieGame::Finalize() {
-  if (active_scene_ != nullptr) {
-    active_scene_->Finalize();
-    active_scene_ = nullptr;
+  if (current_scene_ != nullptr) {
+    current_scene_->Finalize();
+    current_scene_ = nullptr;
   }
   for (auto it = scenes_.begin(); it != scenes_.end(); ++it) {
     delete *it;
@@ -53,22 +53,22 @@ void EllieGame::Finalize() {
 }
 
 void EllieGame::Update(float elapsed_time) {
-  if (active_scene_ != nullptr) {
-    active_scene_->Update(elapsed_time);
+  if (current_scene_ != nullptr) {
+    current_scene_->Update(elapsed_time);
   }
 }
 
 void EllieGame::Draw(const glm::vec2 &window_size) {
-  if (active_scene_ == nullptr) {
+  if (current_scene_ == nullptr) {
     glSetClearingColor(0.0f, 0.0f, 0.0f, 0.0f);
     glClearAll();
   } else {
-    active_scene_->Draw(window_size);
+    current_scene_->Draw(window_size);
   }
 }
 
 int EllieGame::OnKeyDown(SDL_Keycode key) {
-  if (active_scene_ == nullptr) {
+  if (current_scene_ == nullptr) {
     if ((key >= SDLK_1) && (key <= SDLK_9)) {
       size_t scene_idx = static_cast<size_t>(key - SDLK_1);
       if (scene_idx < scenes_.size()) {
@@ -79,22 +79,23 @@ int EllieGame::OnKeyDown(SDL_Keycode key) {
                        scene_idx);
           return -1;
         }
-        active_scene_ = scenes_.at(scene_idx);
+        current_scene_ = scenes_.at(scene_idx);
       }
     }
   } else {
     switch (key) {
       case SDLK_0:
         LOGGER.Info("Clean up the current scene");
-        active_scene_->Finalize();
-        active_scene_ = nullptr;
+        current_scene_->Finalize();
+        current_scene_ = nullptr;
         break;
       case SDLK_w:
       case SDLK_a:
       case SDLK_s:
       case SDLK_d:
       case SDLK_e:
-        active_scene_->OnKeyDown(key);
+      case SDLK_SPACE:
+        current_scene_->OnKeyDown(key);
         break;
     }
   }
@@ -102,14 +103,15 @@ int EllieGame::OnKeyDown(SDL_Keycode key) {
 }
 
 void EllieGame::OnKeyUp(SDL_Keycode key) {
-  if (active_scene_ != nullptr) {
+  if (current_scene_ != nullptr) {
     switch (key) {
       case SDLK_w:
       case SDLK_a:
       case SDLK_s:
       case SDLK_d:
       case SDLK_e:
-        active_scene_->OnKeyUp(key);
+      case SDLK_SPACE:
+        current_scene_->OnKeyUp(key);
         break;
     }
   }

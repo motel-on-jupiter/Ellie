@@ -54,7 +54,7 @@ const float EllieShooting2D::kShotInterval = 0.1f;
 const glm::vec2 EllieShooting2D::kBulletVelocity = glm::vec2(0.0f, -200.0f);
 
 EllieShooting2D::EllieShooting2D()
-    : stage_(), f22_(), shooting_(false), shot_interval_(-1.0f) {
+    : stage_(), f22_(), scene_pausing_(false), shooting_(false), shot_interval_(-1.0f) {
   memset(moving_, 0, sizeof(moving_));
 }
 
@@ -71,41 +71,43 @@ void EllieShooting2D::Finalize() {
 }
 
 void EllieShooting2D::Update(float elapsed_time) {
-  for (int i=0; i<ARRAYSIZE(bullets_); ++i) {
-    bullets_[i].Update(elapsed_time);
-  }
-  if (moving_[0]) {
-    f22_.MoveForward();
-  }
-  if (moving_[1]) {
-    f22_.MoveBack();
-  }
-  if (moving_[2]) {
-    f22_.MoveLeft();
-  }
-  if (moving_[3]) {
-    f22_.MoveRight();
-  }
-  if (shooting_) {
-    if (shot_interval_ > 0.0f) {
-      shot_interval_ -= elapsed_time;
-    } else {
-      bool shot_l = false;
-      for (int i=0; i<ARRAYSIZE(bullets_); ++i) {
-        if (!bullets_[i].IsActive()) {
-          if (shot_l) {
-            bullets_[i].Initialize(f22_.GetShotPos(false), kBulletVelocity);
-            break;
-          } else {
-            bullets_[i].Initialize(f22_.GetShotPos(true), kBulletVelocity);
-            shot_l = true;
+  if (!scene_pausing_) {
+    for (int i=0; i<ARRAYSIZE(bullets_); ++i) {
+      bullets_[i].Update(elapsed_time);
+    }
+    if (moving_[0]) {
+      f22_.MoveForward();
+    }
+    if (moving_[1]) {
+      f22_.MoveBack();
+    }
+    if (moving_[2]) {
+      f22_.MoveLeft();
+    }
+    if (moving_[3]) {
+      f22_.MoveRight();
+    }
+    if (shooting_) {
+      if (shot_interval_ > 0.0f) {
+        shot_interval_ -= elapsed_time;
+      } else {
+        bool shot_l = false;
+        for (int i=0; i<ARRAYSIZE(bullets_); ++i) {
+          if (!bullets_[i].IsActive()) {
+            if (shot_l) {
+              bullets_[i].Initialize(f22_.GetShotPos(false), kBulletVelocity);
+              break;
+            } else {
+              bullets_[i].Initialize(f22_.GetShotPos(true), kBulletVelocity);
+              shot_l = true;
+            }
           }
         }
+        shot_interval_ = kShotInterval;
       }
-      shot_interval_ = kShotInterval;
+    } else {
+      shot_interval_ = -1.0f;
     }
-  } else {
-    shot_interval_ = -1.0f;
   }
 }
 
@@ -120,41 +122,51 @@ void EllieShooting2D::Draw(const glm::vec2 &window_size) {
   glMatrixMode(GL_MODELVIEW);
   stage_.Draw(window_size);
 
-  glMatrixMode(GL_PROJECTION);
-  glm::vec2 focus_pos = glm::vec2(1000.0f, 900.0f);
-  float zoom_ratio = 2.0f;
-  glLoadMatrixf(
-      glm::value_ptr(
-          glm::ortho(focus_pos.x - window_size.x * 0.5f / zoom_ratio, focus_pos.x + window_size.x * 0.5f / zoom_ratio, focus_pos.y + window_size.y * 0.5f / zoom_ratio, focus_pos.y - window_size.y * 0.5f / zoom_ratio, -1.0f, 1.0f)));
-  glMatrixMode(GL_MODELVIEW);
-  for (int i=0; i<ARRAYSIZE(bullets_); ++i) {
-    bullets_[i].Draw();
+  if (!scene_pausing_) {
+    glMatrixMode(GL_PROJECTION);
+    glm::vec2 focus_pos = glm::vec2(1000.0f, 900.0f);
+    float zoom_ratio = 2.0f;
+    glLoadMatrixf(
+        glm::value_ptr(
+            glm::ortho(focus_pos.x - window_size.x * 0.5f / zoom_ratio, focus_pos.x + window_size.x * 0.5f / zoom_ratio, focus_pos.y + window_size.y * 0.5f / zoom_ratio, focus_pos.y - window_size.y * 0.5f / zoom_ratio, -1.0f, 1.0f)));
+    glMatrixMode(GL_MODELVIEW);
+    for (int i=0; i<ARRAYSIZE(bullets_); ++i) {
+      bullets_[i].Draw();
+    }
+    f22_.Draw();
   }
-  f22_.Draw();
   glPopMatrix();
 }
 
-int EllieShooting2D::OnKeyDown(SDL_Keycode key) {
-  switch (key) {
-    case SDLK_w:
-      moving_[0] = true;
-      break;
-    case SDLK_s:
-      moving_[1] = true;
-      break;
-    case SDLK_a:
-      moving_[2] = true;
-      break;
-    case SDLK_d:
-      moving_[3] = true;
-      break;
-    case SDLK_e:
-      shooting_ = true;
-      break;
-    default:
-      break;
+void EllieShooting2D::OnKeyDown(SDL_Keycode key) {
+  if (scene_pausing_) {
+    switch (key) {
+      case SDLK_SPACE:
+        scene_pausing_ = false;
+        break;
+    }
+  } else {
+    switch (key) {
+      case SDLK_w:
+        moving_[0] = true;
+        break;
+      case SDLK_s:
+        moving_[1] = true;
+        break;
+      case SDLK_a:
+        moving_[2] = true;
+        break;
+      case SDLK_d:
+        moving_[3] = true;
+        break;
+      case SDLK_e:
+        shooting_ = true;
+        break;
+      case SDLK_SPACE:
+        scene_pausing_ = true;
+        break;
+    }
   }
-  return 0;
 }
 
 void EllieShooting2D::OnKeyUp(SDL_Keycode key) {
@@ -173,8 +185,6 @@ void EllieShooting2D::OnKeyUp(SDL_Keycode key) {
       break;
     case SDLK_e:
       shooting_ = false;
-      break;
-    default:
       break;
   }
 }

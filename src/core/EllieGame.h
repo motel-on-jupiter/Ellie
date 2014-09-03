@@ -18,7 +18,7 @@ class EllieGameSceneInterface {
   virtual void Finalize() = 0;
   virtual void Update(float elapsed_time) = 0;
   virtual void Draw(const glm::vec2 &window_size) = 0;
-  virtual int OnKeyDown(SDL_Keycode key) = 0;
+  virtual void OnKeyDown(SDL_Keycode key) = 0;
   virtual void OnKeyUp(SDL_Keycode key) = 0;
 };
 
@@ -36,7 +36,7 @@ class EllieGame {
 
  private:
   std::vector<EllieGameSceneInterface *> scenes_;
-  EllieGameSceneInterface *active_scene_;
+  EllieGameSceneInterface *current_scene_;
   TTF_Font *font_;
 };
 
