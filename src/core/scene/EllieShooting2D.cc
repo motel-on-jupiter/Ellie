@@ -50,8 +50,10 @@ void EllieShooting2DStage::Draw(const glm::vec2 &window_size) {
   }
 }
 
+const float EllieShooting2D::kShotInterval = 0.1f;
+
 EllieShooting2D::EllieShooting2D()
-    : stage_(), f22_() {
+    : stage_(), f22_(), shot_interval_(-1.0f) {
 }
 
 EllieShooting2D::~EllieShooting2D() {
@@ -59,8 +61,10 @@ EllieShooting2D::~EllieShooting2D() {
 
 int EllieShooting2D::Initialize(const glm::vec2 &window_size) {
   UNUSED(window_size);
-  f22_.Initialize(glm::vec2(1000.0f, 1000.0f), 0.0f);
+
   glSetClearingColor(0.0f, 0.0f, 0.0f, 0.0f);
+
+  f22_.Initialize(glm::vec2(1000.0f, 1000.0f), 0.0f);
   return 0;
 }
 
@@ -68,8 +72,14 @@ void EllieShooting2D::Finalize() {
 }
 
 void EllieShooting2D::Update(float elapsed_time, const glm::vec2 &window_size) {
-  UNUSED(elapsed_time);
   UNUSED(window_size);
+
+  for (int i=0; i<ARRAYSIZE(bullets_); ++i) {
+    bullets_[i].Update(elapsed_time);
+  }
+  if (shot_interval_ > 0.0f) {
+    shot_interval_ -= elapsed_time;
+  }
 }
 
 void EllieShooting2D::Draw(const glm::vec2 &window_size) {
@@ -90,13 +100,30 @@ void EllieShooting2D::Draw(const glm::vec2 &window_size) {
       glm::value_ptr(
           glm::ortho(focus_pos.x - window_size.x * 0.5f / zoom_ratio, focus_pos.x + window_size.x * 0.5f / zoom_ratio, focus_pos.y + window_size.y * 0.5f / zoom_ratio, focus_pos.y - window_size.y * 0.5f / zoom_ratio, -1.0f, 1.0f)));
   glMatrixMode(GL_MODELVIEW);
+  for (int i=0; i<ARRAYSIZE(bullets_); ++i) {
+    bullets_[i].Draw();
+  }
   f22_.Draw();
   glPopMatrix();
 }
 
-int EllieShooting2D::OnMouseButtonDown(unsigned char button,
-                                       const glm::vec2 &cursor_pos) {
-  UNUSED(button);
-  UNUSED(cursor_pos);
+int EllieShooting2D::OnKeyDown(SDL_Keycode key) {
+  bool shot_l = false;
+  if (key == SDLK_e) {
+    if (shot_interval_ <= 0.0f) {
+      for (int i=0; i<ARRAYSIZE(bullets_); ++i) {
+        if (!bullets_[i].IsActive()) {
+          if (shot_l) {
+            bullets_[i].Initialize(f22_.GetShotPos(false), glm::vec2(0.0f, -200.0f));
+            break;
+          } else {
+            bullets_[i].Initialize(f22_.GetShotPos(true), glm::vec2(0.0f, -200.0f));
+            shot_l = true;
+          }
+        }
+      }
+      shot_interval_ = kShotInterval;
+    }
+  }
   return 0;
 }

@@ -147,12 +147,8 @@ int EllieMain() {
           if (event.key.keysym.sym == SDLK_ESCAPE) {
             escape_loop = true;
           } else {
-            game.OnKeyboardDown(event.key.keysym.sym, kWindowSize);
+            game.OnKeyDown(event.key.keysym.sym, kWindowSize);
           }
-          break;
-        case SDL_MOUSEBUTTONDOWN:
-          game.OnMouseButtonDown(event.button.button, event.button.x,
-                                 event.button.y, kWindowSize);
           break;
       }
     }

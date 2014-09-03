@@ -67,7 +67,7 @@ void EllieGame::Draw(const glm::vec2 &window_size) {
   }
 }
 
-int EllieGame::OnKeyboardDown(SDL_Keycode key, const glm::vec2 &window_size) {
+int EllieGame::OnKeyDown(SDL_Keycode key, const glm::vec2 &window_size) {
   if (active_scene_ == nullptr) {
     if ((key >= SDLK_1) && (key <= SDLK_9)) {
       size_t scene_idx = static_cast<size_t>(key - SDLK_1);
@@ -87,18 +87,9 @@ int EllieGame::OnKeyboardDown(SDL_Keycode key, const glm::vec2 &window_size) {
       LOGGER.Info("Clean up the current scene");
       active_scene_->Finalize();
       active_scene_ = nullptr;
+    } else {
+      active_scene_->OnKeyDown(key);
     }
-  }
-  return 0;
-}
-
-int EllieGame::OnMouseButtonDown(unsigned char button, int x, int y,
-                                 const glm::vec2 &window_size) {
-  if (active_scene_ != nullptr) {
-    auto abs_cursor_pos = glm::vec2(static_cast<float>(x),
-                                    static_cast<float>(y));
-    return active_scene_->OnMouseButtonDown(button,
-                                            abs_cursor_pos / window_size);
   }
   return 0;
 }
