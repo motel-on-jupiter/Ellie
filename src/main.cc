@@ -2,7 +2,7 @@
  * Copyright (C) 2014 The Motel on Jupiter
  */
 
-#include "ellie/EllieMain.h"
+#include "core/EllieMain.h"
 #include "util/logging/emitter/DebuggerConsoleLogEmitter.h"
 #include "util/logging/emitter/FileLogEmitter.h"
 #include "util/logging/Logger.h"

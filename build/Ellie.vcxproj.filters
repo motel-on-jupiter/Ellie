@@ -31,11 +31,11 @@
     <Filter Include="src\util\catalogue">
       <UniqueIdentifier>{4a7ea003-d04b-4a16-ac2f-f66a4a0eb8a7}</UniqueIdentifier>
     </Filter>
-    <Filter Include="src\ellie">
-      <UniqueIdentifier>{e00f54b6-07c3-4065-b3f3-8d975ff8c2f6}</UniqueIdentifier>
+    <Filter Include="src\core">
+      <UniqueIdentifier>{98d5a1b8-d8a6-417e-af02-b5df1a046343}</UniqueIdentifier>
     </Filter>
-    <Filter Include="src\ellie\scene">
-      <UniqueIdentifier>{d361e5c0-619d-4c8e-ad07-09d7eac4dccb}</UniqueIdentifier>
+    <Filter Include="src\core\scene">
+      <UniqueIdentifier>{f0297e15-5be3-4c91-a637-2b064f687ee7}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -111,17 +111,17 @@
     <ClCompile Include="..\src\util\wrapper\glgraphics_wrap.cc">
       <Filter>src\util\wrapper</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\ellie\EllieGame.cc">
-      <Filter>src\ellie</Filter>
+    <ClCompile Include="..\src\core\EllieGame.cc">
+      <Filter>src\core</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\ellie\EllieMain.cc">
-      <Filter>src\ellie</Filter>
+    <ClCompile Include="..\src\core\EllieMain.cc">
+      <Filter>src\core</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\ellie\EllieTweakerContext.cc">
-      <Filter>src\ellie</Filter>
+    <ClCompile Include="..\src\core\EllieTweakerContext.cc">
+      <Filter>src\core</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\ellie\scene\EllieShooting2D.cc">
-      <Filter>src\ellie\scene</Filter>
+    <ClCompile Include="..\src\core\scene\EllieShooting2D.cc">
+      <Filter>src\core\scene</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -212,17 +212,17 @@
     <ClInclude Include="..\src\util\assert_util.h">
       <Filter>src\util</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\ellie\EllieGame.h">
-      <Filter>src\ellie</Filter>
+    <ClInclude Include="..\src\core\EllieGame.h">
+      <Filter>src\core</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\ellie\EllieMain.h">
-      <Filter>src\ellie</Filter>
+    <ClInclude Include="..\src\core\EllieMain.h">
+      <Filter>src\core</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\ellie\EllieTweakerContext.h">
-      <Filter>src\ellie</Filter>
+    <ClInclude Include="..\src\core\EllieTweakerContext.h">
+      <Filter>src\core</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\ellie\scene\EllieShooting2D.h">
-      <Filter>src\ellie\scene</Filter>
+    <ClInclude Include="..\src\core\scene\EllieShooting2D.h">
+      <Filter>src\core\scene</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

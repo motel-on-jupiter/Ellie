@@ -1,7 +1,7 @@
 /**
  * Copyright (C) 2014 The Motel On Jupiter
  */
-#include "ellie/scene/EllieShooting2D.h"
+#include "core/scene/EllieShooting2D.h"
 #include "util/macro_util.h"
 
 EllieShooting2D::EllieShooting2D() {

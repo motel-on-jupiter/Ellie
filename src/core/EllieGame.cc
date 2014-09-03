@@ -8,7 +8,7 @@
 #include <SDL_ttf.h>
 #include <SDL_video.h>
 
-#include "ellie/scene/EllieShooting2D.h"
+#include "core/scene/EllieShooting2D.h"
 #include "util/logging/Logger.h"
 #include "util/macro_util.h"
 

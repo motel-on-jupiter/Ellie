@@ -4,7 +4,7 @@
 #ifndef ELLIE_SHOOTING_2D_H_
 #define ELLIE_SHOOTING_2D_H_
 
-#include "ellie/EllieGame.h"
+#include "core/EllieGame.h"
 
 class EllieShooting2D : public EllieGameSceneInterface {
  public:
