@@ -24,7 +24,7 @@ class EllieShooting2DStage {
   std::vector<std::vector<bool>> star_map_;
 };
 
-class EllieShooting2D : public EllieGameSceneInterface {
+class EllieShooting2D : public EllieBaseGameScene {
  public:
   EllieShooting2D();
   virtual ~EllieShooting2D();

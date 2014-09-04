@@ -7,11 +7,12 @@
 #include <vector>
 #include <SDL_ttf.h>
 
-class EllieGameSceneInterface {
+class EllieBaseGameScene {
  public:
-  EllieGameSceneInterface() {
+  EllieBaseGameScene(const char *name)
+      : name_(name) {
   }
-  virtual ~EllieGameSceneInterface() {
+  virtual ~EllieBaseGameScene() {
   }
 
   virtual int Initialize() = 0;
@@ -20,6 +21,13 @@ class EllieGameSceneInterface {
   virtual void Draw(const glm::vec2 &window_size) = 0;
   virtual void OnKeyDown(SDL_Keycode key) = 0;
   virtual void OnKeyUp(SDL_Keycode key) = 0;
+
+  const std::string &name() const {
+    return name_;
+  }
+
+ private:
+  std::string name_;
 };
 
 class EllieGame {
@@ -35,8 +43,8 @@ class EllieGame {
   void OnKeyUp(SDL_Keycode key);
 
  private:
-  std::vector<EllieGameSceneInterface *> scenes_;
-  EllieGameSceneInterface *current_scene_;
+  std::vector<EllieBaseGameScene *> scenes_;
+  EllieBaseGameScene *current_scene_;
   TTF_Font *font_;
 };
 

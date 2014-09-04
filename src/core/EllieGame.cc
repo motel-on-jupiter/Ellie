@@ -29,7 +29,7 @@ int EllieGame::Initialize() {
     TTF_GetError());
     return -1;
   }
-  EllieGameSceneInterface *scene = new EllieShooting2D();
+  EllieBaseGameScene *scene = new EllieShooting2D();
   if (scene == nullptr) {
     LOGGER.Error("Failed to create shooting 2d scene object");
   }
@@ -72,11 +72,12 @@ int EllieGame::OnKeyDown(SDL_Keycode key) {
     if ((key >= SDLK_1) && (key <= SDLK_9)) {
       size_t scene_idx = static_cast<size_t>(key - SDLK_1);
       if (scene_idx < scenes_.size()) {
-        LOGGER.Info("Set up the game scene");
+        LOGGER.Info("Set up the game scene (scene: %s)",
+                    scenes_.at(scene_idx)->name().c_str());
         int ret = scenes_.at(scene_idx)->Initialize();
         if (ret < 0) {
-          LOGGER.Error("Failed to setup the scene (ret: %d, scene: %d)", ret,
-                       scene_idx);
+          LOGGER.Error("Failed to setup the scene (ret: %d, scene: %s)", ret,
+                       scenes_.at(scene_idx)->name().c_str());
           return -1;
         }
         current_scene_ = scenes_.at(scene_idx);

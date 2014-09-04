@@ -54,7 +54,13 @@ const float EllieShooting2D::kShotInterval = 0.1f;
 const glm::vec2 EllieShooting2D::kBulletVelocity = glm::vec2(0.0f, -200.0f);
 
 EllieShooting2D::EllieShooting2D()
-    : stage_(), f22_(), ufo_(), scene_pausing_(false), shooting_(false), shot_interval_(-1.0f) {
+    : EllieBaseGameScene("2D Shooting"),
+      stage_(),
+      f22_(),
+      ufo_(),
+      scene_pausing_(false),
+      shooting_(false),
+      shot_interval_(-1.0f) {
   memset(moving_, 0, sizeof(moving_));
 }
 
@@ -74,7 +80,7 @@ void EllieShooting2D::Finalize() {
 
 void EllieShooting2D::Update(float elapsed_time) {
   if (!scene_pausing_) {
-    for (int i=0; i<ARRAYSIZE(bullets_); ++i) {
+    for (int i = 0; i < ARRAYSIZE(bullets_); ++i) {
       bullets_[i].Update(elapsed_time);
     }
     if (moving_[0]) {
@@ -94,7 +100,7 @@ void EllieShooting2D::Update(float elapsed_time) {
         shot_interval_ -= elapsed_time;
       } else {
         bool shot_l = false;
-        for (int i=0; i<ARRAYSIZE(bullets_); ++i) {
+        for (int i = 0; i < ARRAYSIZE(bullets_); ++i) {
           if (!bullets_[i].IsActive()) {
             if (shot_l) {
               bullets_[i].Initialize(f22_.GetShotPos(false), kBulletVelocity);
@@ -131,9 +137,13 @@ void EllieShooting2D::Draw(const glm::vec2 &window_size) {
     float zoom_ratio = 2.0f;
     glLoadMatrixf(
         glm::value_ptr(
-            glm::ortho(focus_pos.x - window_size.x * 0.5f / zoom_ratio, focus_pos.x + window_size.x * 0.5f / zoom_ratio, focus_pos.y + window_size.y * 0.5f / zoom_ratio, focus_pos.y - window_size.y * 0.5f / zoom_ratio, -1.0f, 1.0f)));
+            glm::ortho(focus_pos.x - window_size.x * 0.5f / zoom_ratio,
+                       focus_pos.x + window_size.x * 0.5f / zoom_ratio,
+                       focus_pos.y + window_size.y * 0.5f / zoom_ratio,
+                       focus_pos.y - window_size.y * 0.5f / zoom_ratio, -1.0f,
+                       1.0f)));
     glMatrixMode(GL_MODELVIEW);
-    for (int i=0; i<ARRAYSIZE(bullets_); ++i) {
+    for (int i = 0; i < ARRAYSIZE(bullets_); ++i) {
       bullets_[i].Draw();
     }
     f22_.Draw();
