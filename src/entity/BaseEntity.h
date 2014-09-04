@@ -5,7 +5,7 @@
 #define BASEENTITY_H_
 
 #include <boost/noncopyable.hpp>
-#include "util/math_aux.h"
+#include "util/auxiliary/math_aux.h"
 
 class BaseEntity {
  public:

@@ -38,9 +38,9 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
     </ClCompile>
-    <ClCompile Include="..\src\util\assert_util.cc" />
+    <ClCompile Include="..\src\util\auxiliary\assert_aux.cc" />
+    <ClCompile Include="..\src\util\auxiliary\GLINIReader.cpp" />
     <ClCompile Include="..\src\util\catalogue\color_sample.cc" />
-    <ClCompile Include="..\src\util\config\reader\GLINIReader.cpp" />
     <ClCompile Include="..\src\util\logging\emitter\DebuggerConsoleLogEmitter.cc" />
     <ClCompile Include="..\src\util\logging\emitter\FileLogEmitter.cc" />
     <ClCompile Include="..\src\util\logging\emitter\LogEmitter.cc" />
@@ -63,17 +63,17 @@
     <ClInclude Include="..\src\external\ini.h" />
     <ClInclude Include="..\src\external\inireader\INIReader.h" />
     <ClInclude Include="..\src\pch\precompile.h" />
-    <ClInclude Include="..\src\util\assert_util.h" />
+    <ClInclude Include="..\src\util\auxiliary\assert_aux.h" />
+    <ClInclude Include="..\src\util\auxiliary\csyntax_aux.h" />
+    <ClInclude Include="..\src\util\auxiliary\GLINIReader.h" />
+    <ClInclude Include="..\src\util\auxiliary\math_aux.h" />
     <ClInclude Include="..\src\util\catalogue\color_sample.h" />
-    <ClInclude Include="..\src\util\config\reader\GLINIReader.h" />
     <ClInclude Include="..\src\util\logging\emitter\DebuggerConsoleLogEmitter.h" />
     <ClInclude Include="..\src\util\logging\emitter\FileLogEmitter.h" />
     <ClInclude Include="..\src\util\logging\emitter\LogEmitter.h" />
     <ClInclude Include="..\src\util\logging\emitter\MessageBoxLogEmitter.h" />
     <ClInclude Include="..\src\util\logging\emitter\PipeLogEmitter.h" />
     <ClInclude Include="..\src\util\logging\Logger.h" />
-    <ClInclude Include="..\src\util\macro_util.h" />
-    <ClInclude Include="..\src\util\math_aux.h" />
     <ClInclude Include="..\src\util\measurement\FPSCounter.h" />
     <ClInclude Include="..\src\util\wrapper\atb_wrap.h" />
     <ClInclude Include="..\src\util\wrapper\crtdbg_wrap.h" />

@@ -9,8 +9,8 @@
 #include <SDL_video.h>
 
 #include "core/scene/EllieShooting2D.h"
+#include "util/auxiliary/csyntax_aux.h"
 #include "util/logging/Logger.h"
-#include "util/macro_util.h"
 
 EllieGame::EllieGame()
     : scenes_(),

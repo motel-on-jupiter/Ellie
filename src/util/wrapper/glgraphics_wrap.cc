@@ -3,9 +3,9 @@
  */
 #include "glgraphics_wrap.h"
 #include <stddef.h>
+#include "util/auxiliary/assert_aux.h"
+#include "util/auxiliary/csyntax_aux.h"
 #include "util/logging/Logger.h"
-#include "util/assert_util.h"
-#include "util/macro_util.h"
 
 int glCompileShaderFile(GLuint shader, const char *path) {
   // Buffer the shader source

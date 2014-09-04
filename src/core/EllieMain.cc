@@ -13,10 +13,10 @@
 
 #include "core/EllieGame.h"
 #include "core/EllieTweakerContext.h"
+#include "util/auxiliary/csyntax_aux.h"
 #include "util/logging/Logger.h"
 #include "util/measurement/FPSCounter.h"
 #include "util/wrapper/glgraphics_wrap.h"
-#include "util/macro_util.h"
 
 static const std::string kWindowCaption = "Ellie - The Motel on Jupiter";
 static const Uint32 kWindowWidth = 800;

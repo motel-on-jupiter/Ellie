@@ -7,9 +7,6 @@
     <Filter Include="src\util">
       <UniqueIdentifier>{c505ca66-23fa-4a96-8237-e9a4ba077e57}</UniqueIdentifier>
     </Filter>
-    <Filter Include="src\util\config">
-      <UniqueIdentifier>{a719a2c5-4b78-43e1-8454-7a38125ee391}</UniqueIdentifier>
-    </Filter>
     <Filter Include="src\util\logging">
       <UniqueIdentifier>{6341086d-636c-424f-843c-96457097abb0}</UniqueIdentifier>
     </Filter>
@@ -46,8 +43,8 @@
     <Filter Include="src\external\inireader">
       <UniqueIdentifier>{95c23910-fa1f-4523-a692-070bac9498ff}</UniqueIdentifier>
     </Filter>
-    <Filter Include="src\util\config\reader">
-      <UniqueIdentifier>{d676bf63-929b-4bb2-bd97-96c7d8f8c459}</UniqueIdentifier>
+    <Filter Include="src\util\auxiliary">
+      <UniqueIdentifier>{54408f73-c6ab-4faf-a14a-cd489f059216}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -102,9 +99,6 @@
     <ClCompile Include="..\src\util\catalogue\color_sample.cc">
       <Filter>src\util\catalogue</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\util\assert_util.cc">
-      <Filter>src\util</Filter>
-    </ClCompile>
     <ClCompile Include="..\src\util\logging\Logger.cc">
       <Filter>src\util\logging</Filter>
     </ClCompile>
@@ -132,9 +126,6 @@
     <ClCompile Include="..\src\entity\EntityDraw.cc">
       <Filter>src\entity</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\util\config\reader\GLINIReader.cpp">
-      <Filter>src\util\config\reader</Filter>
-    </ClCompile>
     <ClCompile Include="..\src\external\inireader\INIReader.cpp">
       <Filter>src\external\inireader</Filter>
     </ClCompile>
@@ -143,6 +134,12 @@
     </ClCompile>
     <ClCompile Include="..\src\external\TwEventSDL20.c">
       <Filter>src\external</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\util\auxiliary\assert_aux.cc">
+      <Filter>src\util\auxiliary</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\util\auxiliary\GLINIReader.cpp">
+      <Filter>src\util\auxiliary</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -172,12 +169,6 @@
     </ClInclude>
     <ClInclude Include="..\src\util\logging\emitter\PipeLogEmitter.h">
       <Filter>src\util\logging\emitter</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\util\macro_util.h">
-      <Filter>src\util</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\util\math_aux.h">
-      <Filter>src\util</Filter>
     </ClInclude>
     <ClInclude Include="..\src\util\logging\Logger.h">
       <Filter>src\util\logging</Filter>
@@ -221,9 +212,6 @@
     <ClInclude Include="..\src\util\catalogue\color_sample.h">
       <Filter>src\util\catalogue</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\util\assert_util.h">
-      <Filter>src\util</Filter>
-    </ClInclude>
     <ClInclude Include="..\src\core\EllieGame.h">
       <Filter>src\core</Filter>
     </ClInclude>
@@ -245,14 +233,23 @@
     <ClInclude Include="..\src\entity\EntityDraw.h">
       <Filter>src\entity</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\util\config\reader\GLINIReader.h">
-      <Filter>src\util\config\reader</Filter>
-    </ClInclude>
     <ClInclude Include="..\src\external\inireader\INIReader.h">
       <Filter>src\external\inireader</Filter>
     </ClInclude>
     <ClInclude Include="..\src\external\ini.h">
       <Filter>src\external</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\util\auxiliary\assert_aux.h">
+      <Filter>src\util\auxiliary</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\util\auxiliary\csyntax_aux.h">
+      <Filter>src\util\auxiliary</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\util\auxiliary\GLINIReader.h">
+      <Filter>src\util\auxiliary</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\util\auxiliary\math_aux.h">
+      <Filter>src\util\auxiliary</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

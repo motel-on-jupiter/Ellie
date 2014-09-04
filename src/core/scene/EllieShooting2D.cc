@@ -2,9 +2,9 @@
  * Copyright (C) 2014 The Motel On Jupiter
  */
 #include "core/scene/EllieShooting2D.h"
+#include "util/auxiliary/csyntax_aux.h"
 #include "util/catalogue/color_sample.h"
 #include "util/wrapper/glgraphics_wrap.h"
-#include "util/macro_util.h"
 
 const size_t EllieShooting2DStage::kNumXMappingStars = 10;
 const size_t EllieShooting2DStage::kNumYMappingStars = 10;
