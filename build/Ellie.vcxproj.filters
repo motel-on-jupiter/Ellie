@@ -16,9 +16,6 @@
     <Filter Include="src\util\logging\emitter">
       <UniqueIdentifier>{db384ab4-b863-41e5-b8fd-22875de190cc}</UniqueIdentifier>
     </Filter>
-    <Filter Include="src\util\config\reader">
-      <UniqueIdentifier>{8e5fc383-397c-4fa4-b8d1-155afb4e31be}</UniqueIdentifier>
-    </Filter>
     <Filter Include="src\util\wrapper">
       <UniqueIdentifier>{e8b00f52-dcdf-441e-97c6-514bc8daf488}</UniqueIdentifier>
     </Filter>
@@ -42,6 +39,15 @@
     </Filter>
     <Filter Include="src\entity">
       <UniqueIdentifier>{3e79063d-b1f6-449d-af79-d145bdfad179}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\external">
+      <UniqueIdentifier>{2a481a8c-eec3-4fea-8ed9-7a13949fd5d2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\external\inireader">
+      <UniqueIdentifier>{95c23910-fa1f-4523-a692-070bac9498ff}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\util\config\reader">
+      <UniqueIdentifier>{d676bf63-929b-4bb2-bd97-96c7d8f8c459}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -81,22 +87,10 @@
     <ClCompile Include="..\src\util\logging\emitter\FileLogEmitter.cc">
       <Filter>src\util\logging\emitter</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\util\config\reader\GLINIReader.cpp">
-      <Filter>src\util\config\reader</Filter>
-    </ClCompile>
-    <ClCompile Include="..\src\util\config\reader\INIReader.cpp">
-      <Filter>src\util\config\reader</Filter>
-    </ClCompile>
-    <ClCompile Include="..\src\util\config\ini.c">
-      <Filter>src\util\config</Filter>
-    </ClCompile>
     <ClCompile Include="..\src\util\measurement\FPSCounter.cc">
       <Filter>src\util\measurement</Filter>
     </ClCompile>
     <ClCompile Include="..\src\util\wrapper\sdl_wrap.cc">
-      <Filter>src\util\wrapper</Filter>
-    </ClCompile>
-    <ClCompile Include="..\src\util\wrapper\TwEventSDL20.c">
       <Filter>src\util\wrapper</Filter>
     </ClCompile>
     <ClCompile Include="..\src\util\wrapper\atb_wrap.cc">
@@ -137,6 +131,18 @@
     </ClCompile>
     <ClCompile Include="..\src\entity\EntityDraw.cc">
       <Filter>src\entity</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\util\config\reader\GLINIReader.cpp">
+      <Filter>src\util\config\reader</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\external\inireader\INIReader.cpp">
+      <Filter>src\external\inireader</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\external\ini.c">
+      <Filter>src\external</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\external\TwEventSDL20.c">
+      <Filter>src\external</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -191,15 +197,6 @@
     <ClInclude Include="..\src\util\logging\emitter\FileLogEmitter.h">
       <Filter>src\util\logging\emitter</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\util\config\reader\INIReader.h">
-      <Filter>src\util\config\reader</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\util\config\reader\GLINIReader.h">
-      <Filter>src\util\config\reader</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\util\config\ini.h">
-      <Filter>src\util\config</Filter>
-    </ClInclude>
     <ClInclude Include="..\src\util\measurement\FPSCounter.h">
       <Filter>src\util\measurement</Filter>
     </ClInclude>
@@ -247,6 +244,15 @@
     </ClInclude>
     <ClInclude Include="..\src\entity\EntityDraw.h">
       <Filter>src\entity</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\util\config\reader\GLINIReader.h">
+      <Filter>src\util\config\reader</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\external\inireader\INIReader.h">
+      <Filter>src\external\inireader</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\external\ini.h">
+      <Filter>src\external</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

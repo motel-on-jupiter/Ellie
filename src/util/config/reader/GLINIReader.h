@@ -1,7 +1,7 @@
 #ifndef __GLINIREADER_H__
 #define __GLINIREADER_H__
 
-#include "INIReader.h"
+#include "external/inireader/INIReader.h"
 
 class GLINIReader : public INIReader {
  public:
@@ -25,4 +25,4 @@ class GLINIReader : public INIReader {
                              glm::i32vec4 default_value);
 };
 
-#endif  // __GLINIREADER_H__
+#endif  // __GLINIREADER_H__
