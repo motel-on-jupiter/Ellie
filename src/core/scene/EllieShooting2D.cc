@@ -54,7 +54,7 @@ const float EllieShooting2D::kShotInterval = 0.1f;
 const glm::vec2 EllieShooting2D::kBulletVelocity = glm::vec2(0.0f, -200.0f);
 
 EllieShooting2D::EllieShooting2D()
-    : stage_(), f22_(), scene_pausing_(false), shooting_(false), shot_interval_(-1.0f) {
+    : stage_(), f22_(), ufo_(), scene_pausing_(false), shooting_(false), shot_interval_(-1.0f) {
   memset(moving_, 0, sizeof(moving_));
 }
 
@@ -64,10 +64,12 @@ EllieShooting2D::~EllieShooting2D() {
 int EllieShooting2D::Initialize() {
   glSetClearingColor(0.0f, 0.0f, 0.0f, 0.0f);
   f22_.Initialize(glm::vec2(1000.0f, 1000.0f), 0.0f);
+  ufo_.Initialize(glm::vec2(1000.0f, 600.0f));
   return 0;
 }
 
 void EllieShooting2D::Finalize() {
+  ufo_.Finalize();
 }
 
 void EllieShooting2D::Update(float elapsed_time) {
@@ -108,6 +110,7 @@ void EllieShooting2D::Update(float elapsed_time) {
     } else {
       shot_interval_ = -1.0f;
     }
+    ufo_.Update(elapsed_time);
   }
 }
 
@@ -134,6 +137,7 @@ void EllieShooting2D::Draw(const glm::vec2 &window_size) {
       bullets_[i].Draw();
     }
     f22_.Draw();
+    ufo_.Draw();
   }
   glPopMatrix();
 }

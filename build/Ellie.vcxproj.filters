@@ -141,6 +141,9 @@
     <ClCompile Include="..\src\util\auxiliary\GLINIReader.cpp">
       <Filter>src\util\auxiliary</Filter>
     </ClCompile>
+    <ClCompile Include="..\src\core\actor\UFOFighter.cc">
+      <Filter>src\core\actor</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\src\util\logging\Logger.h">
@@ -250,6 +253,12 @@
     </ClInclude>
     <ClInclude Include="..\src\util\auxiliary\math_aux.h">
       <Filter>src\util\auxiliary</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\core\actor\UFOFighter.h">
+      <Filter>src\core\actor</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\external\coroutine.h">
+      <Filter>src\external</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -6,6 +6,7 @@
 
 #include <vector>
 #include "core/actor/F22Fighter.h"
+#include "core/actor/UFOFighter.h"
 #include "core/EllieGame.h"
 
 class EllieShooting2DStage {
@@ -42,6 +43,7 @@ class EllieShooting2D : public EllieGameSceneInterface {
   EllieShooting2DStage stage_;
   F22Fighter f22_;
   FighterBullet bullets_[100];
+  UFOFighter ufo_;
   bool scene_pausing_;
   bool moving_[4];
   bool shooting_;

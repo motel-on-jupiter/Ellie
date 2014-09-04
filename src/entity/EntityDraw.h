@@ -30,6 +30,23 @@ class EntityPointDraw : public EntityDraw {
   virtual void Draw() const;
 };
 
+class EntityCircleDraw : public EntityDraw {
+ public:
+  EntityCircleDraw(BaseEntity &entity, unsigned int splits, bool fill, const GLubyte *color);
+  virtual ~EntityCircleDraw() {}
+
+  virtual void Draw() const;
+
+  unsigned int splits() const { return splits_; }
+  void set_splits(unsigned int splits) { splits_ = splits; }
+  bool fill() const { return fill_; }
+  void set_fill(bool fill) { fill_ = fill; }
+
+ private:
+  unsigned int splits_;
+  bool fill_;
+};
+
 class EntityTriangleDraw : public EntityDraw {
  public:
   EntityTriangleDraw(BaseEntity &entity, bool fill, const GLubyte *color);
