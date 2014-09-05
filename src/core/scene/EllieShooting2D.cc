@@ -4,6 +4,7 @@
 #include "core/scene/EllieShooting2D.h"
 #include "util/auxiliary/csyntax_aux.h"
 #include "util/catalogue/color_sample.h"
+#include "util/wrapper/coroutine_wrap.h"
 #include "util/wrapper/glgraphics_wrap.h"
 
 const size_t EllieShooting2DStage::kNumXMappingStars = 10;
@@ -57,7 +58,10 @@ EllieShooting2D::EllieShooting2D()
     : EllieBaseGameScene("2D Shooting"),
       stage_(),
       f22_(),
-      ufo_(),
+      ufos_(),
+      ccr_(nullptr),
+      time_(0.0f),
+      ufo_idx_(0),
       scene_pausing_(false),
       shooting_(false),
       shot_interval_(-1.0f) {
@@ -70,16 +74,48 @@ EllieShooting2D::~EllieShooting2D() {
 int EllieShooting2D::Initialize() {
   glSetClearingColor(0.0f, 0.0f, 0.0f, 0.0f);
   f22_.Initialize(glm::vec2(1000.0f, 1000.0f), 0.0f);
-  ufo_.Initialize(glm::vec2(1000.0f, 600.0f));
   return 0;
 }
 
 void EllieShooting2D::Finalize() {
-  ufo_.Finalize();
+  for (int i=0; i<ARRAYSIZE(ufos_); ++i) {
+    ufos_[i].Finalize();
+  }
+}
+
+void EllieShooting2D::DirectByScript(float elapsed_time) {
+  struct ccrContextTag **ccrParam = (struct ccrContextTag **) &ccr_;
+  ccrBeginContext;
+  ccrEndContext(ctx);
+  ccrBegin_(ctx);
+  ufo_idx_ = 0;
+  while (ufo_idx_ < 4) {
+    for (time_ = 0.3f; time_ >= 0.0f; time_ -= elapsed_time) {
+      ccrReturnV;
+    }
+    ufos_[ufo_idx_].Initialize(glm::vec2(900.0f, 700.0f));
+    ++ufo_idx_;
+  }
+  while (!ufos_[0].script_end()) {
+    ccrReturnV;
+  }
+  while (ufo_idx_ < 8) {
+    for (time_ = 0.3f; time_ >= 0.0f; time_ -= elapsed_time) {
+      ccrReturnV;
+    }
+    ufos_[ufo_idx_].Initialize(glm::vec2(1100.0f, 700.0f));
+    ++ufo_idx_;
+  }
+  while (!ufos_[4].script_end()) {
+    ccrReturnV;
+  }
+  ccrFinishV;
 }
 
 void EllieShooting2D::Update(float elapsed_time) {
   if (!scene_pausing_) {
+    DirectByScript(elapsed_time);
+
     for (int i = 0; i < ARRAYSIZE(bullets_); ++i) {
       bullets_[i].Update(elapsed_time);
     }
@@ -116,7 +152,9 @@ void EllieShooting2D::Update(float elapsed_time) {
     } else {
       shot_interval_ = -1.0f;
     }
-    ufo_.Update(elapsed_time);
+    for (int i=0; i<ARRAYSIZE(ufos_); ++i) {
+      ufos_[i].Update(elapsed_time);
+    }
   }
 }
 
@@ -147,7 +185,9 @@ void EllieShooting2D::Draw(const glm::vec2 &window_size) {
       bullets_[i].Draw();
     }
     f22_.Draw();
-    ufo_.Draw();
+    for (int i=0; i<ARRAYSIZE(ufos_); ++i) {
+      ufos_[i].Draw();
+    }
   }
   glPopMatrix();
 }

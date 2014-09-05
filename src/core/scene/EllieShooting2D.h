@@ -40,10 +40,15 @@ class EllieShooting2D : public EllieBaseGameScene {
   static const float kShotInterval;
   static const glm::vec2 kBulletVelocity;
 
+  virtual void DirectByScript(float elapsed_time);
+
   EllieShooting2DStage stage_;
   F22Fighter f22_;
   FighterBullet bullets_[100];
-  UFOFighter ufo_;
+  UFOFighter ufos_[100];
+  void *ccr_;
+  float time_;
+  int ufo_idx_;
   bool scene_pausing_;
   bool moving_[4];
   bool shooting_;
