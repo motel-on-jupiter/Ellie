@@ -8,6 +8,7 @@
 #include <SDL_ttf.h>
 #include <SDL_video.h>
 
+#include "core/scene/EllieShooter3D.h"
 #include "core/scene/EllieShooting2D.h"
 #include "util/auxiliary/csyntax_aux.h"
 #include "util/logging/Logger.h"
@@ -32,6 +33,11 @@ int EllieGame::Initialize() {
   EllieBaseGameScene *scene = new EllieShooting2D();
   if (scene == nullptr) {
     LOGGER.Error("Failed to create shooting 2d scene object");
+  }
+  scenes_.push_back(scene);
+  scene = new EllieShooter3D();
+  if (scene == nullptr) {
+    LOGGER.Error("Failed to create shooter 3d scene object");
   }
   scenes_.push_back(scene);
   return 0;

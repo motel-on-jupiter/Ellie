@@ -16,7 +16,9 @@
     <ClCompile Include="..\src\core\EllieGame.cc" />
     <ClCompile Include="..\src\core\EllieMain.cc" />
     <ClCompile Include="..\src\core\EllieTweakerContext.cc" />
+    <ClCompile Include="..\src\core\scene\EllieShooter3D.cc" />
     <ClCompile Include="..\src\core\scene\EllieShooting2D.cc" />
+    <ClCompile Include="..\src\core\stage\GridStage3D.cc" />
     <ClCompile Include="..\src\entity\BaseEntity.cc" />
     <ClCompile Include="..\src\entity\EntityDraw.cc" />
     <ClCompile Include="..\src\external\ini.c">
@@ -59,7 +61,9 @@
     <ClInclude Include="..\src\core\EllieGame.h" />
     <ClInclude Include="..\src\core\EllieMain.h" />
     <ClInclude Include="..\src\core\EllieTweakerContext.h" />
+    <ClInclude Include="..\src\core\scene\EllieShooter3D.h" />
     <ClInclude Include="..\src\core\scene\EllieShooting2D.h" />
+    <ClInclude Include="..\src\core\stage\GridStage3D.h" />
     <ClInclude Include="..\src\entity\BaseEntity.h" />
     <ClInclude Include="..\src\entity\EntityDraw.h" />
     <ClInclude Include="..\src\external\coroutine.h" />

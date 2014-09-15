@@ -46,6 +46,9 @@
     <Filter Include="src\util\auxiliary">
       <UniqueIdentifier>{54408f73-c6ab-4faf-a14a-cd489f059216}</UniqueIdentifier>
     </Filter>
+    <Filter Include="src\core\stage">
+      <UniqueIdentifier>{a27d0fda-1c8f-4f8b-bbda-a4274890308c}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\src\util\logging\emitter\DebuggerConsoleLogEmitter.cc">
@@ -143,6 +146,12 @@
     </ClCompile>
     <ClCompile Include="..\src\core\actor\UFOFighter.cc">
       <Filter>src\core\actor</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\core\stage\GridStage3D.cc">
+      <Filter>src\core\stage</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\core\scene\EllieShooter3D.cc">
+      <Filter>src\core\scene</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -259,6 +268,12 @@
     </ClInclude>
     <ClInclude Include="..\src\external\coroutine.h">
       <Filter>src\external</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\core\stage\GridStage3D.h">
+      <Filter>src\core\stage</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\core\scene\EllieShooter3D.h">
+      <Filter>src\core\scene</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
