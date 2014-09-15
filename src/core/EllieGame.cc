@@ -16,7 +16,9 @@
 EllieGame::EllieGame()
     : scenes_(),
       current_scene_(nullptr),
-      font_(nullptr) {
+      font_(nullptr),
+      cursor_(0),
+      ongoing_(false) {
 }
 
 EllieGame::~EllieGame() {
@@ -40,6 +42,7 @@ int EllieGame::Initialize() {
     LOGGER.Error("Failed to create shooter 3d scene object");
   }
   scenes_.push_back(scene);
+  ongoing_ = true;
   return 0;
 }
 
@@ -56,33 +59,46 @@ void EllieGame::Finalize() {
     TTF_CloseFont(font_);
     font_ = nullptr;
   }
+  ongoing_ = false;
 }
 
 void EllieGame::Update(float elapsed_time) {
+  if (!ongoing_) {
+    return;
+  }
+
   if (current_scene_ != nullptr) {
     current_scene_->Update(elapsed_time);
   }
 }
 
 void EllieGame::Draw(const glm::vec2 &window_size) {
+  if (!ongoing_) {
+    return;
+  }
+
   if (current_scene_ == nullptr) {
     glSetClearanceColor(0.0f, 0.0f, 0.0f, 0.0f);
     glClearAll();
 
     glMatrixMode(GL_PROJECTION);
     glLoadMatrixf(
-        glm::value_ptr(
-            glm::ortho(0.0f, window_size.x, window_size.y, 0.0f)));
+        glm::value_ptr(glm::ortho(0.0f, window_size.x, window_size.y, 0.0f)));
 
     glMatrixMode(GL_MODELVIEW);
+    glLoadIdentity();
     glColor4f(1.0f, 1.0f, 1.0f, 1.0f);
     glm::vec2 name_pos = glm::vec2(10.0f, 20.0f);
-    char idx = '1';
+    unsigned int idx = 0;
     for (auto it = scenes_.begin(); it != scenes_.end(); ++it) {
       glRasterPos2fv(glm::value_ptr(name_pos));
-      glutBitmapCharacter(GLUT_BITMAP_9_BY_15, idx);
-      glutBitmapString(GLUT_BITMAP_9_BY_15, reinterpret_cast<const unsigned char *>(" -> "));
-      glutBitmapString(GLUT_BITMAP_9_BY_15, reinterpret_cast<const unsigned char *>((*it)->name().c_str()));
+      glutBitmapString(
+          GLUT_BITMAP_9_BY_15,
+          reinterpret_cast<const unsigned char *>((
+              (idx == cursor_) ? "-> " : "   ")));
+      glutBitmapString(
+          GLUT_BITMAP_9_BY_15,
+          reinterpret_cast<const unsigned char *>((*it)->name().c_str()));
       name_pos += glm::vec2(0.0f, 12);
       ++idx;
     }
@@ -92,28 +108,43 @@ void EllieGame::Draw(const glm::vec2 &window_size) {
 }
 
 int EllieGame::OnKeyDown(SDL_Keycode key) {
+  if (!ongoing_) {
+    return 0;
+  }
+
   if (current_scene_ == nullptr) {
-    if ((key >= SDLK_1) && (key <= SDLK_9)) {
-      size_t scene_idx = static_cast<size_t>(key - SDLK_1);
-      if (scene_idx < scenes_.size()) {
+    switch (key) {
+      case SDLK_j:
+      case SDLK_DOWN:
+        if (cursor_ < scenes_.size() - 1) {
+          ++cursor_;
+        }
+        break;
+      case SDLK_k:
+      case SDLK_UP:
+        if (cursor_ > 0) {
+          --cursor_;
+        }
+        break;
+      case SDLK_RETURN: {
+        EllieBaseGameScene *setup_scene = scenes_.at(cursor_);
         LOGGER.Info("Set up the game scene (scene: %s)",
-                    scenes_.at(scene_idx)->name().c_str());
-        int ret = scenes_.at(scene_idx)->Initialize();
+                    setup_scene->name().c_str());
+        int ret = setup_scene->Initialize();
         if (ret < 0) {
           LOGGER.Error("Failed to setup the scene (ret: %d, scene: %s)", ret,
-                       scenes_.at(scene_idx)->name().c_str());
+                       setup_scene->name().c_str());
           return -1;
         }
-        current_scene_ = scenes_.at(scene_idx);
+        current_scene_ = setup_scene;
+        break;
       }
+      case SDLK_ESCAPE:
+        ongoing_ = false;
+        break;
     }
   } else {
     switch (key) {
-      case SDLK_0:
-        LOGGER.Info("Clean up the current scene");
-        current_scene_->Finalize();
-        current_scene_ = nullptr;
-        break;
       case SDLK_w:
       case SDLK_a:
       case SDLK_s:
@@ -122,12 +153,21 @@ int EllieGame::OnKeyDown(SDL_Keycode key) {
       case SDLK_SPACE:
         current_scene_->OnKeyDown(key);
         break;
+      case SDLK_ESCAPE:
+        LOGGER.Info("Clean up the current scene (scene: %s)", current_scene_->name().c_str());
+        current_scene_->Finalize();
+        current_scene_ = nullptr;
+        break;
     }
   }
   return 0;
 }
 
 void EllieGame::OnKeyUp(SDL_Keycode key) {
+  if (!ongoing_) {
+    return;
+  }
+
   if (current_scene_ != nullptr) {
     switch (key) {
       case SDLK_w:

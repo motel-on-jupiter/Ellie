@@ -42,10 +42,16 @@ class EllieGame {
   int OnKeyDown(SDL_Keycode key);
   void OnKeyUp(SDL_Keycode key);
 
+  bool ongoing() const {
+    return ongoing_;
+  }
+
  private:
   std::vector<EllieBaseGameScene *> scenes_;
   EllieBaseGameScene *current_scene_;
   TTF_Font *font_;
+  unsigned int cursor_;
+  bool ongoing_;
 };
 
 #endif /* ELLIE_GAME_H_ */

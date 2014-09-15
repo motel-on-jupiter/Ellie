@@ -148,9 +148,6 @@ int EllieMain() {
           escape_loop = true;
           break;
         case SDL_KEYDOWN:
-          if (event.key.keysym.sym == SDLK_ESCAPE) {
-            escape_loop = true;
-          }
           game.OnKeyDown(event.key.keysym.sym);
           break;
         case SDL_KEYUP:
@@ -158,7 +155,7 @@ int EllieMain() {
           break;
       }
     }
-    if (escape_loop) {
+    if (escape_loop || !game.ongoing()) {
       break;
     }
 
