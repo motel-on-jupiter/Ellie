@@ -4,7 +4,8 @@
 #ifndef ELLIE_SHOOTING_2D_H_
 #define ELLIE_SHOOTING_2D_H_
 
-#include <vector>
+#include <map>
+#include <string>
 #include "core/actor/F22Fighter.h"
 #include "core/actor/UFOFighter.h"
 #include "core/EllieGame.h"
@@ -24,17 +25,34 @@ class EllieShooting2DStage {
   std::vector<std::vector<bool>> star_map_;
 };
 
+class EllieShooting2DTitle : public EllieBaseGameScene {
+ public:
+  EllieShooting2DTitle();
+  virtual ~EllieShooting2DTitle();
+
+  virtual void Draw(const glm::vec2 &window_size);
+  virtual void OnKeyDown(SDL_Keycode key);
+  virtual void OnKeyUp(SDL_Keycode key);
+
+ protected:
+  virtual int OnInitial();
+  virtual void OnFinal();
+  virtual void OnUpdate(float elapsed_time);
+};
+
 class EllieShooting2DIngame : public EllieBaseGameScene {
  public:
   EllieShooting2DIngame();
   virtual ~EllieShooting2DIngame();
 
-  virtual int Initialize();
-  virtual void Finalize();
-  virtual void Update(float elapsed_time);
+  virtual void OnUpdate(float elapsed_time);
   virtual void Draw(const glm::vec2 &window_size);
   virtual void OnKeyDown(SDL_Keycode key);
   virtual void OnKeyUp(SDL_Keycode key);
+
+ protected:
+  virtual int OnInitial();
+  virtual void OnFinal();
 
  private:
   static const float kShotInterval;
@@ -59,16 +77,18 @@ class EllieShooting2D : public EllieBaseGameScene {
   EllieShooting2D();
   virtual ~EllieShooting2D();
 
-  virtual int Initialize();
-  virtual void Finalize();
-  virtual void Update(float elapsed_time);
   virtual void Draw(const glm::vec2 &window_size);
   virtual void OnKeyDown(SDL_Keycode key);
   virtual void OnKeyUp(SDL_Keycode key);
 
+ protected:
+  virtual int OnInitial();
+  virtual void OnFinal();
+  virtual void OnUpdate(float elapsed_time);
+
  private:
   EllieShooting2DStage stage_;
-  std::vector<EllieBaseGameScene *> sub_scenes_;
+  std::map<std::string, EllieBaseGameScene *> sub_scenes_;
   EllieBaseGameScene *current_scene_;
 };
 

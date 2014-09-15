@@ -13,12 +13,14 @@ class EllieShooter3D : public EllieBaseGameScene {
   EllieShooter3D();
   virtual ~EllieShooter3D();
 
-  virtual int Initialize();
-  virtual void Finalize();
-  virtual void Update(float elapsed_time);
   virtual void Draw(const glm::vec2 &window_size);
   virtual void OnKeyDown(SDL_Keycode key);
   virtual void OnKeyUp(SDL_Keycode key);
+
+ protected:
+  virtual int OnInitial();
+  virtual void OnFinal();
+  virtual void OnUpdate(float elapsed_time);
 
  private:
   GridStage3D stage_;

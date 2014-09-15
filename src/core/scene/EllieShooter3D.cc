@@ -14,33 +14,21 @@ EllieShooter3D::EllieShooter3D()
 EllieShooter3D::~EllieShooter3D() {
 }
 
-int EllieShooter3D::Initialize() {
-  glSetClearanceColor(0.0f, 0.0f, 0.0f, 0.0f);
-  return 0;
-}
-
-void EllieShooter3D::Finalize() {
-}
-
-void EllieShooter3D::Update(float elapsed_time) {
-  UNUSED(elapsed_time);
-}
-
 void EllieShooter3D::Draw(const glm::vec2 &window_size) {
   glClearAll();
 
   glPushMatrix();
   glViewport(0, 0, static_cast<GLsizei>(window_size.x),
              static_cast<GLsizei>(window_size.y));
-  glEnable (GL_DEPTH_TEST);
+  glEnable(GL_DEPTH_TEST);
 
-  glMatrixMode (GL_PROJECTION);
+  glMatrixMode(GL_PROJECTION);
   glLoadMatrixf(
       glm::value_ptr(
           glm::perspective(glm::radians(45.0f), window_size.x / window_size.y,
                            1.0f, 1000.0f)));
 
-  glMatrixMode (GL_MODELVIEW);
+  glMatrixMode(GL_MODELVIEW);
   glLoadMatrixf(
       glm::value_ptr(
           glm::lookAt(glm::vec3(0.0f, 1.5f, -30.0f), glm::vec3(0.0f),
@@ -54,8 +42,8 @@ void EllieShooter3D::Draw(const glm::vec2 &window_size) {
   glLightfv(GL_LIGHT0, GL_AMBIENT, kLightAmbientColor);
   glLightfv(GL_LIGHT0, GL_DIFFUSE, kLightDiffuseColor);
   glLightfv(GL_LIGHT0, GL_SPECULAR, kLightSpecularColor);
-  glEnable (GL_LIGHTING);
-  glEnable (GL_LIGHT0);
+  glEnable(GL_LIGHTING);
+  glEnable(GL_LIGHT0);
 
   stage_.Draw();
 
@@ -72,3 +60,16 @@ void EllieShooter3D::OnKeyDown(SDL_Keycode key) {
 void EllieShooter3D::OnKeyUp(SDL_Keycode key) {
   UNUSED(key);
 }
+
+int EllieShooter3D::OnInitial() {
+  glSetClearanceColor(0.0f, 0.0f, 0.0f, 0.0f);
+  return 0;
+}
+
+void EllieShooter3D::OnFinal() {
+}
+
+void EllieShooter3D::OnUpdate(float elapsed_time) {
+  UNUSED(elapsed_time);
+}
+

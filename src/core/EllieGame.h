@@ -10,14 +10,17 @@
 class EllieBaseGameScene {
  public:
   EllieBaseGameScene(const char *name)
-      : name_(name) {
+      : name_(name),
+        finished_(true),
+        scene_time_(0.0f) {
   }
   virtual ~EllieBaseGameScene() {
   }
 
-  virtual int Initialize() = 0;
-  virtual void Finalize() = 0;
-  virtual void Update(float elapsed_time) = 0;
+  int Initialize();
+  void Finalize();
+  void Update(float elapsed_time);
+
   virtual void Draw(const glm::vec2 &window_size) = 0;
   virtual void OnKeyDown(SDL_Keycode key) = 0;
   virtual void OnKeyUp(SDL_Keycode key) = 0;
@@ -25,9 +28,26 @@ class EllieBaseGameScene {
   const std::string &name() const {
     return name_;
   }
+  bool finished() const {
+    return finished_;
+  }
+  float scene_time() const {
+    return scene_time_;
+  }
+
+ protected:
+  virtual int OnInitial() = 0;
+  virtual void OnFinal() = 0;
+  virtual void OnUpdate(float elapsed_time) = 0;
+
+  void set_finished(bool finished) {
+    finished_ = finished;
+  }
 
  private:
   std::string name_;
+  bool finished_;
+  float scene_time_;
 };
 
 class EllieGame {

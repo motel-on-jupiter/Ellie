@@ -13,6 +13,21 @@
 #include "util/auxiliary/csyntax_aux.h"
 #include "util/logging/Logger.h"
 
+int EllieBaseGameScene::Initialize() {
+  finished_ = false;
+  scene_time_ = 0.0f;
+  return OnInitial();
+}
+
+void EllieBaseGameScene::Finalize() {
+  OnFinal();
+}
+
+void EllieBaseGameScene::Update(float elapsed_time) {
+  scene_time_ += elapsed_time;
+  OnUpdate(elapsed_time);
+}
+
 EllieGame::EllieGame()
     : scenes_(),
       current_scene_(nullptr),
@@ -151,11 +166,13 @@ int EllieGame::OnKeyDown(SDL_Keycode key) {
       case SDLK_d:
       case SDLK_e:
       case SDLK_SPACE:
+      case SDLK_RETURN:
         current_scene_->OnKeyDown(key);
         break;
       case SDLK_ESCAPE:
         current_scene_->Finalize();
-        LOGGER.Info("Clean up the current scene (scene: %s)", current_scene_->name().c_str());
+        LOGGER.Info("Clean up the current scene (scene: %s)",
+                    current_scene_->name().c_str());
         current_scene_ = nullptr;
         break;
     }
