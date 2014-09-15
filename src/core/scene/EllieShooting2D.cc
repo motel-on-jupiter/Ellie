@@ -81,6 +81,8 @@ void EllieShooting2D::Finalize() {
   for (int i=0; i<ARRAYSIZE(ufos_); ++i) {
     ufos_[i].Finalize();
   }
+  free(ccr_);
+  ccr_ = nullptr;
 }
 
 void EllieShooting2D::DirectByScript(float elapsed_time) {
