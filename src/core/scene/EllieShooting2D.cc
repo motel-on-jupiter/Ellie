@@ -152,25 +152,36 @@ ccrFinishV;
 }
 
 void EllieShooting2DIngame::Draw(const glm::vec2 &window_size) {
-  if (!scene_pausing_) {
-    glMatrixMode(GL_PROJECTION);
-    glm::vec2 focus_pos = glm::vec2(1000.0f, 900.0f);
-    float zoom_ratio = 2.0f;
-    glLoadMatrixf(
-        glm::value_ptr(
-            glm::ortho(focus_pos.x - window_size.x * 0.5f / zoom_ratio,
-                       focus_pos.x + window_size.x * 0.5f / zoom_ratio,
-                       focus_pos.y + window_size.y * 0.5f / zoom_ratio,
-                       focus_pos.y - window_size.y * 0.5f / zoom_ratio, -1.0f,
-                       1.0f)));
+  if (scene_pausing_) {
     glMatrixMode(GL_MODELVIEW);
-    for (int i = 0; i < ARRAYSIZE(bullets_); ++i) {
-      bullets_[i].Draw();
-    }
-    f22_.Draw();
-    for (int i = 0; i < ARRAYSIZE(ufos_); ++i) {
-      ufos_[i].Draw();
-    }
+    glLoadIdentity();
+    glColor4f(1.0f, 1.0f, 1.0f, 1.0f);
+    static const unsigned char *notice_message =
+        reinterpret_cast<const unsigned char *>("PAUSE");
+    glm::vec2 string_size = glm::vec2(
+        glutBitmapLength(GLUT_BITMAP_9_BY_15, notice_message),
+        glutBitmapHeight(GLUT_BITMAP_9_BY_15));
+    glRasterPos2fv(glm::value_ptr(window_size * 0.5f - string_size * 0.5f));
+    glutBitmapString(GLUT_BITMAP_9_BY_15, notice_message);
+  }
+
+  glMatrixMode(GL_PROJECTION);
+  glm::vec2 focus_pos = glm::vec2(1000.0f, 900.0f);
+  float zoom_ratio = 2.0f;
+  glLoadMatrixf(
+      glm::value_ptr(
+          glm::ortho(focus_pos.x - window_size.x * 0.5f / zoom_ratio,
+                     focus_pos.x + window_size.x * 0.5f / zoom_ratio,
+                     focus_pos.y + window_size.y * 0.5f / zoom_ratio,
+                     focus_pos.y - window_size.y * 0.5f / zoom_ratio, -1.0f,
+                     1.0f)));
+  glMatrixMode(GL_MODELVIEW);
+  for (int i = 0; i < ARRAYSIZE(bullets_); ++i) {
+    bullets_[i].Draw();
+  }
+  f22_.Draw();
+  for (int i = 0; i < ARRAYSIZE(ufos_); ++i) {
+    ufos_[i].Draw();
   }
 }
 
