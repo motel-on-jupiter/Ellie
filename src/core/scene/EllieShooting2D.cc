@@ -72,7 +72,7 @@ EllieShooting2D::~EllieShooting2D() {
 }
 
 int EllieShooting2D::Initialize() {
-  glSetClearingColor(0.0f, 0.0f, 0.0f, 0.0f);
+  glSetClearanceColor(0.0f, 0.0f, 0.0f, 0.0f);
   f22_.Initialize(glm::vec2(1000.0f, 1000.0f), 0.0f);
   return 0;
 }

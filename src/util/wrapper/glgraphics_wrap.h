@@ -63,7 +63,7 @@ extern inline void glUnbindReadFramebuffer();
 /**
  * Renamed functions
  */
-extern inline void glSetClearingColor(GLclampf red, GLclampf green,
+extern inline void glSetClearanceColor(GLclampf red, GLclampf green,
                                       GLclampf blue, GLclampf alpha);
 
 #endif /* GLGRAPHICSWRAP_H_ */

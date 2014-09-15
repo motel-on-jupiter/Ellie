@@ -195,7 +195,7 @@ inline void glUnbindReadFramebuffer() {
   glBindFramebuffer(GL_READ_FRAMEBUFFER, 0);
 }
 
-inline void glSetClearingColor(GLclampf red, GLclampf green, GLclampf blue,
+inline void glSetClearanceColor(GLclampf red, GLclampf green, GLclampf blue,
                                GLclampf alpha) {
   glClearColor(red, green, blue, alpha);
 }

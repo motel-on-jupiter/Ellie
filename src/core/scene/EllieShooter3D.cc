@@ -15,7 +15,7 @@ EllieShooter3D::~EllieShooter3D() {
 }
 
 int EllieShooter3D::Initialize() {
-  glSetClearingColor(0.0f, 0.0f, 0.0f, 0.0f);
+  glSetClearanceColor(0.0f, 0.0f, 0.0f, 0.0f);
   return 0;
 }
 
