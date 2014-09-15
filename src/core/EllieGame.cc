@@ -154,8 +154,8 @@ int EllieGame::OnKeyDown(SDL_Keycode key) {
         current_scene_->OnKeyDown(key);
         break;
       case SDLK_ESCAPE:
-        LOGGER.Info("Clean up the current scene (scene: %s)", current_scene_->name().c_str());
         current_scene_->Finalize();
+        LOGGER.Info("Clean up the current scene (scene: %s)", current_scene_->name().c_str());
         current_scene_ = nullptr;
         break;
     }

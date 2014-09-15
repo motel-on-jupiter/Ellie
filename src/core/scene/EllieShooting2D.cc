@@ -4,6 +4,7 @@
 #include "core/scene/EllieShooting2D.h"
 #include "util/auxiliary/csyntax_aux.h"
 #include "util/catalogue/color_sample.h"
+#include "util/logging/Logger.h"
 #include "util/wrapper/coroutine_wrap.h"
 #include "util/wrapper/glgraphics_wrap.h"
 
@@ -51,12 +52,11 @@ void EllieShooting2DStage::Draw(const glm::vec2 &window_size) {
   }
 }
 
-const float EllieShooting2D::kShotInterval = 0.1f;
-const glm::vec2 EllieShooting2D::kBulletVelocity = glm::vec2(0.0f, -200.0f);
+const float EllieShooting2DIngame::kShotInterval = 0.1f;
+const glm::vec2 EllieShooting2DIngame::kBulletVelocity = glm::vec2(0.0f, -200.0f);
 
-EllieShooting2D::EllieShooting2D()
-    : EllieBaseGameScene("2D Shooting"),
-      stage_(),
+EllieShooting2DIngame::EllieShooting2DIngame()
+    : EllieBaseGameScene("Ingame"),
       f22_(),
       ufos_(),
       ccrParam_(nullptr),
@@ -68,23 +68,23 @@ EllieShooting2D::EllieShooting2D()
   memset(moving_, 0, sizeof(moving_));
 }
 
-EllieShooting2D::~EllieShooting2D() {
+EllieShooting2DIngame::~EllieShooting2DIngame() {
 }
 
-int EllieShooting2D::Initialize() {
+int EllieShooting2DIngame::Initialize() {
   glSetClearanceColor(0.0f, 0.0f, 0.0f, 0.0f);
   f22_.Initialize(glm::vec2(1000.0f, 1000.0f), 0.0f);
   return 0;
 }
 
-void EllieShooting2D::Finalize() {
+void EllieShooting2DIngame::Finalize() {
   for (int i=0; i<ARRAYSIZE(ufos_); ++i) {
     ufos_[i].Finalize();
   }
   ccrAbort(ccrParam_);
 }
 
-void EllieShooting2D::DirectByScript(float elapsed_time) {
+void EllieShooting2DIngame::DirectEnemies(float elapsed_time) {
   ccrAsContParam(ccrParam_);
   ccrBeginContext;
   ccrEndContext(ctx);
@@ -113,9 +113,9 @@ void EllieShooting2D::DirectByScript(float elapsed_time) {
   ccrFinishV;
 }
 
-void EllieShooting2D::Update(float elapsed_time) {
+void EllieShooting2DIngame::Update(float elapsed_time) {
   if (!scene_pausing_) {
-    DirectByScript(elapsed_time);
+    DirectEnemies(elapsed_time);
 
     for (int i = 0; i < ARRAYSIZE(bullets_); ++i) {
       bullets_[i].Update(elapsed_time);
@@ -159,17 +159,7 @@ void EllieShooting2D::Update(float elapsed_time) {
   }
 }
 
-void EllieShooting2D::Draw(const glm::vec2 &window_size) {
-  glClearAll();
-
-  glPushMatrix();
-  glMatrixMode(GL_PROJECTION);
-  glLoadMatrixf(
-      glm::value_ptr(
-          glm::ortho(0.0f, window_size.x, window_size.y, 0.0f)));
-  glMatrixMode(GL_MODELVIEW);
-  stage_.Draw(window_size);
-
+void EllieShooting2DIngame::Draw(const glm::vec2 &window_size) {
   if (!scene_pausing_) {
     glMatrixMode(GL_PROJECTION);
     glm::vec2 focus_pos = glm::vec2(1000.0f, 900.0f);
@@ -190,10 +180,9 @@ void EllieShooting2D::Draw(const glm::vec2 &window_size) {
       ufos_[i].Draw();
     }
   }
-  glPopMatrix();
 }
 
-void EllieShooting2D::OnKeyDown(SDL_Keycode key) {
+void EllieShooting2DIngame::OnKeyDown(SDL_Keycode key) {
   if (scene_pausing_) {
     switch (key) {
       case SDLK_SPACE:
@@ -224,7 +213,7 @@ void EllieShooting2D::OnKeyDown(SDL_Keycode key) {
   }
 }
 
-void EllieShooting2D::OnKeyUp(SDL_Keycode key) {
+void EllieShooting2DIngame::OnKeyUp(SDL_Keycode key) {
   switch (key) {
     case SDLK_w:
       moving_[0] = false;
@@ -241,5 +230,83 @@ void EllieShooting2D::OnKeyUp(SDL_Keycode key) {
     case SDLK_e:
       shooting_ = false;
       break;
+  }
+}
+
+EllieShooting2D::EllieShooting2D()
+    : EllieBaseGameScene("2D Shooting"),
+      stage_(),
+      sub_scenes_(),
+      current_scene_(nullptr) {
+}
+
+EllieShooting2D::~EllieShooting2D() {
+}
+
+int EllieShooting2D::Initialize() {
+  glSetClearanceColor(0.0f, 0.0f, 0.0f, 0.0f);
+  EllieBaseGameScene *sub_scene = new EllieShooting2DIngame();
+  if (sub_scene == nullptr) {
+    LOGGER.Error("Failed to allocate for sub scene object");
+    return -1;
+  }
+  sub_scenes_.push_back(sub_scene);
+
+  LOGGER.Info("Set up the sub scene (scene: %s)", sub_scene->name().c_str());
+  int ret = sub_scene->Initialize();
+  if (ret < 0) {
+    LOGGER.Error("Failed to initialize the sub scene (scene: %s)", sub_scene->name().c_str());
+    delete sub_scene;
+    return -1;
+  }
+  current_scene_ = sub_scene;
+
+  return 0;
+}
+
+void EllieShooting2D::Finalize() {
+  if (current_scene_ != nullptr) {
+    current_scene_->Finalize();
+    LOGGER.Info("Clean up the current sub scene (scene: %s)", current_scene_->name().c_str());
+    current_scene_ = nullptr;
+  }
+  for (auto it = sub_scenes_.begin(); it != sub_scenes_.end(); ++it) {
+    delete *it;
+  }
+  sub_scenes_.clear();
+}
+
+void EllieShooting2D::Update(float elapsed_time) {
+  if (current_scene_ != nullptr) {
+    current_scene_->Update(elapsed_time);
+  }
+}
+
+void EllieShooting2D::Draw(const glm::vec2 &window_size) {
+  glClearAll();
+
+  glPushMatrix();
+  glMatrixMode(GL_PROJECTION);
+  glLoadMatrixf(
+      glm::value_ptr(
+          glm::ortho(0.0f, window_size.x, window_size.y, 0.0f)));
+  glMatrixMode(GL_MODELVIEW);
+  stage_.Draw(window_size);
+
+  if (current_scene_ != nullptr) {
+    current_scene_->Draw(window_size);
+  }
+  glPopMatrix();
+}
+
+void EllieShooting2D::OnKeyDown(SDL_Keycode key) {
+  if (current_scene_ != nullptr) {
+    current_scene_->OnKeyDown(key);
+  }
+}
+
+void EllieShooting2D::OnKeyUp(SDL_Keycode key) {
+  if (current_scene_ != nullptr) {
+    current_scene_->OnKeyUp(key);
   }
 }
