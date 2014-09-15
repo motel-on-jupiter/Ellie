@@ -4,10 +4,10 @@
 #ifndef F22FIGHTER_H_
 #define F22FIGHTER_H_
 
-#include "entity/BaseEntity.h"
-#include "entity/EntityDraw.h"
+#include "entity/PlanarEntity.h"
+#include "entity/PlanarEntityDraw.h"
 
-class FighterBullet : public BaseEntity, public EntityPointDraw {
+class FighterBullet : public PlanarEntity, public EntityPointDraw {
  public:
   FighterBullet();
   virtual ~FighterBullet();
@@ -22,7 +22,7 @@ class FighterBullet : public BaseEntity, public EntityPointDraw {
   float life_time_;
 };
 
-class F22Fighter : public BaseEntity, public EntityTriangleDraw {
+class F22Fighter : public PlanarEntity, public EntityTriangleDraw {
  public:
   F22Fighter();
   virtual ~F22Fighter();

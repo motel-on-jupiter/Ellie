@@ -1,17 +1,17 @@
 /**
  * Copyright (C) 2014 The Motel on Jupiter
  */
-#ifndef ENTITYDRAW_H_
-#define ENTITYDRAW_H_
+#ifndef PLANARENTITYDRAW_H_
+#define PLANARENTITYDRAW_H_
 
 #include <GL/glew.h>
-#include "entity/BaseEntity.h"
+#include "entity/PlanarEntity.h"
 
-class EntityDraw : public EntityMixIn {
+class PlanarEntityDraw : public PlanarEntityMixIn {
  public:
-  EntityDraw(BaseEntity &entity, const GLubyte *color)
-  : EntityMixIn(entity), color_(color) {}
-  virtual ~EntityDraw() {}
+  PlanarEntityDraw(PlanarEntity &entity, const GLubyte *color)
+  : PlanarEntityMixIn(entity), color_(color) {}
+  virtual ~PlanarEntityDraw() {}
 
   virtual void Draw() const = 0;
 
@@ -22,17 +22,17 @@ class EntityDraw : public EntityMixIn {
   const GLubyte *color_;
 };
 
-class EntityPointDraw : public EntityDraw {
+class EntityPointDraw : public PlanarEntityDraw {
  public:
-  EntityPointDraw(BaseEntity &entity, const GLubyte *color);
+  EntityPointDraw(PlanarEntity &entity, const GLubyte *color);
   virtual ~EntityPointDraw() {}
 
   virtual void Draw() const;
 };
 
-class EntityCircleDraw : public EntityDraw {
+class EntityCircleDraw : public PlanarEntityDraw {
  public:
-  EntityCircleDraw(BaseEntity &entity, unsigned int splits, bool fill, const GLubyte *color);
+  EntityCircleDraw(PlanarEntity &entity, unsigned int splits, bool fill, const GLubyte *color);
   virtual ~EntityCircleDraw() {}
 
   virtual void Draw() const;
@@ -47,9 +47,9 @@ class EntityCircleDraw : public EntityDraw {
   bool fill_;
 };
 
-class EntityTriangleDraw : public EntityDraw {
+class EntityTriangleDraw : public PlanarEntityDraw {
  public:
-  EntityTriangleDraw(BaseEntity &entity, bool fill, const GLubyte *color);
+  EntityTriangleDraw(PlanarEntity &entity, bool fill, const GLubyte *color);
   virtual ~EntityTriangleDraw() {}
 
   virtual void Draw() const;
@@ -61,9 +61,9 @@ class EntityTriangleDraw : public EntityDraw {
   bool fill_;
 };
 
-class EntityRectangleDraw : public EntityDraw {
+class EntityRectangleDraw : public PlanarEntityDraw {
  public:
-  EntityRectangleDraw(BaseEntity &entity, bool fill, const GLubyte *color);
+  EntityRectangleDraw(PlanarEntity &entity, bool fill, const GLubyte *color);
   virtual ~EntityRectangleDraw() {}
 
   virtual void Draw() const;
@@ -75,4 +75,4 @@ class EntityRectangleDraw : public EntityDraw {
   bool fill_;
 };
 
-#endif /* ENTITYDRAW_H_ */
+#endif /* PLANARENTITYDRAW_H_ */

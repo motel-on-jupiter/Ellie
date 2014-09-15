@@ -4,10 +4,10 @@
 #ifndef UFO_FIGHTER_H_
 #define UFO_FIGHTER_H_
 
-#include "entity/BaseEntity.h"
-#include "entity/EntityDraw.h"
+#include "entity/PlanarEntity.h"
+#include "entity/PlanarEntityDraw.h"
 
-class UFOFighter : public BaseEntity, public EntityCircleDraw {
+class UFOFighter : public PlanarEntity, public EntityCircleDraw {
  public:
   UFOFighter();
   virtual ~UFOFighter();

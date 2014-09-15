@@ -2,12 +2,12 @@
  * Copyright (C) 2014 The Motel On Jupiter
  */
 #include "F22Fighter.h"
-#include "entity/BaseEntity.h"
-#include "entity/EntityDraw.h"
+#include "entity/PlanarEntity.h"
+#include "entity/PlanarEntityDraw.h"
 #include "util/catalogue/color_sample.h"
 
 FighterBullet::FighterBullet()
-: BaseEntity(glm::vec2(0.0f), 0.0f, glm::vec2(2.0f)),
+: PlanarEntity(glm::vec2(0.0f), 0.0f, glm::vec2(2.0f)),
   EntityPointDraw(*this, X11Color::kOrange),
   vel_(0.0f),
   life_time_(-1.0f) {
@@ -38,7 +38,7 @@ void FighterBullet::Draw() {
 }
 
 F22Fighter::F22Fighter()
-: BaseEntity(glm::vec2(0.0f), 0.0f, glm::vec2(18.92f, 13.56f)),
+: PlanarEntity(glm::vec2(0.0f), 0.0f, glm::vec2(18.92f, 13.56f)),
   EntityTriangleDraw(*this, true, X11Color::kGray) {
 }
 

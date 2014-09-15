@@ -1,12 +1,12 @@
 /**
  * Copyright (C) 2014 The Motel on Jupiter
  */
-#include "entity/EntityDraw.h"
+#include "entity/PlanarEntityDraw.h"
 #include <glm/gtx/rotate_vector.hpp>
-#include "entity/BaseEntity.h"
+#include "entity/PlanarEntity.h"
 
-EntityPointDraw::EntityPointDraw(BaseEntity &entity, const GLubyte *color) :
-  EntityDraw(entity, color) {
+EntityPointDraw::EntityPointDraw(PlanarEntity &entity, const GLubyte *color) :
+  PlanarEntityDraw(entity, color) {
 }
 
 void EntityPointDraw::Draw() const {
@@ -19,8 +19,8 @@ void EntityPointDraw::Draw() const {
   glEnd();
 }
 
-EntityCircleDraw::EntityCircleDraw(BaseEntity &entity, unsigned int splits, bool fill, const GLubyte *color) :
-  EntityDraw(entity, color), splits_(splits), fill_(fill) {
+EntityCircleDraw::EntityCircleDraw(PlanarEntity &entity, unsigned int splits, bool fill, const GLubyte *color) :
+  PlanarEntityDraw(entity, color), splits_(splits), fill_(fill) {
 }
 
 void EntityCircleDraw::Draw() const {
@@ -42,8 +42,8 @@ void EntityCircleDraw::Draw() const {
   glPopMatrix();
 }
 
-EntityTriangleDraw::EntityTriangleDraw(BaseEntity &entity, bool fill, const GLubyte *color) :
-  EntityDraw(entity, color), fill_(fill) {
+EntityTriangleDraw::EntityTriangleDraw(PlanarEntity &entity, bool fill, const GLubyte *color) :
+  PlanarEntityDraw(entity, color), fill_(fill) {
 }
 
 void EntityTriangleDraw::Draw() const {
@@ -60,8 +60,8 @@ void EntityTriangleDraw::Draw() const {
   glPopMatrix();
 }
 
-EntityRectangleDraw::EntityRectangleDraw(BaseEntity &entity, bool fill, const GLubyte *color) :
-  EntityDraw(entity, color), fill_(fill) {
+EntityRectangleDraw::EntityRectangleDraw(PlanarEntity &entity, bool fill, const GLubyte *color) :
+  PlanarEntityDraw(entity, color), fill_(fill) {
 }
 
 void EntityRectangleDraw::Draw() const {

@@ -2,13 +2,13 @@
  * Copyright (C) 2014 The Motel On Jupiter
  */
 #include "UFOFighter.h"
-#include "entity/BaseEntity.h"
-#include "entity/EntityDraw.h"
+#include "entity/PlanarEntity.h"
+#include "entity/PlanarEntityDraw.h"
 #include "util/catalogue/color_sample.h"
 #include "util/wrapper/coroutine_wrap.h"
 
 UFOFighter::UFOFighter()
-: BaseEntity(glm::vec2(0.0f), 0.0f, glm::vec2(10.0f)),
+: PlanarEntity(glm::vec2(0.0f), 0.0f, glm::vec2(10.0f)),
   EntityCircleDraw(*this, 10, true, X11Color::kDeepPink),
   script_end_(true),
   ccr_(nullptr),

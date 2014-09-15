@@ -123,12 +123,6 @@
     <ClCompile Include="..\src\core\actor\F22Fighter.cc">
       <Filter>src\core\actor</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\entity\BaseEntity.cc">
-      <Filter>src\entity</Filter>
-    </ClCompile>
-    <ClCompile Include="..\src\entity\EntityDraw.cc">
-      <Filter>src\entity</Filter>
-    </ClCompile>
     <ClCompile Include="..\src\external\inireader\INIReader.cpp">
       <Filter>src\external\inireader</Filter>
     </ClCompile>
@@ -152,6 +146,12 @@
     </ClCompile>
     <ClCompile Include="..\src\core\scene\EllieShooter3D.cc">
       <Filter>src\core\scene</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\entity\PlanarEntity.cc">
+      <Filter>src\entity</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\entity\PlanarEntityDraw.cc">
+      <Filter>src\entity</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -239,12 +239,6 @@
     <ClInclude Include="..\src\core\actor\F22Fighter.h">
       <Filter>src\core\actor</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\entity\BaseEntity.h">
-      <Filter>src\entity</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\entity\EntityDraw.h">
-      <Filter>src\entity</Filter>
-    </ClInclude>
     <ClInclude Include="..\src\external\inireader\INIReader.h">
       <Filter>src\external\inireader</Filter>
     </ClInclude>
@@ -274,6 +268,12 @@
     </ClInclude>
     <ClInclude Include="..\src\core\scene\EllieShooter3D.h">
       <Filter>src\core\scene</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\entity\PlanarEntity.h">
+      <Filter>src\entity</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\entity\PlanarEntityDraw.h">
+      <Filter>src\entity</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

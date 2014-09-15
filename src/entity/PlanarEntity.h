@@ -1,17 +1,17 @@
 /**
  * Copyright (C) 2014 The Motel on Jupiter
  */
-#ifndef BASEENTITY_H_
-#define BASEENTITY_H_
+#ifndef PLANARENTITY_H_
+#define PLANARENTITY_H_
 
 #include <boost/noncopyable.hpp>
 #include "util/auxiliary/math_aux.h"
 
-class BaseEntity {
+class PlanarEntity {
  public:
-  BaseEntity(const glm::vec2 &pos, float rot, const glm::vec2 &scale) :
+  PlanarEntity(const glm::vec2 &pos, float rot, const glm::vec2 &scale) :
     pos_(pos), rot_(rot), scale_(scale) {}
-  virtual ~BaseEntity() {}
+  virtual ~PlanarEntity() {}
 
   void Move(const glm::vec2 &offset) { set_pos(pos() + offset); }
   void MoveTo(const glm::vec2 &pos) { set_pos(pos); }
@@ -33,17 +33,17 @@ class BaseEntity {
   glm::vec2 scale_;
 };
 
-class EntityMixIn : public boost::noncopyable {
+class PlanarEntityMixIn : public boost::noncopyable {
  public:
-  explicit EntityMixIn(BaseEntity &entity) : entity_(entity) {}
-  virtual ~EntityMixIn() {}
+  explicit PlanarEntityMixIn(PlanarEntity &entity) : entity_(entity) {}
+  virtual ~PlanarEntityMixIn() {}
 
  protected:
-  BaseEntity &entity() { return entity_; }
-  const BaseEntity &entity() const { return entity_; }
+  PlanarEntity &entity() { return entity_; }
+  const PlanarEntity &entity() const { return entity_; }
 
  private:
-  BaseEntity &entity_;
+  PlanarEntity &entity_;
 };
 
-#endif /* BASEENTITY_H_ */
+#endif /* PLANARENTITY_H_ */
