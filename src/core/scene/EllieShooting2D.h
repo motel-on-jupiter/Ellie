@@ -46,7 +46,7 @@ class EllieShooting2D : public EllieBaseGameScene {
   F22Fighter f22_;
   FighterBullet bullets_[100];
   UFOFighter ufos_[100];
-  void *ccr_;
+  void *ccrParam_;
   float time_;
   int ufo_idx_;
   bool scene_pausing_;

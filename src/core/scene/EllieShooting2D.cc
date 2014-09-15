@@ -59,7 +59,7 @@ EllieShooting2D::EllieShooting2D()
       stage_(),
       f22_(),
       ufos_(),
-      ccr_(nullptr),
+      ccrParam_(nullptr),
       time_(0.0f),
       ufo_idx_(0),
       scene_pausing_(false),
@@ -81,12 +81,11 @@ void EllieShooting2D::Finalize() {
   for (int i=0; i<ARRAYSIZE(ufos_); ++i) {
     ufos_[i].Finalize();
   }
-  free(ccr_);
-  ccr_ = nullptr;
+  ccrAbort(ccrParam_);
 }
 
 void EllieShooting2D::DirectByScript(float elapsed_time) {
-  struct ccrContextTag **ccrParam = (struct ccrContextTag **) &ccr_;
+  ccrAsContParam(ccrParam_);
   ccrBeginContext;
   ccrEndContext(ctx);
   ccrBegin_(ctx);
