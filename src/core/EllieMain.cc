@@ -75,7 +75,7 @@ int EllieMain() {
     return -1;
   }
 
-  // Initialize the graphics extension library
+  // Initialize the GLEW (for shader support)
   GLenum glew_error = glewInit();
   if (glew_error != GLEW_OK) {
     LOGGER.Error("Failed to initialize glew library (errmsg: %s)",
@@ -83,6 +83,10 @@ int EllieMain() {
     EllieCleanUp();
     return -1;
   }
+
+  // Initialize the GLUT (for bitmap font support)
+  int glut_argc = 0;
+  glutInit(&glut_argc, {});
 
   // Initialize the tweaker library
   if (TwInit(TW_OPENGL, NULL) == 0) {

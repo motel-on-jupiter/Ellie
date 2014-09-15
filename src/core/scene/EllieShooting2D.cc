@@ -165,7 +165,7 @@ void EllieShooting2D::Draw(const glm::vec2 &window_size) {
   glMatrixMode(GL_PROJECTION);
   glLoadMatrixf(
       glm::value_ptr(
-          glm::ortho(0.0f, window_size.x, window_size.y, 0.0f, -1.0f, 1.0f)));
+          glm::ortho(0.0f, window_size.x, window_size.y, 0.0f)));
   glMatrixMode(GL_MODELVIEW);
   stage_.Draw(window_size);
 

@@ -68,6 +68,24 @@ void EllieGame::Draw(const glm::vec2 &window_size) {
   if (current_scene_ == nullptr) {
     glSetClearanceColor(0.0f, 0.0f, 0.0f, 0.0f);
     glClearAll();
+
+    glMatrixMode(GL_PROJECTION);
+    glLoadMatrixf(
+        glm::value_ptr(
+            glm::ortho(0.0f, window_size.x, window_size.y, 0.0f)));
+
+    glMatrixMode(GL_MODELVIEW);
+    glColor4f(1.0f, 1.0f, 1.0f, 1.0f);
+    glm::vec2 name_pos = glm::vec2(10.0f, 20.0f);
+    char idx = '1';
+    for (auto it = scenes_.begin(); it != scenes_.end(); ++it) {
+      glRasterPos2fv(glm::value_ptr(name_pos));
+      glutBitmapCharacter(GLUT_BITMAP_9_BY_15, idx);
+      glutBitmapString(GLUT_BITMAP_9_BY_15, reinterpret_cast<const unsigned char *>(" -> "));
+      glutBitmapString(GLUT_BITMAP_9_BY_15, reinterpret_cast<const unsigned char *>((*it)->name().c_str()));
+      name_pos += glm::vec2(0.0f, 12);
+      ++idx;
+    }
   } else {
     current_scene_->Draw(window_size);
   }
