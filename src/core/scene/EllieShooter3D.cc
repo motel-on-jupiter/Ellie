@@ -8,7 +8,8 @@
 
 EllieShooter3D::EllieShooter3D()
     : EllieBaseGameScene("3D Shooter"),
-      stage_(glm::vec3(1000.0f, 10.0f, 1000.0f), X11Color::kDarkGreen) {
+      stage_(glm::vec3(1000.0f, 10.0f, 1000.0f)),
+      zombie_() {
 }
 
 EllieShooter3D::~EllieShooter3D() {
@@ -31,10 +32,10 @@ void EllieShooter3D::Draw(const glm::vec2 &window_size) {
   glMatrixMode(GL_MODELVIEW);
   glLoadMatrixf(
       glm::value_ptr(
-          glm::lookAt(glm::vec3(0.0f, 1.5f, -30.0f), glm::vec3(0.0f),
+          glm::lookAt(glm::vec3(0.0f, 1.5f, -5.0f), glm::vec3(0.0f),
                       glm::vec3(0.0f, 1.0f, 0.0f))));
 
-  static const GLfloat kLightPosition[] = { 0.0f, 10.0f, -10.0f, 1.0f };
+  static const GLfloat kLightPosition[] = { 0.0f, 10.0f, 10.0f };
   static const GLfloat kLightAmbientColor[] = { 1.0f, 1.0f, 1.0f, 1.0f };
   static const GLfloat kLightDiffuseColor[] = { 1.0f, 1.0f, 1.0f, 1.0f };
   static const GLfloat kLightSpecularColor[] = { 0.1f, 0.1f, 0.1f, 1.0f };
@@ -46,6 +47,7 @@ void EllieShooter3D::Draw(const glm::vec2 &window_size) {
   glEnable(GL_LIGHT0);
 
   stage_.Draw();
+  zombie_.Draw();
 
   glDisable(GL_LIGHTING);
   glDisable(GL_LIGHT0);

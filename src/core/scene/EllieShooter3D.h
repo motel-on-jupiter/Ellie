@@ -5,6 +5,7 @@
 #define ELLIE_SHOOTER_3D_H_
 
 #include <vector>
+#include "core/actor/Zombie.h"
 #include "core/stage/GridStage3D.h"
 #include "core/EllieGame.h"
 
@@ -24,6 +25,7 @@ class EllieShooter3D : public EllieBaseGameScene {
 
  private:
   GridStage3D stage_;
+  Zombie zombie_;
 };
 
 #endif /* ELLIE_SHOOTER_3D_H_ */

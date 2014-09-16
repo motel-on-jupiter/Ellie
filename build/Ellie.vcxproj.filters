@@ -49,6 +49,9 @@
     <Filter Include="src\core\stage">
       <UniqueIdentifier>{a27d0fda-1c8f-4f8b-bbda-a4274890308c}</UniqueIdentifier>
     </Filter>
+    <Filter Include="src\graphics">
+      <UniqueIdentifier>{d3355293-c8ff-4cc8-b9c8-b7a939aa3c8b}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\src\util\logging\emitter\DebuggerConsoleLogEmitter.cc">
@@ -152,6 +155,18 @@
     </ClCompile>
     <ClCompile Include="..\src\entity\PlanarEntityDraw.cc">
       <Filter>src\entity</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\entity\CubicEntity.cc">
+      <Filter>src\entity</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\entity\CubicEntityDraw.cc">
+      <Filter>src\entity</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\core\actor\Zombie.cc">
+      <Filter>src\core\actor</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\graphics\GLMaterialColor.cc">
+      <Filter>src\graphics</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -274,6 +289,18 @@
     </ClInclude>
     <ClInclude Include="..\src\entity\PlanarEntityDraw.h">
       <Filter>src\entity</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\entity\CubicEntity.h">
+      <Filter>src\entity</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\entity\CubicEntityDraw.h">
+      <Filter>src\entity</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\core\actor\Zombie.h">
+      <Filter>src\core\actor</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\graphics\GLMaterialColor.h">
+      <Filter>src\graphics</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

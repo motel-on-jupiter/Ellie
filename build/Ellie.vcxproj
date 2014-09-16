@@ -13,12 +13,15 @@
   <ItemGroup>
     <ClCompile Include="..\src\core\actor\F22Fighter.cc" />
     <ClCompile Include="..\src\core\actor\UFOFighter.cc" />
+    <ClCompile Include="..\src\core\actor\Zombie.cc" />
     <ClCompile Include="..\src\core\EllieGame.cc" />
     <ClCompile Include="..\src\core\EllieMain.cc" />
     <ClCompile Include="..\src\core\EllieTweakerContext.cc" />
     <ClCompile Include="..\src\core\scene\EllieShooter3D.cc" />
     <ClCompile Include="..\src\core\scene\EllieShooting2D.cc" />
     <ClCompile Include="..\src\core\stage\GridStage3D.cc" />
+    <ClCompile Include="..\src\entity\CubicEntity.cc" />
+    <ClCompile Include="..\src\entity\CubicEntityDraw.cc" />
     <ClCompile Include="..\src\entity\PlanarEntity.cc" />
     <ClCompile Include="..\src\entity\PlanarEntityDraw.cc" />
     <ClCompile Include="..\src\external\ini.c">
@@ -36,6 +39,7 @@
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
     </ClCompile>
+    <ClCompile Include="..\src\graphics\GLMaterialColor.cc" />
     <ClCompile Include="..\src\main.cc" />
     <ClCompile Include="..\src\pch\precompile.cc">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
@@ -58,17 +62,21 @@
   <ItemGroup>
     <ClInclude Include="..\src\core\actor\F22Fighter.h" />
     <ClInclude Include="..\src\core\actor\UFOFighter.h" />
+    <ClInclude Include="..\src\core\actor\Zombie.h" />
     <ClInclude Include="..\src\core\EllieGame.h" />
     <ClInclude Include="..\src\core\EllieMain.h" />
     <ClInclude Include="..\src\core\EllieTweakerContext.h" />
     <ClInclude Include="..\src\core\scene\EllieShooter3D.h" />
     <ClInclude Include="..\src\core\scene\EllieShooting2D.h" />
     <ClInclude Include="..\src\core\stage\GridStage3D.h" />
+    <ClInclude Include="..\src\entity\CubicEntity.h" />
+    <ClInclude Include="..\src\entity\CubicEntityDraw.h" />
     <ClInclude Include="..\src\entity\PlanarEntity.h" />
     <ClInclude Include="..\src\entity\PlanarEntityDraw.h" />
     <ClInclude Include="..\src\external\coroutine.h" />
     <ClInclude Include="..\src\external\ini.h" />
     <ClInclude Include="..\src\external\inireader\INIReader.h" />
+    <ClInclude Include="..\src\graphics\GLMaterialColor.h" />
     <ClInclude Include="..\src\pch\precompile.h" />
     <ClInclude Include="..\src\util\auxiliary\assert_aux.h" />
     <ClInclude Include="..\src\util\auxiliary\csyntax_aux.h" />
