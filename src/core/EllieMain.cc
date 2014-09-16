@@ -148,10 +148,13 @@ int EllieMain() {
           escape_loop = true;
           break;
         case SDL_KEYDOWN:
-          game.OnKeyDown(event.key.keysym.sym);
+          game.OnKeyDown(event.key);
           break;
         case SDL_KEYUP:
-          game.OnKeyUp(event.key.keysym.sym);
+          game.OnKeyUp(event.key);
+          break;
+        case SDL_MOUSEMOTION:
+          game.OnMouseMotion(event.motion);
           break;
       }
     }

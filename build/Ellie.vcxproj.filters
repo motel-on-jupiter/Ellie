@@ -52,6 +52,9 @@
     <Filter Include="src\graphics">
       <UniqueIdentifier>{d3355293-c8ff-4cc8-b9c8-b7a939aa3c8b}</UniqueIdentifier>
     </Filter>
+    <Filter Include="src\camera">
+      <UniqueIdentifier>{60bbe0df-440d-459c-a01e-cabc3fefb122}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\src\util\logging\emitter\DebuggerConsoleLogEmitter.cc">
@@ -167,6 +170,12 @@
     </ClCompile>
     <ClCompile Include="..\src\graphics\GLMaterialColor.cc">
       <Filter>src\graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\camera\Camera.cc">
+      <Filter>src\camera</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\camera\FirstPersonCameraController.cc">
+      <Filter>src\camera</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -301,6 +310,12 @@
     </ClInclude>
     <ClInclude Include="..\src\graphics\GLMaterialColor.h">
       <Filter>src\graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\camera\Camera.h">
+      <Filter>src\camera</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\camera\FirstPersonCameraController.h">
+      <Filter>src\camera</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

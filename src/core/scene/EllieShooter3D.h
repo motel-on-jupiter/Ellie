@@ -5,6 +5,7 @@
 #define ELLIE_SHOOTER_3D_H_
 
 #include <vector>
+#include "camera/FirstPersonCameraController.h"
 #include "core/actor/Zombie.h"
 #include "core/stage/GridStage3D.h"
 #include "core/EllieGame.h"
@@ -15,8 +16,9 @@ class EllieShooter3D : public EllieBaseGameScene {
   virtual ~EllieShooter3D();
 
   virtual void Draw(const glm::vec2 &window_size);
-  virtual void OnKeyDown(SDL_Keycode key);
-  virtual void OnKeyUp(SDL_Keycode key);
+  virtual void OnKeyDown(const SDL_KeyboardEvent &key);
+  virtual void OnKeyUp(const SDL_KeyboardEvent &key);
+  virtual void OnMouseMotion(const SDL_MouseMotionEvent &motion);
 
  protected:
   virtual int OnInitial();
@@ -24,6 +26,8 @@ class EllieShooter3D : public EllieBaseGameScene {
   virtual void OnUpdate(float elapsed_time);
 
  private:
+  Camera camera_;
+  FirstPersonCameraController camera_controller_;
   GridStage3D stage_;
   Zombie zombie_;
 };

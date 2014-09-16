@@ -22,8 +22,9 @@ class EllieBaseGameScene {
   void Update(float elapsed_time);
 
   virtual void Draw(const glm::vec2 &window_size) = 0;
-  virtual void OnKeyDown(SDL_Keycode key) = 0;
-  virtual void OnKeyUp(SDL_Keycode key) = 0;
+  virtual void OnKeyDown(const SDL_KeyboardEvent &key) = 0;
+  virtual void OnKeyUp(const SDL_KeyboardEvent &key) = 0;
+  virtual void OnMouseMotion(const SDL_MouseMotionEvent &motion) = 0;
 
   const std::string &name() const {
     return name_;
@@ -59,8 +60,9 @@ class EllieGame {
   void Finalize();
   void Update(float elapsed_time);
   void Draw(const glm::vec2 &window_size);
-  int OnKeyDown(SDL_Keycode key);
-  void OnKeyUp(SDL_Keycode key);
+  int OnKeyDown(const SDL_KeyboardEvent &keyboard);
+  void OnKeyUp(const SDL_KeyboardEvent &keyboard);
+  void OnMouseMotion(const SDL_MouseMotionEvent &motion);
 
   bool ongoing() const {
     return ongoing_;

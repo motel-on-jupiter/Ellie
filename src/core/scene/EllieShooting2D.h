@@ -31,8 +31,9 @@ class EllieShooting2DTitle : public EllieBaseGameScene {
   virtual ~EllieShooting2DTitle();
 
   virtual void Draw(const glm::vec2 &window_size);
-  virtual void OnKeyDown(SDL_Keycode key);
-  virtual void OnKeyUp(SDL_Keycode key);
+  virtual void OnKeyDown(const SDL_KeyboardEvent &keyboard);
+  virtual void OnKeyUp(const SDL_KeyboardEvent &keyboard);
+  virtual void OnMouseMotion(const SDL_MouseMotionEvent &motion);
 
  protected:
   virtual int OnInitial();
@@ -47,8 +48,9 @@ class EllieShooting2DIngame : public EllieBaseGameScene {
 
   virtual void OnUpdate(float elapsed_time);
   virtual void Draw(const glm::vec2 &window_size);
-  virtual void OnKeyDown(SDL_Keycode key);
-  virtual void OnKeyUp(SDL_Keycode key);
+  virtual void OnKeyDown(const SDL_KeyboardEvent &keyboard);
+  virtual void OnKeyUp(const SDL_KeyboardEvent &keyboard);
+  virtual void OnMouseMotion(const SDL_MouseMotionEvent &motion);
 
  protected:
   virtual int OnInitial();
@@ -78,8 +80,9 @@ class EllieShooting2D : public EllieBaseGameScene {
   virtual ~EllieShooting2D();
 
   virtual void Draw(const glm::vec2 &window_size);
-  virtual void OnKeyDown(SDL_Keycode key);
-  virtual void OnKeyUp(SDL_Keycode key);
+  virtual void OnKeyDown(const SDL_KeyboardEvent &keyboard);
+  virtual void OnKeyUp(const SDL_KeyboardEvent &keyboard);
+  virtual void OnMouseMotion(const SDL_MouseMotionEvent &motion);
 
  protected:
   virtual int OnInitial();

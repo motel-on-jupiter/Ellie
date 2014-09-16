@@ -75,14 +75,18 @@ void EllieShooting2DTitle::Draw(const glm::vec2& window_size) {
   }
 }
 
-void EllieShooting2DTitle::OnKeyDown(SDL_Keycode key) {
-  if (key == SDLK_RETURN) {
+void EllieShooting2DTitle::OnKeyDown(const SDL_KeyboardEvent &keyboard) {
+  if (keyboard.keysym.sym == SDLK_RETURN) {
     set_finished(true);
   }
 }
 
-void EllieShooting2DTitle::OnKeyUp(SDL_Keycode key) {
-  UNUSED(key);
+void EllieShooting2DTitle::OnKeyUp(const SDL_KeyboardEvent &keyboard) {
+  UNUSED(keyboard);
+}
+
+void EllieShooting2DTitle::OnMouseMotion(const SDL_MouseMotionEvent &motion) {
+  UNUSED(motion);
 }
 
 int EllieShooting2DTitle::OnInitial() {
@@ -185,15 +189,15 @@ void EllieShooting2DIngame::Draw(const glm::vec2 &window_size) {
   }
 }
 
-void EllieShooting2DIngame::OnKeyDown(SDL_Keycode key) {
+void EllieShooting2DIngame::OnKeyDown(const SDL_KeyboardEvent &keyboard) {
   if (scene_pausing_) {
-    switch (key) {
+    switch (keyboard.keysym.sym) {
       case SDLK_SPACE:
         scene_pausing_ = false;
         break;
     }
   } else {
-    switch (key) {
+    switch (keyboard.keysym.sym) {
       case SDLK_w:
         moving_[0] = true;
         break;
@@ -216,8 +220,8 @@ void EllieShooting2DIngame::OnKeyDown(SDL_Keycode key) {
   }
 }
 
-void EllieShooting2DIngame::OnKeyUp(SDL_Keycode key) {
-  switch (key) {
+void EllieShooting2DIngame::OnKeyUp(const SDL_KeyboardEvent &keyboard) {
+  switch (keyboard.keysym.sym) {
     case SDLK_w:
       moving_[0] = false;
       break;
@@ -234,6 +238,10 @@ void EllieShooting2DIngame::OnKeyUp(SDL_Keycode key) {
       shooting_ = false;
       break;
   }
+}
+
+void EllieShooting2DIngame::OnMouseMotion(const SDL_MouseMotionEvent &motion) {
+  UNUSED(motion);
 }
 
 int EllieShooting2DIngame::OnInitial() {
@@ -321,16 +329,20 @@ void EllieShooting2D::Draw(const glm::vec2 &window_size) {
   glPopMatrix();
 }
 
-void EllieShooting2D::OnKeyDown(SDL_Keycode key) {
+void EllieShooting2D::OnKeyDown(const SDL_KeyboardEvent &keyboard) {
   if (current_scene_ != nullptr) {
-    current_scene_->OnKeyDown(key);
+    current_scene_->OnKeyDown(keyboard);
   }
 }
 
-void EllieShooting2D::OnKeyUp(SDL_Keycode key) {
+void EllieShooting2D::OnKeyUp(const SDL_KeyboardEvent &keyboard) {
   if (current_scene_ != nullptr) {
-    current_scene_->OnKeyUp(key);
+    current_scene_->OnKeyUp(keyboard);
   }
+}
+
+void EllieShooting2D::OnMouseMotion(const SDL_MouseMotionEvent &motion) {
+  UNUSED(motion);
 }
 
 int EllieShooting2D::OnInitial() {

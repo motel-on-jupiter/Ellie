@@ -8,6 +8,8 @@
 
 EllieShooter3D::EllieShooter3D()
     : EllieBaseGameScene("3D Shooter"),
+      camera_(glm::vec3(0.0f, 1.5f, -5.0f), glm::vec3(0.0f), glm::vec3(0.0f, 1.0f, 0.0f)),
+      camera_controller_(camera_, 0.05f, 0.015f),
       stage_(glm::vec3(1000.0f, 10.0f, 1000.0f)),
       zombie_() {
 }
@@ -30,10 +32,7 @@ void EllieShooter3D::Draw(const glm::vec2 &window_size) {
                            1.0f, 1000.0f)));
 
   glMatrixMode(GL_MODELVIEW);
-  glLoadMatrixf(
-      glm::value_ptr(
-          glm::lookAt(glm::vec3(0.0f, 1.5f, -5.0f), glm::vec3(0.0f),
-                      glm::vec3(0.0f, 1.0f, 0.0f))));
+  glLoadMatrixf(glm::value_ptr(camera_.BuildLookAt()));
 
   static const GLfloat kLightPosition[] = { 0.0f, 10.0f, 10.0f };
   static const GLfloat kLightAmbientColor[] = { 1.0f, 1.0f, 1.0f, 1.0f };
@@ -55,12 +54,16 @@ void EllieShooter3D::Draw(const glm::vec2 &window_size) {
   glPopMatrix();
 }
 
-void EllieShooter3D::OnKeyDown(SDL_Keycode key) {
-  UNUSED(key);
+void EllieShooter3D::OnKeyDown(const SDL_KeyboardEvent &keyboard) {
+  camera_controller_.OnKeyDown(keyboard);
 }
 
-void EllieShooter3D::OnKeyUp(SDL_Keycode key) {
-  UNUSED(key);
+void EllieShooter3D::OnKeyUp(const SDL_KeyboardEvent &keyboard) {
+  camera_controller_.OnKeyUp(keyboard);
+}
+
+void EllieShooter3D::OnMouseMotion(const SDL_MouseMotionEvent &motion) {
+  camera_controller_.OnMouseMotion(motion);
 }
 
 int EllieShooter3D::OnInitial() {
@@ -73,5 +76,7 @@ void EllieShooter3D::OnFinal() {
 
 void EllieShooter3D::OnUpdate(float elapsed_time) {
   UNUSED(elapsed_time);
+
+  camera_controller_.Update();
 }
 

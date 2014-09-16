@@ -1,7 +1,8 @@
 /**
  * Copyright (C) 2014 The Motel On Jupiter
  */
-#include "GridStage3D.h"
+#include "core/stage/GridStage3D.h"
+#include <glm/gtx/quaternion.hpp>
 #include "graphics/GLMaterialColor.h"
 #include "util/catalogue/color_sample.h"
 #include "util/wrapper/glgraphics_wrap.h"
@@ -15,6 +16,11 @@ GridStage3D::~GridStage3D() {
 
 void GridStage3D::Draw() {
   glMaterial(GL_FRONT, GLMaterialColor(X11Color::to_fvec(X11Color::kDarkOrange)));
+  glPushMatrix();
+  glMultMatrixf(
+      glm::value_ptr(
+          glm::translate(
+              glm::vec3(0.0f)) * glm::toMat4(glm::quat()) * glm::scale(glm::vec3(1.0f))));
   glBegin(GL_LINES);
   for (float x = scale_.x * -0.5f + 1.0f; x < scale_.x * 0.5f; x += 1.0f) {
     glVertex3f(x, 0.0f, scale_.z * -0.5f);
@@ -25,4 +31,5 @@ void GridStage3D::Draw() {
     glVertex3f(scale_.x * 0.5f, 0.0f, z);
   }
   glEnd();
+  glPopMatrix();
 }

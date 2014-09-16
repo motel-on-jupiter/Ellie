@@ -122,13 +122,13 @@ void EllieGame::Draw(const glm::vec2 &window_size) {
   }
 }
 
-int EllieGame::OnKeyDown(SDL_Keycode key) {
+int EllieGame::OnKeyDown(const SDL_KeyboardEvent &keyboard) {
   if (!ongoing_) {
     return 0;
   }
 
   if (current_scene_ == nullptr) {
-    switch (key) {
+    switch (keyboard.keysym.sym) {
       case SDLK_j:
       case SDLK_DOWN:
         if (cursor_ < scenes_.size() - 1) {
@@ -159,7 +159,7 @@ int EllieGame::OnKeyDown(SDL_Keycode key) {
         break;
     }
   } else {
-    switch (key) {
+    switch (keyboard.keysym.sym) {
       case SDLK_w:
       case SDLK_a:
       case SDLK_s:
@@ -167,7 +167,7 @@ int EllieGame::OnKeyDown(SDL_Keycode key) {
       case SDLK_e:
       case SDLK_SPACE:
       case SDLK_RETURN:
-        current_scene_->OnKeyDown(key);
+        current_scene_->OnKeyDown(keyboard);
         break;
       case SDLK_ESCAPE:
         current_scene_->Finalize();
@@ -180,21 +180,31 @@ int EllieGame::OnKeyDown(SDL_Keycode key) {
   return 0;
 }
 
-void EllieGame::OnKeyUp(SDL_Keycode key) {
+void EllieGame::OnKeyUp(const SDL_KeyboardEvent &keyboard) {
   if (!ongoing_) {
     return;
   }
 
   if (current_scene_ != nullptr) {
-    switch (key) {
+    switch (keyboard.keysym.sym) {
       case SDLK_w:
       case SDLK_a:
       case SDLK_s:
       case SDLK_d:
       case SDLK_e:
       case SDLK_SPACE:
-        current_scene_->OnKeyUp(key);
+        current_scene_->OnKeyUp(keyboard);
         break;
     }
+  }
+}
+
+void EllieGame::OnMouseMotion(const SDL_MouseMotionEvent &motion) {
+  if (!ongoing_) {
+    return;
+  }
+
+  if (current_scene_ != nullptr) {
+    current_scene_->OnMouseMotion(motion);
   }
 }

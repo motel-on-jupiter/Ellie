@@ -11,6 +11,8 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\src\camera\Camera.cc" />
+    <ClCompile Include="..\src\camera\FirstPersonCameraController.cc" />
     <ClCompile Include="..\src\core\actor\F22Fighter.cc" />
     <ClCompile Include="..\src\core\actor\UFOFighter.cc" />
     <ClCompile Include="..\src\core\actor\Zombie.cc" />
@@ -60,6 +62,8 @@
     <ClCompile Include="..\src\util\wrapper\sdl_wrap.cc" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\src\camera\Camera.h" />
+    <ClInclude Include="..\src\camera\FirstPersonCameraController.h" />
     <ClInclude Include="..\src\core\actor\F22Fighter.h" />
     <ClInclude Include="..\src\core\actor\UFOFighter.h" />
     <ClInclude Include="..\src\core\actor\Zombie.h" />
