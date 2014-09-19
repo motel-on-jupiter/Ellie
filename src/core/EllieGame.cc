@@ -199,11 +199,19 @@ void EllieGame::OnKeyUp(const SDL_KeyboardEvent &keyboard) {
   }
 }
 
+void EllieGame::OnMouseButtonDown(const SDL_MouseButtonEvent &button) {
+  if (!ongoing_) {
+    return;
+  }
+  if (current_scene_ != nullptr) {
+    current_scene_->OnMouseButtonDown(button);
+  }
+}
+
 void EllieGame::OnMouseMotion(const SDL_MouseMotionEvent &motion) {
   if (!ongoing_) {
     return;
   }
-
   if (current_scene_ != nullptr) {
     current_scene_->OnMouseMotion(motion);
   }

@@ -153,6 +153,9 @@ int EllieMain() {
         case SDL_KEYUP:
           game.OnKeyUp(event.key);
           break;
+        case SDL_MOUSEBUTTONDOWN:
+          game.OnMouseButtonDown(event.button);
+          break;
         case SDL_MOUSEMOTION:
           game.OnMouseMotion(event.motion);
           break;

@@ -85,6 +85,10 @@ void EllieShooting2DTitle::OnKeyUp(const SDL_KeyboardEvent &keyboard) {
   UNUSED(keyboard);
 }
 
+void EllieShooting2DTitle::OnMouseButtonDown(const SDL_MouseButtonEvent &button) {
+  UNUSED(button);
+}
+
 void EllieShooting2DTitle::OnMouseMotion(const SDL_MouseMotionEvent &motion) {
   UNUSED(motion);
 }
@@ -240,6 +244,10 @@ void EllieShooting2DIngame::OnKeyUp(const SDL_KeyboardEvent &keyboard) {
   }
 }
 
+void EllieShooting2DIngame::OnMouseButtonDown(const SDL_MouseButtonEvent &button) {
+  UNUSED(button);
+}
+
 void EllieShooting2DIngame::OnMouseMotion(const SDL_MouseMotionEvent &motion) {
   UNUSED(motion);
 }
@@ -341,8 +349,16 @@ void EllieShooting2D::OnKeyUp(const SDL_KeyboardEvent &keyboard) {
   }
 }
 
+void EllieShooting2D::OnMouseButtonDown(const SDL_MouseButtonEvent &button) {
+  if (current_scene_ != nullptr) {
+    current_scene_->OnMouseButtonDown(button);
+  }
+}
+
 void EllieShooting2D::OnMouseMotion(const SDL_MouseMotionEvent &motion) {
-  UNUSED(motion);
+  if (current_scene_ != nullptr) {
+    current_scene_->OnMouseMotion(motion);
+  }
 }
 
 int EllieShooting2D::OnInitial() {
