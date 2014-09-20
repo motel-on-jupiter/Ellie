@@ -8,13 +8,17 @@
 #include "util/catalogue/color_sample.h"
 #include "util/logging/Logger.h"
 
+const unsigned int Zombie::kHP = 3;
+
 Zombie::Zombie()
     : CubicEntity(glm::vec3(0.0f), glm::quat(), glm::vec3(1.0f, 1.75f, 0.3f)),
       EntityCubeDraw(*this, true,
                      GLMaterialColor(X11Color::to_fvec(X11Color::kTeal))),
       bt_shape_(nullptr),
       bt_motion_(nullptr),
-      bt_body_(nullptr) {
+      bt_body_(nullptr),
+      damage_(0),
+      hp_(kHP) {
 }
 
 Zombie::~Zombie() {
@@ -45,6 +49,7 @@ bool Zombie::Initialize() {
     CleanObjects();
     return false;
   }
+  damage_ = 0;
   return true;
 }
 

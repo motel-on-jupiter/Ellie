@@ -76,7 +76,9 @@ void EllieShooter3D::Draw(const glm::vec2 &window_size) {
   glEnable(GL_LIGHT0);
 
   stage_.Draw();
-  zombie_.Draw();
+  if (!zombie_.IsDead()) {
+    zombie_.Draw();
+  }
 
   glDisable(GL_LIGHTING);
   glDisable(GL_LIGHT0);
@@ -187,6 +189,7 @@ void EllieShooter3D::OnUpdate(float elapsed_time) {
     bt_world_->rayTest(glm_aux::castToBt(bullet->prev_pos()),
                        glm_aux::castToBt(bullet->pos()), test_result);
     if (test_result.hasHit()) {
+      zombie_.TakeDamage();
       delete bullet;
       it = bullets_.erase(it);
       continue;
