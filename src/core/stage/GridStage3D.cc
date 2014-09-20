@@ -15,7 +15,7 @@ GridStage3D::~GridStage3D() {
 }
 
 void GridStage3D::Draw() {
-  glMaterial(GL_FRONT, GLMaterialColor(X11Color::to_fvec(X11Color::kDarkOrange)));
+  glColor3ubv(X11Color::kDarkOrange);
   glPushMatrix();
   glMultMatrixf(
       glm::value_ptr(

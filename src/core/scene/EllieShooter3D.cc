@@ -2,6 +2,7 @@
  * Copyright (C) 2014 The Motel On Jupiter
  */
 #include "EllieShooter3D.h"
+#include "util/auxiliary/assert_aux.h"
 #include "util/auxiliary/csyntax_aux.h"
 #include "util/auxiliary/glm_aux.h"
 #include "util/auxiliary/math_aux.h"
@@ -21,6 +22,7 @@ ShooterBullet::~ShooterBullet() {
 }
 
 const float EllieShooter3D::kBulletVanishDistance = 100.0f;
+const float EllieShooter3D::kZombieSpawnInterval = 5.0f;
 
 EllieShooter3D::EllieShooter3D()
     : EllieBaseGameScene("3D Shooter"),
@@ -33,16 +35,20 @@ EllieShooter3D::EllieShooter3D()
               glm::vec3(0.0f, 1.0f, 0.0f)),
       camera_controller_(camera_, 5.0f, 0.015f),
       stage_(glm::vec3(1000.0f, 10.0f, 1000.0f)),
-      zombie_(),
-      bullets_() {
+      zombies_(),
+      bullets_(),
+      spawn_timer_(0.0f) {
 }
 
 EllieShooter3D::~EllieShooter3D() {
   for (auto it = bullets_.begin(); it != bullets_.end(); ++it) {
     delete *it;
   }
-  if ((bt_world_ != nullptr) && (zombie_.bt_body() != nullptr)) {
-    bt_world_->removeRigidBody(zombie_.bt_body());
+  if (bt_world_ != nullptr) {
+    for (auto it = zombies_.begin(); it != zombies_.end(); ++it) {
+      bt_world_->removeRigidBody((*it)->bt_body());
+      delete *it;
+    }
   }
   CleanObjects();
 }
@@ -62,26 +68,18 @@ void EllieShooter3D::Draw(const glm::vec2 &window_size) {
                            0.1f, 1000.0f)));
 
   glMatrixMode(GL_MODELVIEW);
-  glLoadMatrixf(glm::value_ptr(camera_.BuildLookAt()));
-
-  static const GLfloat kLightPosition[] = { 0.0f, 10.0f, 10.0f };
-  static const GLfloat kLightAmbientColor[] = { 1.0f, 1.0f, 1.0f, 1.0f };
-  static const GLfloat kLightDiffuseColor[] = { 1.0f, 1.0f, 1.0f, 1.0f };
-  static const GLfloat kLightSpecularColor[] = { 0.1f, 0.1f, 0.1f, 1.0f };
-  glLightfv(GL_LIGHT0, GL_POSITION, kLightPosition);
-  glLightfv(GL_LIGHT0, GL_AMBIENT, kLightAmbientColor);
-  glLightfv(GL_LIGHT0, GL_DIFFUSE, kLightDiffuseColor);
-  glLightfv(GL_LIGHT0, GL_SPECULAR, kLightSpecularColor);
-  glEnable(GL_LIGHTING);
-  glEnable(GL_LIGHT0);
+  glLoadMatrixf(glm::value_ptr(camera_.BuildViewMatrix()));
 
   stage_.Draw();
-  if (!zombie_.IsDead()) {
-    zombie_.Draw();
-  }
 
+  glEnable(GL_LIGHTING);
+  glEnable(GL_LIGHT0);
+  for (auto it = zombies_.begin(); it != zombies_.end(); ++it) {
+    (*it)->Draw();
+  }
   glDisable(GL_LIGHTING);
   glDisable(GL_LIGHT0);
+
   for (auto it = bullets_.begin(); it != bullets_.end(); ++it) {
     (*it)->Draw();
   }
@@ -117,6 +115,15 @@ void EllieShooter3D::OnMouseMotion(const SDL_MouseMotionEvent &motion) {
 int EllieShooter3D::OnInitial() {
   glSetClearanceColor(0.0f, 0.0f, 0.0f, 0.0f);
 
+  static const GLfloat kLightPosition[] = { 0.0f, 10.0f, 10.0f };
+  static const GLfloat kLightAmbientColor[] = { 1.0f, 1.0f, 1.0f, 1.0f };
+  static const GLfloat kLightDiffuseColor[] = { 1.0f, 1.0f, 1.0f, 1.0f };
+  static const GLfloat kLightSpecularColor[] = { 0.1f, 0.1f, 0.1f, 1.0f };
+  glLightfv(GL_LIGHT0, GL_POSITION, kLightPosition);
+  glLightfv(GL_LIGHT0, GL_AMBIENT, kLightAmbientColor);
+  glLightfv(GL_LIGHT0, GL_DIFFUSE, kLightDiffuseColor);
+  glLightfv(GL_LIGHT0, GL_SPECULAR, kLightSpecularColor);
+
   bt_colli_config_ = new btDefaultCollisionConfiguration();
   if (bt_colli_config_ == nullptr) {
     LOGGER.Error(
@@ -150,13 +157,7 @@ int EllieShooter3D::OnInitial() {
     return -1;
   }
 
-  if (!zombie_.Initialize()) {
-    LOGGER.Error(
-        "Failed to allocate for Bullet collision configuration object");
-    CleanObjects();
-    return -1;
-  }
-  bt_world_->addRigidBody(zombie_.bt_body());
+  spawn_timer_ = 0.0f;
 
   return 0;
 }
@@ -166,13 +167,39 @@ void EllieShooter3D::OnFinal() {
     delete *it;
   }
   bullets_.clear();
-  bt_world_->removeRigidBody(zombie_.bt_body());
-  zombie_.Finalize();
+  for (auto it = zombies_.begin(); it != zombies_.end(); ++it) {
+    bt_world_->removeRigidBody((*it)->bt_body());
+    (*it)->Finalize();
+    delete *it;
+  }
+  zombies_.clear();
   CleanObjects();
 }
 
 void EllieShooter3D::OnUpdate(float elapsed_time) {
   camera_controller_.Update(elapsed_time);
+
+  spawn_timer_ += elapsed_time;
+  if (spawn_timer_ > kZombieSpawnInterval) {
+    float angle = glm::linearRand(0.0f, glm::radians(360.0f));
+    Zombie *zombie = new Zombie(
+        camera_.pos() * glm::vec3(1.0f, 0.0f, 1.0f) + glm::rotateY(glm::vec3(0.0f, 0.0f, 10.0f), angle),
+        glm::angleAxis(angle, glm::vec3(0.0f, 1.0f, 0.0f)));
+    if (zombie == nullptr) {
+      LOGGER.Error("Failed to allocate for zombie object");
+    } else {
+      if (zombie->Initialize()) {
+        bt_world_->addRigidBody(zombie->bt_body());
+        zombie->bt_body()->setUserPointer(zombie);
+        zombies_.push_back(zombie);
+      } else {
+        LOGGER.Error("Failed to initialize zombie");
+        delete zombie;
+      }
+    }
+    spawn_timer_ -= kZombieSpawnInterval;
+  }
+
   for (auto it = bullets_.begin(); it != bullets_.end();) {
     ShooterBullet *bullet = *it;
     bullet->Update(elapsed_time);
@@ -183,19 +210,32 @@ void EllieShooter3D::OnUpdate(float elapsed_time) {
       continue;
     }
 
-    if (!zombie_.IsDead()) {
-      btCollisionWorld::ClosestRayResultCallback test_result =
-          btCollisionWorld::ClosestRayResultCallback(btVector3(), btVector3());
-      bt_world_->rayTest(glm_aux::castToBt(bullet->prev_pos()),
-                         glm_aux::castToBt(bullet->pos()), test_result);
-      if (test_result.hasHit()) {
-        zombie_.TakeDamage();
+    btCollisionWorld::ClosestRayResultCallback test_result =
+        btCollisionWorld::ClosestRayResultCallback(btVector3(), btVector3());
+    bt_world_->rayTest(glm_aux::castToBt(bullet->prev_pos()),
+                       glm_aux::castToBt(bullet->pos()), test_result);
+    if (test_result.hasHit()) {
+      Zombie *zombie = static_cast<Zombie *>(test_result.m_collisionObject
+          ->getUserPointer());
+      ASSERT(zombie != nullptr);
+      if (!(zombie->IsDead())) {
+        zombie->TakeDamage();
         delete bullet;
         it = bullets_.erase(it);
         continue;
       }
     }
     ++it;
+  }
+  for (auto it = zombies_.begin(); it != zombies_.end();) {
+    if ((*it)->IsDead()) {
+      bt_world_->removeRigidBody((*it)->bt_body());
+      (*it)->Finalize();
+      delete *it;
+      it = zombies_.erase(it);
+    } else {
+      ++it;
+    }
   }
 }
 

@@ -13,7 +13,7 @@ class Zombie : public CubicEntity, public EntityCubeDraw,
  public:
   static const unsigned int kHP;
 
-  Zombie();
+  Zombie(const glm::vec3 &pos, const glm::quat &rot);
   virtual ~Zombie();
 
   virtual bool Initialize();

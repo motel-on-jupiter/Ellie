@@ -34,7 +34,7 @@ class Camera {
     up_ = up;
   }
 
-  glm::mat4 BuildLookAt() const {
+  glm::mat4 BuildViewMatrix() const {
     return glm::lookAt(pos_, at_, up_);
   }
   glm::vec3 BuildForwardDir() const {
