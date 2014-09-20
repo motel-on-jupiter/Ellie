@@ -183,15 +183,17 @@ void EllieShooter3D::OnUpdate(float elapsed_time) {
       continue;
     }
 
-    btCollisionWorld::ClosestRayResultCallback test_result =
-        btCollisionWorld::ClosestRayResultCallback(btVector3(), btVector3());
-    bt_world_->rayTest(glm_aux::castToBt(bullet->prev_pos()),
-                       glm_aux::castToBt(bullet->pos()), test_result);
-    if (test_result.hasHit()) {
-      zombie_.TakeDamage();
-      delete bullet;
-      it = bullets_.erase(it);
-      continue;
+    if (!zombie_.IsDead()) {
+      btCollisionWorld::ClosestRayResultCallback test_result =
+          btCollisionWorld::ClosestRayResultCallback(btVector3(), btVector3());
+      bt_world_->rayTest(glm_aux::castToBt(bullet->prev_pos()),
+                         glm_aux::castToBt(bullet->pos()), test_result);
+      if (test_result.hasHit()) {
+        zombie_.TakeDamage();
+        delete bullet;
+        it = bullets_.erase(it);
+        continue;
+      }
     }
     ++it;
   }
