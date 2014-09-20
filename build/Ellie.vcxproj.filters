@@ -177,6 +177,12 @@
     <ClCompile Include="..\src\camera\FirstPersonCameraController.cc">
       <Filter>src\camera</Filter>
     </ClCompile>
+    <ClCompile Include="..\src\util\auxiliary\glm_aux.cc">
+      <Filter>src\util\auxiliary</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\util\auxiliary\math_aux.cc">
+      <Filter>src\util\auxiliary</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\src\util\logging\Logger.h">
@@ -316,6 +322,12 @@
     </ClInclude>
     <ClInclude Include="..\src\camera\FirstPersonCameraController.h">
       <Filter>src\camera</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\util\wrapper\bullet_wrap.h">
+      <Filter>src\util\wrapper</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\util\auxiliary\glm_aux.h">
+      <Filter>src\util\auxiliary</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

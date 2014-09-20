@@ -11,6 +11,7 @@
 #include "core/EllieGame.h"
 #include "entity/CubicEntityDraw.h"
 #include "entity/CubicEntityPhysics.h"
+#include "util/wrapper/bullet_wrap.h"
 
 class ShooterBullet : public CubicEntity, public CubicEntityPhysics,
     public EntitySphereDraw {
@@ -31,11 +32,20 @@ class EllieShooter3D : public EllieBaseGameScene {
   virtual void OnMouseMotion(const SDL_MouseMotionEvent &motion);
 
  protected:
+  static const float EllieShooter3D::kBulletVanishDistance;
+
   virtual int OnInitial();
   virtual void OnFinal();
   virtual void OnUpdate(float elapsed_time);
 
  private:
+  void CleanObjects();
+
+  btDefaultCollisionConfiguration* bt_colli_config_;
+  btDispatcher* bt_dispatcher_;
+  btBroadphaseInterface* bt_overlap_cache_;
+  btSequentialImpulseConstraintSolver *bt_solver_;
+  btDiscreteDynamicsWorld* bt_world_;
   Camera camera_;
   FirstPersonCameraController camera_controller_;
   GridStage3D stage_;

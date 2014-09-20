@@ -49,6 +49,8 @@
     </ClCompile>
     <ClCompile Include="..\src\util\auxiliary\assert_aux.cc" />
     <ClCompile Include="..\src\util\auxiliary\GLINIReader.cpp" />
+    <ClCompile Include="..\src\util\auxiliary\glm_aux.cc" />
+    <ClCompile Include="..\src\util\auxiliary\math_aux.cc" />
     <ClCompile Include="..\src\util\catalogue\color_sample.cc" />
     <ClCompile Include="..\src\util\logging\emitter\DebuggerConsoleLogEmitter.cc" />
     <ClCompile Include="..\src\util\logging\emitter\FileLogEmitter.cc" />
@@ -85,6 +87,7 @@
     <ClInclude Include="..\src\util\auxiliary\assert_aux.h" />
     <ClInclude Include="..\src\util\auxiliary\csyntax_aux.h" />
     <ClInclude Include="..\src\util\auxiliary\GLINIReader.h" />
+    <ClInclude Include="..\src\util\auxiliary\glm_aux.h" />
     <ClInclude Include="..\src\util\auxiliary\math_aux.h" />
     <ClInclude Include="..\src\util\catalogue\color_sample.h" />
     <ClInclude Include="..\src\util\logging\emitter\DebuggerConsoleLogEmitter.h" />
@@ -95,6 +98,7 @@
     <ClInclude Include="..\src\util\logging\Logger.h" />
     <ClInclude Include="..\src\util\measurement\FPSCounter.h" />
     <ClInclude Include="..\src\util\wrapper\atb_wrap.h" />
+    <ClInclude Include="..\src\util\wrapper\bullet_wrap.h" />
     <ClInclude Include="..\src\util\wrapper\crtdbg_wrap.h" />
     <ClInclude Include="..\src\util\wrapper\glgraphics_wrap.h" />
     <ClInclude Include="..\src\util\wrapper\glm_wrap.h" />
@@ -165,14 +169,14 @@
       <AdditionalOptions>/Zm360 %(AdditionalOptions)</AdditionalOptions>
       <InlineFunctionExpansion>OnlyExplicitInline</InlineFunctionExpansion>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
-      <AdditionalIncludeDirectories>C:\Work\Lib\SDL\SDL2-2.0.3\include;C:\Work\Lib\SDL_image\SDL2_image-2.0.0\include;C:\Work\Lib\SDL_ttf\SDL2_ttf-2.0.12\include;C:\Work\Lib\glew\glew-1.9.0\include;C:\Work\Lib\boost\boost_1_55_0\include;C:\Work\Lib\freeglut\freeglut-2.8.1\include;C:\Work\Lib\glm\glm-0.9.5.2\include;C:\Work\Lib\AntTweakBar\AntTweakBar-1.16\include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\Work\Lib\AntTweakBar\AntTweakBar-1.16\include;C:\Work\Lib\boost\boost_1_55_0\include;C:\Work\Lib\bullet\bullet-2.82-r2704\include;C:\Work\Lib\freeglut\freeglut-2.8.1\include;C:\Work\Lib\glew\glew-1.9.0\include;C:\Work\Lib\glm\glm-0.9.5.2\include;C:\Work\Lib\SDL\SDL2-2.0.3\include;C:\Work\Lib\SDL_image\SDL2_image-2.0.0\include;C:\Work\Lib\SDL_ttf\SDL2_ttf-2.0.12\include</AdditionalIncludeDirectories>
       <EnablePREfast>false</EnablePREfast>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <TreatLinkerWarningAsErrors>true</TreatLinkerWarningAsErrors>
-      <AdditionalDependencies>SDL2.lib;SDL2main.lib;SDL2_image.lib;SDL2_ttf.lib;glew32.lib;freeglut.lib;opengl32.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>C:\Work\Lib\SDL\SDL2-2.0.3\lib\x86;C:\Work\Lib\SDL_image\SDL2_image-2.0.0\lib\x86;C:\Work\Lib\SDL_ttf\SDL2_ttf-2.0.12\lib\x86;C:\Work\Lib\glew\glew-1.9.0\lib;C:\Work\Lib\freeglut\freeglut-2.8.1\lib\x86;C:\Work\Lib\AntTweakBar\AntTweakBar-1.16\lib</AdditionalLibraryDirectories>
+      <AdditionalDependencies>BulletCollision_debug.lib;BulletDynamics_debug.lib;freeglut.lib;glew32.lib;LinearMath_debug.lib;opengl32.lib;SDL2.lib;SDL2main.lib;SDL2_image.lib;SDL2_ttf.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>C:\Work\Lib\AntTweakBar\AntTweakBar-1.16\lib;C:\Work\Lib\bullet\bullet-2.82-r2704\lib\vs2013_dynamic_x86;C:\Work\Lib\freeglut\freeglut-2.8.1\lib\x86;C:\Work\Lib\glew\glew-1.9.0\lib;C:\Work\Lib\SDL\SDL2-2.0.3\lib\x86;C:\Work\Lib\SDL_image\SDL2_image-2.0.0\lib\x86;C:\Work\Lib\SDL_ttf\SDL2_ttf-2.0.12\lib\x86</AdditionalLibraryDirectories>
     </Link>
     <PostBuildEvent>
       <Command>
@@ -197,7 +201,7 @@
       <SmallerTypeCheck>false</SmallerTypeCheck>
       <DisableSpecificWarnings>4127;4530</DisableSpecificWarnings>
       <AdditionalOptions>/Zm360 %(AdditionalOptions)</AdditionalOptions>
-      <AdditionalIncludeDirectories>C:\Work\Lib\SDL\SDL2-2.0.3\include;C:\Work\Lib\SDL_image\SDL2_image-2.0.0\include;C:\Work\Lib\SDL_ttf\SDL2_ttf-2.0.12\include;C:\Work\Lib\glew\glew-1.9.0\include;C:\Work\Lib\boost\boost_1_55_0\include;C:\Work\Lib\freeglut\freeglut-2.8.1\include;C:\Work\Lib\glm\glm-0.9.5.2\include;C:\Work\Lib\AntTweakBar\AntTweakBar-1.16\include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\Work\Lib\AntTweakBar\AntTweakBar-1.16\include;C:\Work\Lib\boost\boost_1_55_0\include;C:\Work\Lib\bullet\bullet-2.82-r2704\include;C:\Work\Lib\freeglut\freeglut-2.8.1\include;C:\Work\Lib\glew\glew-1.9.0\include;C:\Work\Lib\glm\glm-0.9.5.2\include;C:\Work\Lib\SDL\SDL2-2.0.3\include;C:\Work\Lib\SDL_image\SDL2_image-2.0.0\include;C:\Work\Lib\SDL_ttf\SDL2_ttf-2.0.12\include</AdditionalIncludeDirectories>
       <EnablePREfast>false</EnablePREfast>
     </ClCompile>
     <Link>
@@ -205,8 +209,8 @@
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <TreatLinkerWarningAsErrors>true</TreatLinkerWarningAsErrors>
-      <AdditionalDependencies>SDL2.lib;SDL2main.lib;SDL2_image.lib;SDL2_ttf.lib;glew32.lib;freeglut.lib;opengl32.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>C:\Work\Lib\SDL\SDL2-2.0.3\lib\x86;C:\Work\Lib\SDL_image\SDL2_image-2.0.0\lib\x86;C:\Work\Lib\SDL_ttf\SDL2_ttf-2.0.12\lib\x86;C:\Work\Lib\glew\glew-1.9.0\lib;C:\Work\Lib\freeglut\freeglut-2.8.1\lib\x86;C:\Work\Lib\AntTweakBar\AntTweakBar-1.16\lib</AdditionalLibraryDirectories>
+      <AdditionalDependencies>BulletCollision_debug.lib;BulletDynamics_debug.lib;freeglut.lib;glew32.lib;LinearMath_debug.lib;opengl32.lib;SDL2.lib;SDL2main.lib;SDL2_image.lib;SDL2_ttf.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>C:\Work\Lib\AntTweakBar\AntTweakBar-1.16\lib;C:\Work\Lib\bullet\bullet-2.82-r2704\lib\vs2013_dynamic_x86;C:\Work\Lib\freeglut\freeglut-2.8.1\lib\x86;C:\Work\Lib\glew\glew-1.9.0\lib;C:\Work\Lib\SDL\SDL2-2.0.3\lib\x86;C:\Work\Lib\SDL_image\SDL2_image-2.0.0\lib\x86;C:\Work\Lib\SDL_ttf\SDL2_ttf-2.0.12\lib\x86</AdditionalLibraryDirectories>
     </Link>
     <PostBuildEvent>
       <Command>

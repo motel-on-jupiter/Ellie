@@ -1,22 +1,23 @@
 /**
  * Copyright (C) 2014 The Motel On Jupiter
  */
-#ifndef MATHAUX_H_
-#define MATHAUX_H_
+#ifndef MATH_AUX_H_
+#define MATH_AUX_H_
 
 #include "util/wrapper/glm_wrap.h"
 
-inline int sign_i(int value) {
+namespace math_aux {
+inline int sign(int value) {
   return (value > 0) - (value < 0);
 }
-inline float sign_f(float value) {
+inline float sign(float value) {
   return static_cast<float>((value > 0.0f) - (value < 0.0f));
 }
 inline double sign(double value) {
   return static_cast<double>((value > 0.0) - (value < 0.0));
 }
 
-inline float saturate_f(float value) {
+inline float saturate(float value) {
   return (value > 1.0f) ? 1.0f : (value < 0.0f) ? 0.0f : value;
 }
 inline double saturate(double value) {
@@ -30,14 +31,42 @@ inline bool is_fzero(float value) {
   return is_fequal(value, 0.0f);
 }
 
-inline float normalize_angle(float angle) {
-  while (angle > glm::pi<float>()) {
-    angle -= glm::pi<float>() * 2.0f;
-  }
-  while (angle < glm::pi<float>() * -1.0f) {
-    angle += glm::pi<float>() * 2.0f;
-  }
-  return angle;
+inline float square(float value) {
+  return pow(value, 2);
+}
+inline double square(double value) {
+  return pow(value, 2);
+}
+inline float cubic(float value) {
+  return pow(value, 3);
+}
+inline double cubic(double value) {
+  return pow(value, 3);
+}
+inline float twice(float value) {
+  return value * 2.0f;
+}
+inline double twice(double value) {
+  return value * 2.0;
+}
+inline float treble(float value) {
+  return value * 3.0f;
+}
+inline double treble(double value) {
+  return value * 3.0;
+}
+inline float half(float value) {
+  return value * 0.5f;
+}
+inline double half(double value) {
+  return value * 0.5;
+}
+inline float quater(float value) {
+  return value * 0.25f;
+}
+inline double quater(double value) {
+  return value * 0.25;
+}
 }
 
-#endif /* MATHAUX_H_ */
+#endif /* MATH_AUX_H_ */

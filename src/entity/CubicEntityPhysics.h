@@ -16,10 +16,19 @@ class CubicEntityPhysics : public CubicEntityMixIn {
   }
 
   void Update(float elapsed_time) {
+    prev_pos_ = entity().pos();
     entity().Move(entity().rot() * velocity_ * elapsed_time);
   }
 
+  const glm::vec3 &prev_pos() const {
+    return prev_pos_;
+  }
+  const glm::vec3 &velocity() const {
+    return velocity_;
+  }
+
  private:
+  glm::vec3 prev_pos_;
   glm::vec3 velocity_;
 };
 
