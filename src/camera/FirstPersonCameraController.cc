@@ -17,7 +17,7 @@ FirstPersonCameraController::FirstPersonCameraController(Camera &camera,
 FirstPersonCameraController::~FirstPersonCameraController() {
 }
 
-void FirstPersonCameraController::Update() {
+void FirstPersonCameraController::Update(float elapsed_time) {
   glm::vec3 forward = camera().at() - camera().pos();
   forward.y = 0.0f;
   if (glm::epsilon<float>() > glm::length(forward)) {
@@ -28,18 +28,19 @@ void FirstPersonCameraController::Update() {
 
   auto it = pressing_key_.begin();
   for (; pressing_key_.end() != it; ++it) {
+    float translation = translate_speed_ * elapsed_time;
     if ('w' == *it) {
-      camera().set_pos(camera().pos() + forward * translate_speed_);
-      camera().set_at(camera().at() + forward * translate_speed_);
+      camera().set_pos(camera().pos() + forward * translation);
+      camera().set_at(camera().at() + forward * translation);
     } else if ('s' == *it) {
-      camera().set_pos(camera().pos() - forward * translate_speed_);
-      camera().set_at(camera().at() - forward * translate_speed_);
+      camera().set_pos(camera().pos() - forward * translation);
+      camera().set_at(camera().at() - forward * translation);
     } else if ('d' == *it) {
-      camera().set_pos(camera().pos() + right * translate_speed_);
-      camera().set_at(camera().at() + right * translate_speed_);
+      camera().set_pos(camera().pos() + right * translation);
+      camera().set_at(camera().at() + right * translation);
     } else if ('a' == *it) {
-      camera().set_pos(camera().pos() - right * translate_speed_);
-      camera().set_at(camera().at() - right * translate_speed_);
+      camera().set_pos(camera().pos() - right * translation);
+      camera().set_at(camera().at() - right * translation);
     }
   }
 }

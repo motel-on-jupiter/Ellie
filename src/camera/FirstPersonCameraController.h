@@ -13,7 +13,7 @@ class FirstPersonCameraController : public BaseCameraController {
                               float rotate_speed);
   virtual ~FirstPersonCameraController();
 
-  virtual void Update();
+  virtual void Update(float elapsed_time);
   virtual void OnKeyDown(const SDL_KeyboardEvent &keyboard);
   virtual void OnKeyUp(const SDL_KeyboardEvent &keyboard);
   virtual void OnMouseMotion(const SDL_MouseMotionEvent &motion);

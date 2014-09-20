@@ -56,7 +56,7 @@ public:
   BaseCameraController(Camera &camera) : camera_(camera) {}
   virtual ~BaseCameraController() {}
 
-  virtual void Update() = 0;
+  virtual void Update(float elapsed_time) = 0;
   virtual void OnKeyDown(const SDL_KeyboardEvent &keyboard) = 0;
   virtual void OnKeyUp(const SDL_KeyboardEvent &keyboard) = 0;
   virtual void OnMouseMotion(const SDL_MouseMotionEvent &motion) = 0;

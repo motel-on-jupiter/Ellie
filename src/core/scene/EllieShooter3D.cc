@@ -22,7 +22,7 @@ EllieShooter3D::EllieShooter3D()
     : EllieBaseGameScene("3D Shooter"),
       camera_(glm::vec3(0.0f, 1.5f, -5.0f), glm::vec3(0.0f),
               glm::vec3(0.0f, 1.0f, 0.0f)),
-      camera_controller_(camera_, 0.05f, 0.015f),
+      camera_controller_(camera_, 5.0f, 0.015f),
       stage_(glm::vec3(1000.0f, 10.0f, 1000.0f)),
       zombie_(),
       bullets_() {
@@ -113,7 +113,7 @@ void EllieShooter3D::OnFinal() {
 }
 
 void EllieShooter3D::OnUpdate(float elapsed_time) {
-  camera_controller_.Update();
+  camera_controller_.Update(elapsed_time);
   for (auto it = bullets_.begin(); it != bullets_.end();) {
     (*it)->Update(elapsed_time);
     if (glm::distance2((*it)->pos(), camera_.pos()) > 1000.0f) {
