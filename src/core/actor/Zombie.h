@@ -6,30 +6,26 @@
 
 #include "entity/CubicEntity.h"
 #include "entity/CubicEntityDraw.h"
+#include "entity/CubicEntityPhysics.h"
 
-class Zombie : public CubicEntity, public EntityCubeDraw {
+class Zombie : public CubicEntity, public EntityCubeDraw,
+    public CubicEntityPhysics {
  public:
   static const unsigned int kHP;
 
   Zombie();
   virtual ~Zombie();
 
-  bool Initialize();
-  void Finalize();
+  virtual bool Initialize();
 
-  void TakeDamage() { ++damage_; }
-  bool IsDead() const { return damage_ >= hp_; }
-
-  btRigidBody *bt_body() {
-    return bt_body_;
+  void TakeDamage() {
+    ++damage_;
+  }
+  bool IsDead() const {
+    return damage_ >= hp_;
   }
 
  private:
-  void CleanObjects();
-
-  btCollisionShape *bt_shape_;
-  btDefaultMotionState *bt_motion_;
-  btRigidBody* bt_body_;
   unsigned int damage_;
   unsigned int hp_;
 };

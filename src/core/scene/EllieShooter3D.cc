@@ -9,12 +9,12 @@
 #include "util/logging/Logger.h"
 #include "util/wrapper/glgraphics_wrap.h"
 
-ShooterBullet::ShooterBullet(const glm::vec3 &pos, const glm::quat &rot,
-                             float speed)
+const float ShooterBullet::kSpeed = 150.0f;
+
+ShooterBullet::ShooterBullet(const glm::vec3 &pos, const glm::quat &rot)
     : CubicEntity(pos, rot, glm::vec3(0.1f, 0.1f, 2.0f)),
       EntitySphereDraw(*this, true, 10, 10,
-                       GLMaterialColor(X11Color::to_fvec(X11Color::kDeepPink))),
-      CubicEntityPhysics(*this, glm::vec3(0.0f, 0.0f, speed)) {
+                       GLMaterialColor(X11Color::to_fvec(X11Color::kDeepPink))) {
 }
 
 ShooterBullet::~ShooterBullet() {
@@ -102,8 +102,7 @@ void EllieShooter3D::OnMouseButtonDown(const SDL_MouseButtonEvent &button) {
   if (button.button == SDL_BUTTON_LEFT) {
     ShooterBullet *bullet = new ShooterBullet(
         camera_.pos(),
-        glm::rotation(glm::vec3(0.0f, 0.0f, 1.0f), camera_.BuildForwardDir()),
-        150.0f);
+        glm::rotation(glm::vec3(0.0f, 0.0f, 1.0f), camera_.BuildForwardDir()));
     if (bullet == nullptr) {
       LOGGER.Error("Failed to allocate for bullet object");
     }

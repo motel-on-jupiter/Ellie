@@ -13,11 +13,28 @@
 #include "entity/CubicEntityPhysics.h"
 #include "util/wrapper/bullet_wrap.h"
 
-class ShooterBullet : public CubicEntity, public CubicEntityPhysics,
-    public EntitySphereDraw {
+class ShooterBullet : public CubicEntity, public EntitySphereDraw {
  public:
-  ShooterBullet(const glm::vec3 &pos, const glm::quat &rot, float speed);
+  static const float kSpeed;
+
+  ShooterBullet(const glm::vec3 &pos, const glm::quat &rot);
   virtual ~ShooterBullet();
+
+  void Update(float elapsed_time) {
+    prev_pos_ = pos();
+    Move(rot() * glm::vec3(0.0f, 0.0f, kSpeed) * elapsed_time);
+  }
+
+  const glm::vec3 &prev_pos() const {
+    return prev_pos_;
+  }
+  const glm::vec3 &velocity() const {
+    return velocity_;
+  }
+
+ private:
+  glm::vec3 prev_pos_;
+  glm::vec3 velocity_;
 };
 
 class EllieShooter3D : public EllieBaseGameScene {

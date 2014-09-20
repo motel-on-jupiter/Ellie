@@ -24,6 +24,7 @@
     <ClCompile Include="..\src\core\stage\GridStage3D.cc" />
     <ClCompile Include="..\src\entity\CubicEntity.cc" />
     <ClCompile Include="..\src\entity\CubicEntityDraw.cc" />
+    <ClCompile Include="..\src\entity\CubicEntityPhysics.cc" />
     <ClCompile Include="..\src\entity\PlanarEntity.cc" />
     <ClCompile Include="..\src\entity\PlanarEntityDraw.cc" />
     <ClCompile Include="..\src\external\ini.c">
@@ -77,6 +78,7 @@
     <ClInclude Include="..\src\core\stage\GridStage3D.h" />
     <ClInclude Include="..\src\entity\CubicEntity.h" />
     <ClInclude Include="..\src\entity\CubicEntityDraw.h" />
+    <ClInclude Include="..\src\entity\CubicEntityPhysics.h" />
     <ClInclude Include="..\src\entity\PlanarEntity.h" />
     <ClInclude Include="..\src\entity\PlanarEntityDraw.h" />
     <ClInclude Include="..\src\external\coroutine.h" />

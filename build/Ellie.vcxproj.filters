@@ -183,6 +183,9 @@
     <ClCompile Include="..\src\util\auxiliary\math_aux.cc">
       <Filter>src\util\auxiliary</Filter>
     </ClCompile>
+    <ClCompile Include="..\src\entity\CubicEntityPhysics.cc">
+      <Filter>src\entity</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\src\util\logging\Logger.h">
@@ -328,6 +331,9 @@
     </ClInclude>
     <ClInclude Include="..\src\util\auxiliary\glm_aux.h">
       <Filter>src\util\auxiliary</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\entity\CubicEntityPhysics.h">
+      <Filter>src\entity</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

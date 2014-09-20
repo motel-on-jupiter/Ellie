@@ -1,35 +1,42 @@
 /**
  * Copyright (C) 2014 The Motel on Jupiter
  */
-#ifndef CUBICENTITYPHYSICS_H_
-#define CUBICENTITYPHYSICS_H_
+#ifndef CUBIC_ENTITY_PHYSICS_H_
+#define CUBIC_ENTITY_PHYSICS_H_
 
 #include "entity/CubicEntity.h"
 
+class btCollisionShape;
+struct btDefaultMotionState;
+class btRigidBody;
+
 class CubicEntityPhysics : public CubicEntityMixIn {
  public:
-  CubicEntityPhysics(CubicEntity &entity, const glm::vec3 &velocity)
+  CubicEntityPhysics(CubicEntity &entity)
       : CubicEntityMixIn(entity),
-        velocity_(velocity) {
+        bt_shape_(nullptr),
+        bt_motion_(nullptr),
+        bt_body_(nullptr) {
   }
   virtual ~CubicEntityPhysics() {
+    delete bt_body_;
+    delete bt_motion_;
+    delete bt_shape_;
   }
 
-  void Update(float elapsed_time) {
-    prev_pos_ = entity().pos();
-    entity().Move(entity().rot() * velocity_ * elapsed_time);
-  }
+  virtual bool Initialize();
+  virtual void Finalize();
 
-  const glm::vec3 &prev_pos() const {
-    return prev_pos_;
-  }
-  const glm::vec3 &velocity() const {
-    return velocity_;
+  btRigidBody *bt_body() {
+    return bt_body_;
   }
 
  private:
-  glm::vec3 prev_pos_;
-  glm::vec3 velocity_;
+  void CubicEntityPhysics::CleanObjects();
+
+  btCollisionShape *bt_shape_;
+  btDefaultMotionState *bt_motion_;
+  btRigidBody* bt_body_;
 };
 
-#endif /* CUBICENTITYPHYSICS_H_ */
+#endif /* CUBIC_ENTITY_PHYSICS_H_ */
