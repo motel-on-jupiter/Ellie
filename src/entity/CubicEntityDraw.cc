@@ -3,6 +3,7 @@
  */
 #include "entity/CubicEntityDraw.h"
 #include "entity/CubicEntity.h"
+#include "util/auxiliary/glm_aux.h"
 
 EntitySphereDraw::EntitySphereDraw(CubicEntity &entity, bool fill, int slices,
                                    int stacks,
@@ -39,7 +40,7 @@ void EntityCubeDraw::Draw() const {
   glMultMatrixf(
       glm::value_ptr(
           glm::translate(
-              entity().pos() + glm::vec3(0.0f, entity().scale().y * 0.5f, 0.0f))
+              entity().pos() + glm_aux::y_dir() * entity().scale() * 0.5f)
               * glm::toMat4(entity().rot()) * glm::scale(entity().scale())));
   if (fill_) {
     glutSolidCube(1.0);

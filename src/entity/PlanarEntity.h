@@ -15,8 +15,8 @@ class PlanarEntity {
 
   void Move(const glm::vec2 &offset) { set_pos(pos() + offset); }
   void MoveTo(const glm::vec2 &pos) { set_pos(pos); }
-  void Rotate(float offset) { set_rot(glm_aux::normalize_angle(rot() + offset)); }
-  void RotateTo(float rot) { set_rot(glm_aux::normalize_angle(rot)); }
+  void Rotate(float offset) { set_rot(glm_aux::normalizeAngle(rot() + offset)); }
+  void RotateTo(float rot) { set_rot(glm_aux::normalizeAngle(rot)); }
   void Rescale(const glm::vec2 &offset) { set_scale(scale() + offset); }
   void RescaleTo(const glm::vec2 &scale) { set_scale(scale); }
 

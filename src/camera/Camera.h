@@ -8,6 +8,7 @@
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
 #include <glm/gtx/norm.hpp>
+#include "util/auxiliary/glm_aux.h"
 
 class Camera {
  public:
@@ -39,7 +40,7 @@ class Camera {
   }
   glm::vec3 BuildForwardDir() const {
     glm::vec3 forward = at_ - pos_;
-    if (glm::length2(forward) < glm::epsilon<float>()) {
+    if (glm::length2(forward) < glm_aux::epsilon()) {
       return glm::vec3(0.0f, 0.0f, 1.0f);
     }
     return glm::normalize(forward);

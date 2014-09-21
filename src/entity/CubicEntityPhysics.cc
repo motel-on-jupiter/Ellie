@@ -7,15 +7,16 @@
 #include "util/wrapper/bullet_wrap.h"
 
 bool CubicEntityPhysics::Initialize() {
-  bt_shape_ = new btBoxShape(glm_aux::castToBt(entity().scale() * 0.5f));
+  bt_shape_ = new btBoxShape(glm_aux::toBtVec3(entity().scale() * 0.5f));
   if (bt_shape_ == nullptr) {
     LOGGER.Error("Failed to allocate for Bullet collsion shape object");
     return false;
   }
   glm::vec3 motion_pos = entity().pos()
-      + glm::vec3(0.0f, entity().scale().y * 0.5f, 0.0f);
+      + glm_aux::y_dir() * entity().scale() * 0.5f;
   bt_motion_ = new btDefaultMotionState(
-      btTransform(glm_aux::castToBt(entity().rot()), glm_aux::castToBt(motion_pos)));
+      btTransform(glm_aux::toBtQuat(entity().rot()),
+                  glm_aux::toBtVec3(motion_pos)));
   if (bt_motion_ == nullptr) {
     LOGGER.Error("Failed to allocate for Bullet motion state object");
     CleanObjects();

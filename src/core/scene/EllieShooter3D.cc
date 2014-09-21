@@ -23,6 +23,7 @@ ShooterBullet::~ShooterBullet() {
 
 const float EllieShooter3D::kBulletVanishDistance = 100.0f;
 const float EllieShooter3D::kZombieSpawnInterval = 5.0f;
+const unsigned int EllieShooter3D::kMaxZombies = 5;
 
 EllieShooter3D::EllieShooter3D()
     : EllieBaseGameScene("3D Shooter"),
@@ -100,7 +101,7 @@ void EllieShooter3D::OnMouseButtonDown(const SDL_MouseButtonEvent &button) {
   if (button.button == SDL_BUTTON_LEFT) {
     ShooterBullet *bullet = new ShooterBullet(
         camera_.pos(),
-        glm::rotation(glm::vec3(0.0f, 0.0f, 1.0f), camera_.BuildForwardDir()));
+        glm::rotation(glm_aux::z_dir(), camera_.BuildForwardDir()));
     if (bullet == nullptr) {
       LOGGER.Error("Failed to allocate for bullet object");
     }
@@ -179,26 +180,35 @@ void EllieShooter3D::OnFinal() {
 void EllieShooter3D::OnUpdate(float elapsed_time) {
   camera_controller_.Update(elapsed_time);
 
-  spawn_timer_ += elapsed_time;
-  if (spawn_timer_ > kZombieSpawnInterval) {
-    float angle = glm::linearRand(0.0f, glm::radians(360.0f));
-    Zombie *zombie = new Zombie(
-        camera_.pos() * glm::vec3(1.0f, 0.0f, 1.0f) + glm::rotateY(glm::vec3(0.0f, 0.0f, 10.0f), angle),
-        glm::angleAxis(angle, glm::vec3(0.0f, 1.0f, 0.0f)));
-    if (zombie == nullptr) {
-      LOGGER.Error("Failed to allocate for zombie object");
-    } else {
-      if (zombie->Initialize()) {
-        bt_world_->addRigidBody(zombie->bt_body());
-        zombie->bt_body()->setUserPointer(zombie);
-        zombies_.push_back(zombie);
-      } else {
-        LOGGER.Error("Failed to initialize zombie");
-        delete zombie;
-      }
-    }
-    spawn_timer_ -= kZombieSpawnInterval;
+  for (auto it = zombies_.begin(); it != zombies_.end(); ++it) {
+    (*it)->Update(elapsed_time, camera_.pos());
   }
+
+  if (zombies_.size() < kMaxZombies) {
+    spawn_timer_ += elapsed_time;
+    if (spawn_timer_ > kZombieSpawnInterval) {
+      float angle = glm::linearRand(0.0f, glm::radians(360.0f));
+      Zombie *zombie = new Zombie(
+          camera_.pos() * glm::vec3(1.0f, 0.0f, 1.0f) + glm::rotateY(glm_aux::z_dir(), angle) * 10.0f,
+          glm::angleAxis(glm_aux::normalizeAngle(angle * glm::radians(180.0f)),
+                         glm_aux::y_dir()));
+      if (zombie == nullptr) {
+        LOGGER.Error("Failed to allocate for zombie object");
+      } else {
+        if (zombie->Initialize()) {
+          bt_world_->addRigidBody(zombie->bt_body());
+          zombie->bt_body()->setUserPointer(zombie);
+          zombies_.push_back(zombie);
+        } else {
+          LOGGER.Error("Failed to initialize zombie");
+          delete zombie;
+        }
+      }
+      spawn_timer_ -= kZombieSpawnInterval;
+    }
+  }
+
+  bt_world_->stepSimulation(elapsed_time, 60);
 
   for (auto it = bullets_.begin(); it != bullets_.end();) {
     ShooterBullet *bullet = *it;
@@ -212,8 +222,8 @@ void EllieShooter3D::OnUpdate(float elapsed_time) {
 
     btCollisionWorld::ClosestRayResultCallback test_result =
         btCollisionWorld::ClosestRayResultCallback(btVector3(), btVector3());
-    bt_world_->rayTest(glm_aux::castToBt(bullet->prev_pos()),
-                       glm_aux::castToBt(bullet->pos()), test_result);
+    bt_world_->rayTest(glm_aux::toBtVec3(bullet->prev_pos()),
+                       glm_aux::toBtVec3(bullet->pos()), test_result);
     if (test_result.hasHit()) {
       Zombie *zombie = static_cast<Zombie *>(test_result.m_collisionObject
           ->getUserPointer());

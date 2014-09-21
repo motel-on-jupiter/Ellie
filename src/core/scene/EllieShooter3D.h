@@ -41,6 +41,7 @@ class EllieShooter3D : public EllieBaseGameScene {
  public:
   static const float kBulletVanishDistance;
   static const float kZombieSpawnInterval;
+  static const unsigned int kMaxZombies;
 
   EllieShooter3D();
   virtual ~EllieShooter3D();

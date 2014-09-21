@@ -27,6 +27,9 @@ class CubicEntityPhysics : public CubicEntityMixIn {
   virtual bool Initialize();
   virtual void Finalize();
 
+  btDefaultMotionState *bt_motion() {
+    return bt_motion_;
+  }
   btRigidBody *bt_body() {
     return bt_body_;
   }

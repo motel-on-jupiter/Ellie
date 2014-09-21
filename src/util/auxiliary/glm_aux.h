@@ -8,21 +8,51 @@
 #include "util/wrapper/bullet_wrap.h"
 
 namespace glm_aux {
-inline float normalize_angle(float angle) {
-  while (angle > glm::pi<float>()) {
-    angle -= glm::pi<float>() * 2.0f;
+template<typename T = float, glm::precision P = glm::defaultp> GLM_FUNC_QUALIFIER glm::detail::tvec3<
+    T, P> zero() {
+  return glm::detail::tvec3<T, P>(0, 0, 0);
+}
+template<typename T = float, glm::precision P = glm::defaultp> GLM_FUNC_QUALIFIER glm::detail::tvec3<
+    T, P> unit() {
+  return glm::detail::tvec3<T, P>(1, 1, 1);
+}
+template<typename T = float, glm::precision P = glm::defaultp> GLM_FUNC_QUALIFIER glm::detail::tvec3<
+    T, P> x_dir() {
+  return glm::detail::tvec3<T, P>(1, 0, 0);
+}
+template<typename T = float, glm::precision P = glm::defaultp> GLM_FUNC_QUALIFIER glm::detail::tvec3<
+    T, P> y_dir() {
+  return glm::detail::tvec3<T, P>(0, 1, 0);
+}
+template<typename T = float, glm::precision P = glm::defaultp> GLM_FUNC_QUALIFIER glm::detail::tvec3<
+    T, P> z_dir() {
+  return glm::detail::tvec3<T, P>(0, 0, 1);
+}
+template<typename T = float> GLM_FUNC_QUALIFIER T epsilon() {
+  return glm::epsilon<T>();
+}
+
+template<typename T = float> GLM_FUNC_QUALIFIER T normalizeAngle(T angle) {
+  while (angle > glm::pi<T>()) {
+    angle -= glm::pi<T>() * T(2);
   }
-  while (angle < glm::pi<float>() * -1.0f) {
-    angle += glm::pi<float>() * 2.0f;
+  while (angle < glm::pi<T>() * T(-1)) {
+    angle += glm::pi<T>() * T(2);
   }
   return angle;
 }
 
-inline btVector3 castToBt(const glm::vec3 &glm_vec) {
-  return btVector3(glm_vec.x, glm_vec.y, glm_vec.z);
+template<typename T = float, glm::precision P = glm::defaultp> GLM_FUNC_QUALIFIER btVector3 toBtVec3(
+    glm::detail::tvec3<T, P> const & v) {
+  return btVector3(v.x, v.y, v.z);
 }
-inline btQuaternion castToBt(const glm::quat &glm_quat) {
-  return btQuaternion(glm_quat.x, glm_quat.y, glm_quat.z, glm_quat.w);
+template<typename T = float, glm::precision P = glm::defaultp> GLM_FUNC_QUALIFIER btVector4 toBtVec4(
+    glm::detail::tvec4<T, P> const & v) {
+  return btVector4(v.x, v.y, v.z, v.w);
+}
+template<typename T = float, glm::precision P = glm::defaultp> GLM_FUNC_QUALIFIER btQuaternion toBtQuat(
+    glm::detail::tquat<T, P> const & q) {
+  return btQuaternion(q.x, q.y, q.z, q.w);
 }
 }
 

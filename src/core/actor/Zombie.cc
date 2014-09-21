@@ -5,17 +5,20 @@
 #include "entity/CubicEntity.h"
 #include "entity/CubicEntityDraw.h"
 #include "entity/CubicEntityPhysics.h"
+#include "util/auxiliary/glm_aux.h"
+#include "util/auxiliary/math_aux.h"
 #include "util/catalogue/color_sample.h"
 
-const unsigned int Zombie::kHP = 3;
+const unsigned int Zombie::kPatience = 3;
+const float Zombie::kMoveSpeed = 0.3f;
+const float Zombie::kTurnSpeed = 0.7f;
 
 Zombie::Zombie(const glm::vec3 &pos, const glm::quat &rot)
     : CubicEntity(pos, rot, glm::vec3(1.0f, 1.75f, 0.3f)),
       EntityCubeDraw(*static_cast<CubicEntity *>(this), true,
                      GLMaterialColor(X11Color::to_fvec(X11Color::kTeal))),
       CubicEntityPhysics(*static_cast<CubicEntity *>(this)),
-      damage_(0),
-      hp_(kHP) {
+      damage_(0) {
 }
 
 Zombie::~Zombie() {
@@ -25,6 +28,41 @@ bool Zombie::Initialize() {
   if (!CubicEntityPhysics::Initialize()) {
     return false;
   }
+  bt_body()->setCollisionFlags(bt_body()->getCollisionFlags() | btCollisionObject::CF_KINEMATIC_OBJECT);
+  bt_body()->setActivationState(DISABLE_DEACTIVATION);
   damage_ = 0;
   return true;
+}
+
+void Zombie::Update(float elapsed_time, const glm::vec3 &player_pos) {
+  glm::vec3 to_player = player_pos * glm::vec3(1.0f, 0.0f, 1.0f) - pos();
+  float to_player_dist2 = glm::length2(to_player);
+  if (to_player_dist2 > glm_aux::epsilon()) {
+    glm::vec3 to_player_dir = glm::normalize(to_player);
+    Move(to_player_dir * kMoveSpeed * elapsed_time);
+
+    glm::vec3 dir = rot() * glm_aux::z_dir();
+    float to_player_cos = glm::dot(to_player_dir, dir);
+    bool need_to_turn;
+    float turn_angle;
+    if (to_player_cos > 1.0f - glm_aux::epsilon()) {
+      need_to_turn = false;
+    } else {
+      turn_angle = kTurnSpeed * elapsed_time;
+      need_to_turn = true;
+      if (to_player_cos > -1.0f + glm_aux::epsilon()) {
+        need_to_turn = true;
+        float to_player_angle = acos(to_player_cos);
+        if (abs(to_player_angle) < turn_angle) {
+          turn_angle = to_player_angle;
+        }
+        turn_angle *= math_aux::sign(glm::cross(to_player_dir, dir).y) * -1.0f;
+      }
+    }
+    if (need_to_turn) {
+      Rotate(glm::angleAxis(turn_angle, glm_aux::y_dir()));
+    }
+  }
+  glm::vec3 motion_pos = pos() + glm_aux::y_dir() * scale() * 0.5f;
+  bt_motion()->m_graphicsWorldTrans = btTransform(glm_aux::toBtQuat(rot()), glm_aux::toBtVec3(motion_pos));
 }

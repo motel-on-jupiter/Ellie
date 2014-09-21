@@ -11,23 +11,25 @@
 class Zombie : public CubicEntity, public EntityCubeDraw,
     public CubicEntityPhysics {
  public:
-  static const unsigned int kHP;
+  static const unsigned int kPatience;
+  static const float kMoveSpeed;
+  static const float kTurnSpeed;
 
   Zombie(const glm::vec3 &pos, const glm::quat &rot);
   virtual ~Zombie();
 
   virtual bool Initialize();
+  void Update(float elapsed_time, const glm::vec3 &player_pos);
 
   void TakeDamage() {
     ++damage_;
   }
   bool IsDead() const {
-    return damage_ >= hp_;
+    return damage_ >= kPatience;
   }
 
  private:
   unsigned int damage_;
-  unsigned int hp_;
 };
 
 #endif /* ZOMBIE_H_ */
