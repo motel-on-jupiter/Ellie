@@ -189,9 +189,9 @@ void EllieShooter3D::OnUpdate(float elapsed_time) {
     if (spawn_timer_ > kZombieSpawnInterval) {
       float angle = glm::linearRand(0.0f, glm::radians(360.0f));
       Zombie *zombie = new Zombie(
-          camera_.pos() * glm::vec3(1.0f, 0.0f, 1.0f) + glm::rotateY(glm_aux::z_dir(), angle) * 10.0f,
-          glm::angleAxis(glm_aux::normalizeAngle(angle * glm::radians(180.0f)),
-                         glm_aux::y_dir()));
+          camera_.pos() * glm::vec3(1.0f, 0.0f, 1.0f)
+              + glm::rotateY(glm_aux::z_dir() * -1.0f, angle) * 10.0f,
+          glm_aux::angleAxisY(angle));
       if (zombie == nullptr) {
         LOGGER.Error("Failed to allocate for zombie object");
       } else {

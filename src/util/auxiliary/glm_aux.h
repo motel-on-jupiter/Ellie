@@ -42,6 +42,22 @@ template<typename T = float> GLM_FUNC_QUALIFIER T normalizeAngle(T angle) {
   return angle;
 }
 
+template <typename T = float, glm::precision P = glm::defaultp>
+GLM_FUNC_DECL glm::detail::tquat<T, P> angleAxisX(
+  T const & angle) {
+  return glm::angleAxis(angle, x_dir<T, P>());
+}
+template <typename T = float, glm::precision P = glm::defaultp>
+GLM_FUNC_DECL glm::detail::tquat<T, P> angleAxisY(
+  T const & angle) {
+  return glm::angleAxis(angle, y_dir<T, P>());
+}
+template <typename T = float, glm::precision P = glm::defaultp>
+GLM_FUNC_DECL glm::detail::tquat<T, P> angleAxisZ(
+  T const & angle) {
+  return glm::angleAxis(angle, z_dir<T, P>());
+}
+
 template<typename T = float, glm::precision P = glm::defaultp> GLM_FUNC_QUALIFIER btVector3 toBtVec3(
     glm::detail::tvec3<T, P> const & v) {
   return btVector3(v.x, v.y, v.z);
