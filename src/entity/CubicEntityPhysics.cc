@@ -12,11 +12,7 @@ bool CubicEntityPhysics::Initialize() {
     LOGGER.Error("Failed to allocate for Bullet collsion shape object");
     return false;
   }
-  glm::vec3 motion_pos = entity().pos()
-      + glm_aux::y_dir() * entity().scale() * 0.5f;
-  bt_motion_ = new btDefaultMotionState(
-      btTransform(glm_aux::toBtQuat(entity().rot()),
-                  glm_aux::toBtVec3(motion_pos)));
+  bt_motion_ = new CubicEntityMotionState(entity());
   if (bt_motion_ == nullptr) {
     LOGGER.Error("Failed to allocate for Bullet motion state object");
     CleanObjects();
@@ -29,18 +25,21 @@ bool CubicEntityPhysics::Initialize() {
     CleanObjects();
     return false;
   }
+  bt_body_->setCollisionFlags(
+      bt_body_->getCollisionFlags() | btCollisionObject::CF_KINEMATIC_OBJECT);
+  bt_body_->setActivationState(DISABLE_DEACTIVATION);
   return true;
 }
 
 void CubicEntityPhysics::Finalize() {
   CleanObjects();
+  bt_body_ = nullptr;
+  bt_motion_ = nullptr;
+  bt_shape_ = nullptr;
 }
 
 void CubicEntityPhysics::CleanObjects() {
   delete bt_body_;
-  bt_body_ = nullptr;
   delete bt_motion_;
-  bt_motion_ = nullptr;
   delete bt_shape_;
-  bt_shape_ = nullptr;
 }

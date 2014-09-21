@@ -29,8 +29,6 @@ bool Zombie::Initialize() {
   if (!CubicEntityPhysics::Initialize()) {
     return false;
   }
-  bt_body()->setCollisionFlags(bt_body()->getCollisionFlags() | btCollisionObject::CF_KINEMATIC_OBJECT);
-  bt_body()->setActivationState(DISABLE_DEACTIVATION);
   total_damage_ = 0;
   return true;
 }
@@ -64,8 +62,6 @@ void Zombie::Update(float elapsed_time, const glm::vec3 &player_pos) {
       Rotate(glm::angleAxis(turn_angle, glm_aux::y_dir()));
     }
   }
-  glm::vec3 motion_pos = pos() + glm_aux::y_dir() * scale() * 0.5f;
-  bt_motion()->m_graphicsWorldTrans = btTransform(glm_aux::toBtQuat(rot()), glm_aux::toBtVec3(motion_pos));
 }
 
 void Zombie::TakeDamage() {

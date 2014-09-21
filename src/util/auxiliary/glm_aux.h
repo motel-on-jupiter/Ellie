@@ -58,6 +58,18 @@ GLM_FUNC_DECL glm::detail::tquat<T, P> angleAxisZ(
   return glm::angleAxis(angle, z_dir<T, P>());
 }
 
+template<typename T = float, glm::precision P = glm::defaultp> GLM_FUNC_QUALIFIER glm::detail::tvec3<T, P> fromBtVec3(
+    btVector3 const & v) {
+  return glm::vec3(v.x(), v.y(), v.z());
+}
+template<typename T = float, glm::precision P = glm::defaultp> GLM_FUNC_QUALIFIER glm::detail::tvec4<T, P> fromBtVec4(
+    btVector4 const & v) {
+  return glm::vec3(v.x(), v.y(), v.z(), v.w());
+}
+template<typename T = float, glm::precision P = glm::defaultp> GLM_FUNC_QUALIFIER glm::detail::tquat<T, P> fromBtQuat(
+    btQuaternion const & q) {
+  return glm::quat(q.x(), q.y(), q.z(), q.w());
+}
 template<typename T = float, glm::precision P = glm::defaultp> GLM_FUNC_QUALIFIER btVector3 toBtVec3(
     glm::detail::tvec3<T, P> const & v) {
   return btVector3(v.x, v.y, v.z);
