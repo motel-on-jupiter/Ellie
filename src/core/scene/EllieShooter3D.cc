@@ -118,7 +118,7 @@ int EllieShooter3D::OnInitial() {
 
   static const GLfloat kLightPosition[] = { 0.0f, 10.0f, 10.0f };
   static const GLfloat kLightAmbientColor[] = { 1.0f, 1.0f, 1.0f, 1.0f };
-  static const GLfloat kLightDiffuseColor[] = { 1.0f, 1.0f, 1.0f, 1.0f };
+  static const GLfloat kLightDiffuseColor[] = { 0.1f, 0.1f, 0.1f, 0.1f };
   static const GLfloat kLightSpecularColor[] = { 0.1f, 0.1f, 0.1f, 1.0f };
   glLightfv(GL_LIGHT0, GL_POSITION, kLightPosition);
   glLightfv(GL_LIGHT0, GL_AMBIENT, kLightAmbientColor);

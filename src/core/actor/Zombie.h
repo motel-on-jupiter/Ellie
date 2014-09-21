@@ -21,15 +21,13 @@ class Zombie : public CubicEntity, public EntityCubeDraw,
   virtual bool Initialize();
   void Update(float elapsed_time, const glm::vec3 &player_pos);
 
-  void TakeDamage() {
-    ++damage_;
-  }
+  void TakeDamage();
   bool IsDead() const {
-    return damage_ >= kPatience;
+    return total_damage_ > kPatience;
   }
 
  private:
-  unsigned int damage_;
+  unsigned int total_damage_;
 };
 
 #endif /* ZOMBIE_H_ */

@@ -5,11 +5,12 @@
 #include "entity/CubicEntity.h"
 #include "entity/CubicEntityDraw.h"
 #include "entity/CubicEntityPhysics.h"
+#include "graphics/GLMaterialColor.h"
 #include "util/auxiliary/glm_aux.h"
 #include "util/auxiliary/math_aux.h"
 #include "util/catalogue/color_sample.h"
 
-const unsigned int Zombie::kPatience = 3;
+const unsigned int Zombie::kPatience = 5;
 const float Zombie::kMoveSpeed = 0.3f;
 const float Zombie::kTurnSpeed = 0.7f;
 
@@ -18,7 +19,7 @@ Zombie::Zombie(const glm::vec3 &pos, const glm::quat &rot)
       EntityCubeDraw(*static_cast<CubicEntity *>(this), true,
                      GLMaterialColor(X11Color::to_fvec(X11Color::kTeal))),
       CubicEntityPhysics(*static_cast<CubicEntity *>(this)),
-      damage_(0) {
+      total_damage_(0) {
 }
 
 Zombie::~Zombie() {
@@ -30,7 +31,7 @@ bool Zombie::Initialize() {
   }
   bt_body()->setCollisionFlags(bt_body()->getCollisionFlags() | btCollisionObject::CF_KINEMATIC_OBJECT);
   bt_body()->setActivationState(DISABLE_DEACTIVATION);
-  damage_ = 0;
+  total_damage_ = 0;
   return true;
 }
 
@@ -65,4 +66,9 @@ void Zombie::Update(float elapsed_time, const glm::vec3 &player_pos) {
   }
   glm::vec3 motion_pos = pos() + glm_aux::y_dir() * scale() * 0.5f;
   bt_motion()->m_graphicsWorldTrans = btTransform(glm_aux::toBtQuat(rot()), glm_aux::toBtVec3(motion_pos));
+}
+
+void Zombie::TakeDamage() {
+  ++total_damage_;
+  set_material_color(GLMaterialColor(glm::lerp(X11Color::to_fvec(X11Color::kTeal), X11Color::to_fvec(X11Color::kDeepPink), static_cast<float>(total_damage_) / static_cast<float>(kPatience))));
 }

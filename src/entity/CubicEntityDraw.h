@@ -22,8 +22,8 @@ class CubicEntityDraw : public CubicEntityMixIn {
   const GLMaterialColor &material_color() const {
     return material_color_;
   }
-  GLMaterialColor &mutable_material_color() {
-    return material_color_;
+  void set_material_color(const GLMaterialColor &color) {
+    material_color_ = color;
   }
 
  private:
