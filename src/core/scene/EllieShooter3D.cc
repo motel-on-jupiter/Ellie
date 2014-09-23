@@ -2,6 +2,10 @@
  * Copyright (C) 2014 The Motel On Jupiter
  */
 #include "EllieShooter3D.h"
+#include "scene/BaseScene.h"
+#include "scene/GraphDrivenScene.h"
+#include "scene/SceneGraph.h"
+#include "scene/TitleScene.h"
 #include "util/auxiliary/assert_aux.h"
 #include "util/auxiliary/csyntax_aux.h"
 #include "util/auxiliary/glm_aux.h"
@@ -21,27 +25,25 @@ ShooterBullet::ShooterBullet(const glm::vec3 &pos, const glm::quat &rot)
 ShooterBullet::~ShooterBullet() {
 }
 
-const float EllieShooter3D::kBulletVanishDistance = 100.0f;
-const float EllieShooter3D::kZombieSpawnInterval = 5.0f;
-const unsigned int EllieShooter3D::kMaxZombies = 5;
+const float EllieShooter3DIngame::kBulletVanishDistance = 100.0f;
+const float EllieShooter3DIngame::kZombieSpawnInterval = 5.0f;
+const unsigned int EllieShooter3DIngame::kMaxZombies = 5;
 
-EllieShooter3D::EllieShooter3D()
-    : EllieBaseGameScene("3D Shooter"),
+EllieShooter3DIngame::EllieShooter3DIngame(Camera &camera)
+    : BaseScene("3D Shooter"),
       bt_colli_config_(nullptr),
       bt_dispatcher_(nullptr),
       bt_overlap_cache_(nullptr),
       bt_solver_(nullptr),
       bt_world_(nullptr),
-      camera_(glm::vec3(0.0f, 1.5f, -5.0f), glm::vec3(0.0f),
-              glm::vec3(0.0f, 1.0f, 0.0f)),
+      camera_(camera),
       camera_controller_(camera_, 5.0f, 0.015f),
-      stage_(glm::vec3(1000.0f, 10.0f, 1000.0f)),
       zombies_(),
       bullets_(),
       spawn_timer_(0.0f) {
 }
 
-EllieShooter3D::~EllieShooter3D() {
+EllieShooter3DIngame::~EllieShooter3DIngame() {
   for (auto it = bullets_.begin(); it != bullets_.end(); ++it) {
     delete *it;
   }
@@ -54,24 +56,10 @@ EllieShooter3D::~EllieShooter3D() {
   CleanObjects();
 }
 
-void EllieShooter3D::Draw(const glm::vec2 &window_size) {
-  glClearAll();
+void EllieShooter3DIngame::Draw(const glm::vec2 &window_size) {
+  UNUSED(window_size);
 
   glPushMatrix();
-  glViewport(0, 0, static_cast<GLsizei>(window_size.x),
-             static_cast<GLsizei>(window_size.y));
-  glEnable(GL_DEPTH_TEST);
-
-  glMatrixMode(GL_PROJECTION);
-  glLoadMatrixf(
-      glm::value_ptr(
-          glm::perspective(glm::radians(45.0f), window_size.x / window_size.y,
-                           0.1f, 1000.0f)));
-
-  glMatrixMode(GL_MODELVIEW);
-  glLoadMatrixf(glm::value_ptr(camera_.BuildViewMatrix()));
-
-  stage_.Draw();
 
   glEnable(GL_LIGHTING);
   glEnable(GL_LIGHT0);
@@ -85,19 +73,19 @@ void EllieShooter3D::Draw(const glm::vec2 &window_size) {
     (*it)->Draw();
   }
 
-  glDisable(GL_DEPTH_TEST);
   glPopMatrix();
 }
 
-void EllieShooter3D::OnKeyDown(const SDL_KeyboardEvent &keyboard) {
+void EllieShooter3DIngame::OnKeyDown(const SDL_KeyboardEvent &keyboard) {
   camera_controller_.OnKeyDown(keyboard);
 }
 
-void EllieShooter3D::OnKeyUp(const SDL_KeyboardEvent &keyboard) {
+void EllieShooter3DIngame::OnKeyUp(const SDL_KeyboardEvent &keyboard) {
   camera_controller_.OnKeyUp(keyboard);
 }
 
-void EllieShooter3D::OnMouseButtonDown(const SDL_MouseButtonEvent &button) {
+void EllieShooter3DIngame::OnMouseButtonDown(
+    const SDL_MouseButtonEvent &button) {
   if (button.button == SDL_BUTTON_LEFT) {
     ShooterBullet *bullet = new ShooterBullet(
         camera_.pos(),
@@ -109,11 +97,11 @@ void EllieShooter3D::OnMouseButtonDown(const SDL_MouseButtonEvent &button) {
   }
 }
 
-void EllieShooter3D::OnMouseMotion(const SDL_MouseMotionEvent &motion) {
+void EllieShooter3DIngame::OnMouseMotion(const SDL_MouseMotionEvent &motion) {
   camera_controller_.OnMouseMotion(motion);
 }
 
-int EllieShooter3D::OnInitial() {
+int EllieShooter3DIngame::OnInitial() {
   glSetClearanceColor(0.0f, 0.0f, 0.0f, 0.0f);
 
   static const GLfloat kLightPosition[] = { 0.0f, 10.0f, 10.0f };
@@ -163,7 +151,7 @@ int EllieShooter3D::OnInitial() {
   return 0;
 }
 
-void EllieShooter3D::OnFinal() {
+void EllieShooter3DIngame::OnFinal() {
   for (auto it = bullets_.begin(); it != bullets_.end(); ++it) {
     delete *it;
   }
@@ -177,7 +165,7 @@ void EllieShooter3D::OnFinal() {
   CleanObjects();
 }
 
-void EllieShooter3D::OnUpdate(float elapsed_time) {
+void EllieShooter3DIngame::OnUpdate(float elapsed_time) {
   camera_controller_.Update(elapsed_time);
 
   for (auto it = zombies_.begin(); it != zombies_.end(); ++it) {
@@ -249,7 +237,7 @@ void EllieShooter3D::OnUpdate(float elapsed_time) {
   }
 }
 
-void EllieShooter3D::CleanObjects() {
+void EllieShooter3DIngame::CleanObjects() {
   delete bt_world_;
   bt_world_ = nullptr;
   delete bt_solver_;
@@ -260,4 +248,85 @@ void EllieShooter3D::CleanObjects() {
   bt_dispatcher_ = nullptr;
   delete bt_colli_config_;
   bt_colli_config_ = nullptr;
+}
+
+EllieShooter3D::EllieShooter3D()
+    : GraphDrivenScene("3D Shooter", scene_graph_),
+      camera_(glm::vec3(0.0f, 1.5f, -5.0f), glm::vec3(0.0f),
+              glm::vec3(0.0f, 1.0f, 0.0f)),
+      stage_(glm::vec3(1000.0f, 10.0f, 1000.0f)),
+      scene_pool_(),
+      scene_graph_() {
+}
+
+EllieShooter3D::~EllieShooter3D() {
+}
+
+void EllieShooter3D::Draw(const glm::vec2 &window_size) {
+  glClearAll();
+
+  glPushMatrix();
+  glViewport(0, 0, static_cast<GLsizei>(window_size.x),
+             static_cast<GLsizei>(window_size.y));
+
+  glMatrixMode(GL_PROJECTION);
+  glLoadMatrixf(
+      glm::value_ptr(
+          glm::perspective(glm::radians(45.0f), window_size.x / window_size.y,
+                           0.1f, 1000.0f)));
+
+  glMatrixMode(GL_MODELVIEW);
+  glLoadMatrixf(glm::value_ptr(camera_.BuildViewMatrix()));
+
+  glEnable(GL_DEPTH_TEST);
+  stage_.Draw();
+  GraphDrivenScene::Draw(window_size);
+  glDisable(GL_DEPTH_TEST);
+  glPopMatrix();
+}
+
+int EllieShooter3D::OnInitial() {
+  glSetClearanceColor(0.0f, 0.0f, 0.0f, 0.0f);
+
+  camera_.Reset();
+
+  BaseScene *sub_scene = new TitleScene("Title");
+  if (sub_scene == nullptr) {
+    LOGGER.Error("Failed to allocate for sub scene object");
+    return -1;
+  }
+  scene_pool_.push_back(sub_scene);
+
+  sub_scene = new EllieShooter3DIngame(camera_);
+  if (sub_scene == nullptr) {
+    LOGGER.Error("Failed to allocate for sub scene object");
+    return -1;
+  }
+  scene_pool_.push_back(sub_scene);
+
+  SceneFlow flow = SceneFlow(nullptr, scene_pool_[0]);
+  SceneEdge edge = SceneEdge(flow, 0);
+  scene_graph_.push_back(edge);
+  flow = SceneFlow(scene_pool_[0], scene_pool_[1]);
+  edge = SceneEdge(flow, 0);
+  scene_graph_.push_back(edge);
+
+  int ret = GraphDrivenScene::OnInitial();
+  if (ret < 0) {
+    for (auto it = scene_pool_.begin(); it != scene_pool_.end(); ++it) {
+      delete *it;
+    }
+    scene_pool_.clear();
+    return ret;
+  }
+  return 0;
+}
+
+void EllieShooter3D::OnFinal() {
+  GraphDrivenScene::OnFinal();
+  for (auto it = scene_pool_.begin(); it != scene_pool_.end(); ++it) {
+    delete *it;
+  }
+  scene_pool_.clear();
+  scene_graph_.clear();
 }

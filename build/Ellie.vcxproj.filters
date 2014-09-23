@@ -55,6 +55,9 @@
     <Filter Include="src\camera">
       <UniqueIdentifier>{60bbe0df-440d-459c-a01e-cabc3fefb122}</UniqueIdentifier>
     </Filter>
+    <Filter Include="src\scene">
+      <UniqueIdentifier>{4598485e-b26f-4746-9c71-559edc7a2196}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\src\util\logging\emitter\DebuggerConsoleLogEmitter.cc">
@@ -185,6 +188,18 @@
     </ClCompile>
     <ClCompile Include="..\src\entity\CubicEntityPhysics.cc">
       <Filter>src\entity</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\scene\BaseScene.cc">
+      <Filter>src\scene</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\scene\GraphDrivenScene.cc">
+      <Filter>src\scene</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\scene\SceneGraph.cc">
+      <Filter>src\scene</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\scene\TitleScene.cc">
+      <Filter>src\scene</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -334,6 +349,18 @@
     </ClInclude>
     <ClInclude Include="..\src\entity\CubicEntityPhysics.h">
       <Filter>src\entity</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\scene\BaseScene.h">
+      <Filter>src\scene</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\scene\GraphDrivenScene.h">
+      <Filter>src\scene</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\scene\SceneGraph.h">
+      <Filter>src\scene</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\scene\TitleScene.h">
+      <Filter>src\scene</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

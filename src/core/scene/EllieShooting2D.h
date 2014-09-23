@@ -9,6 +9,9 @@
 #include "core/actor/F22Fighter.h"
 #include "core/actor/UFOFighter.h"
 #include "core/EllieGame.h"
+#include "scene/BaseScene.h"
+#include "scene/GraphDrivenScene.h"
+#include "scene/SceneGraph.h"
 
 class EllieShooting2DStage {
  public:
@@ -25,24 +28,7 @@ class EllieShooting2DStage {
   std::vector<std::vector<bool>> star_map_;
 };
 
-class EllieShooting2DTitle : public EllieBaseGameScene {
- public:
-  EllieShooting2DTitle();
-  virtual ~EllieShooting2DTitle();
-
-  virtual void Draw(const glm::vec2 &window_size);
-  virtual void OnKeyDown(const SDL_KeyboardEvent &keyboard);
-  virtual void OnKeyUp(const SDL_KeyboardEvent &keyboard);
-  virtual void OnMouseButtonDown(const SDL_MouseButtonEvent &button);
-  virtual void OnMouseMotion(const SDL_MouseMotionEvent &motion);
-
- protected:
-  virtual int OnInitial();
-  virtual void OnFinal();
-  virtual void OnUpdate(float elapsed_time);
-};
-
-class EllieShooting2DIngame : public EllieBaseGameScene {
+class EllieShooting2DIngame : public BaseScene {
  public:
   EllieShooting2DIngame();
   virtual ~EllieShooting2DIngame();
@@ -67,7 +53,7 @@ class EllieShooting2DIngame : public EllieBaseGameScene {
   F22Fighter f22_;
   FighterBullet bullets_[100];
   UFOFighter ufos_[100];
-  void *ccrParam_;
+  void *ccr_param_;
   float time_;
   int ufo_idx_;
   bool scene_pausing_;
@@ -76,26 +62,21 @@ class EllieShooting2DIngame : public EllieBaseGameScene {
   float shot_interval_;
 };
 
-class EllieShooting2D : public EllieBaseGameScene {
+class EllieShooting2D : public GraphDrivenScene {
  public:
   EllieShooting2D();
   virtual ~EllieShooting2D();
 
   virtual void Draw(const glm::vec2 &window_size);
-  virtual void OnKeyDown(const SDL_KeyboardEvent &keyboard);
-  virtual void OnKeyUp(const SDL_KeyboardEvent &keyboard);
-  virtual void OnMouseButtonDown(const SDL_MouseButtonEvent &button);
-  virtual void OnMouseMotion(const SDL_MouseMotionEvent &motion);
 
  protected:
   virtual int OnInitial();
   virtual void OnFinal();
-  virtual void OnUpdate(float elapsed_time);
 
  private:
   EllieShooting2DStage stage_;
-  std::map<std::string, EllieBaseGameScene *> sub_scenes_;
-  EllieBaseGameScene *current_scene_;
+  std::vector<BaseScene *> scene_pool_;
+  SceneGraph scene_graph_;
 };
 
 #endif /* ELLIE_SHOOTING_2D_H_ */

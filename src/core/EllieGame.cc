@@ -1,7 +1,7 @@
 /**
  * Copyright (C) 2014 The Motel on Jupiter
  */
-#include "EllieGame.h"
+#include "core/EllieGame.h"
 
 #include <GL/glew.h>
 #include <SDL_surface.h>
@@ -10,23 +10,8 @@
 
 #include "core/scene/EllieShooter3D.h"
 #include "core/scene/EllieShooting2D.h"
-#include "util/auxiliary/csyntax_aux.h"
+#include "scene/BaseScene.h"
 #include "util/logging/Logger.h"
-
-int EllieBaseGameScene::Initialize() {
-  finished_ = false;
-  scene_time_ = 0.0f;
-  return OnInitial();
-}
-
-void EllieBaseGameScene::Finalize() {
-  OnFinal();
-}
-
-void EllieBaseGameScene::Update(float elapsed_time) {
-  scene_time_ += elapsed_time;
-  OnUpdate(elapsed_time);
-}
 
 EllieGame::EllieGame()
     : scenes_(),
@@ -43,11 +28,10 @@ EllieGame::~EllieGame() {
 int EllieGame::Initialize() {
   font_ = TTF_OpenFont("share/ipag00303/ipag.ttf", 24);
   if (font_ == nullptr) {
-    LOGGER.Error("Failed to open font with SDL_ttf (errmsg: %s)",
-    TTF_GetError());
+    LOGGER.Error("Failed to open font with SDL_ttf (errmsg: %s)", TTF_GetError());
     return -1;
   }
-  EllieBaseGameScene *scene = new EllieShooting2D();
+  BaseScene *scene = new EllieShooting2D();
   if (scene == nullptr) {
     LOGGER.Error("Failed to create shooting 2d scene object");
   }
@@ -142,8 +126,8 @@ int EllieGame::OnKeyDown(const SDL_KeyboardEvent &keyboard) {
         }
         break;
       case SDLK_RETURN: {
-        EllieBaseGameScene *setup_scene = scenes_.at(cursor_);
-        LOGGER.Info("Set up the game scene (scene: %s)",
+        BaseScene *setup_scene = scenes_.at(cursor_);
+        LOGGER.Info("Set up the scene (scene: %s)",
                     setup_scene->name().c_str());
         int ret = setup_scene->Initialize();
         if (ret < 0) {

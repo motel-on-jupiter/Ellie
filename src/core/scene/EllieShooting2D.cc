@@ -2,6 +2,9 @@
  * Copyright (C) 2014 The Motel On Jupiter
  */
 #include "core/scene/EllieShooting2D.h"
+#include "scene/BaseScene.h"
+#include "scene/SceneGraph.h"
+#include "scene/TitleScene.h"
 #include "util/auxiliary/csyntax_aux.h"
 #include "util/catalogue/color_sample.h"
 #include "util/logging/Logger.h"
@@ -52,67 +55,15 @@ void EllieShooting2DStage::Draw(const glm::vec2 &window_size) {
   }
 }
 
-EllieShooting2DTitle::EllieShooting2DTitle()
-    : EllieBaseGameScene("Title") {
-}
-
-EllieShooting2DTitle::~EllieShooting2DTitle() {
-}
-
-void EllieShooting2DTitle::Draw(const glm::vec2& window_size) {
-  if (scene_time() - static_cast<float>(static_cast<int>(scene_time()))
-      < 0.8f) {
-    glMatrixMode(GL_MODELVIEW);
-    glLoadIdentity();
-    glColor4f(1.0f, 1.0f, 1.0f, 1.0f);
-    static const unsigned char *notice_message =
-        reinterpret_cast<const unsigned char *>("PRESS ENTER KEY");
-    glm::vec2 string_size = glm::vec2(
-        glutBitmapLength(GLUT_BITMAP_9_BY_15, notice_message),
-        glutBitmapHeight(GLUT_BITMAP_9_BY_15));
-    glRasterPos2fv(glm::value_ptr(window_size * 0.5f - string_size * 0.5f));
-    glutBitmapString(GLUT_BITMAP_9_BY_15, notice_message);
-  }
-}
-
-void EllieShooting2DTitle::OnKeyDown(const SDL_KeyboardEvent &keyboard) {
-  if (keyboard.keysym.sym == SDLK_RETURN) {
-    set_finished(true);
-  }
-}
-
-void EllieShooting2DTitle::OnKeyUp(const SDL_KeyboardEvent &keyboard) {
-  UNUSED(keyboard);
-}
-
-void EllieShooting2DTitle::OnMouseButtonDown(const SDL_MouseButtonEvent &button) {
-  UNUSED(button);
-}
-
-void EllieShooting2DTitle::OnMouseMotion(const SDL_MouseMotionEvent &motion) {
-  UNUSED(motion);
-}
-
-int EllieShooting2DTitle::OnInitial() {
-  return 0;
-}
-
-void EllieShooting2DTitle::OnFinal() {
-}
-
-void EllieShooting2DTitle::OnUpdate(float elapsed_time) {
-  UNUSED(elapsed_time);
-}
-
 const float EllieShooting2DIngame::kShotInterval = 0.1f;
 const glm::vec2 EllieShooting2DIngame::kBulletVelocity = glm::vec2(0.0f,
                                                                    -200.0f);
 
 EllieShooting2DIngame::EllieShooting2DIngame()
-    : EllieBaseGameScene("Ingame"),
+    : BaseScene("Ingame"),
       f22_(),
       ufos_(),
-      ccrParam_(nullptr),
+      ccr_param_(nullptr),
       time_(0.0f),
       ufo_idx_(0),
       scene_pausing_(false),
@@ -125,7 +76,7 @@ EllieShooting2DIngame::~EllieShooting2DIngame() {
 }
 
 void EllieShooting2DIngame::DirectEnemies(float elapsed_time) {
-  ccrAsContParam(ccrParam_);
+  ccrAsContParam(ccr_param_);
   ccrBeginContext
     ;
   ccrEndContext(ctx);
@@ -244,7 +195,8 @@ void EllieShooting2DIngame::OnKeyUp(const SDL_KeyboardEvent &keyboard) {
   }
 }
 
-void EllieShooting2DIngame::OnMouseButtonDown(const SDL_MouseButtonEvent &button) {
+void EllieShooting2DIngame::OnMouseButtonDown(
+    const SDL_MouseButtonEvent &button) {
   UNUSED(button);
 }
 
@@ -262,7 +214,7 @@ void EllieShooting2DIngame::OnFinal() {
   for (int i = 0; i < ARRAYSIZE(ufos_); ++i) {
     ufos_[i].Finalize();
   }
-  ccrAbort(ccrParam_);
+  ccrAbort(ccr_param_);
 }
 
 void EllieShooting2DIngame::OnUpdate(float elapsed_time) {
@@ -312,10 +264,10 @@ void EllieShooting2DIngame::OnUpdate(float elapsed_time) {
 }
 
 EllieShooting2D::EllieShooting2D()
-    : EllieBaseGameScene("2D Shooting"),
+    : GraphDrivenScene("2D Shooting", scene_graph_),
       stage_(),
-      sub_scenes_(),
-      current_scene_(nullptr) {
+      scene_pool_(),
+      scene_graph_() {
 }
 
 EllieShooting2D::~EllieShooting2D() {
@@ -331,113 +283,50 @@ void EllieShooting2D::Draw(const glm::vec2 &window_size) {
   glMatrixMode(GL_MODELVIEW);
   stage_.Draw(window_size);
 
-  if (current_scene_ != nullptr) {
-    current_scene_->Draw(window_size);
-  }
+  GraphDrivenScene::Draw(window_size);
   glPopMatrix();
-}
-
-void EllieShooting2D::OnKeyDown(const SDL_KeyboardEvent &keyboard) {
-  if (current_scene_ != nullptr) {
-    current_scene_->OnKeyDown(keyboard);
-  }
-}
-
-void EllieShooting2D::OnKeyUp(const SDL_KeyboardEvent &keyboard) {
-  if (current_scene_ != nullptr) {
-    current_scene_->OnKeyUp(keyboard);
-  }
-}
-
-void EllieShooting2D::OnMouseButtonDown(const SDL_MouseButtonEvent &button) {
-  if (current_scene_ != nullptr) {
-    current_scene_->OnMouseButtonDown(button);
-  }
-}
-
-void EllieShooting2D::OnMouseMotion(const SDL_MouseMotionEvent &motion) {
-  if (current_scene_ != nullptr) {
-    current_scene_->OnMouseMotion(motion);
-  }
 }
 
 int EllieShooting2D::OnInitial() {
   glSetClearanceColor(0.0f, 0.0f, 0.0f, 0.0f);
 
-  EllieBaseGameScene *sub_scene = new EllieShooting2DTitle();
+  BaseScene *sub_scene = new TitleScene("Title");
   if (sub_scene == nullptr) {
     LOGGER.Error("Failed to allocate for sub scene object");
     return -1;
   }
-  typedef std::map<std::string, EllieBaseGameScene *>::value_type SubScenesItem;
-  sub_scenes_.insert(SubScenesItem(sub_scene->name(), sub_scene));
-
-  LOGGER.Info("Set up the sub scene (scene: %s)", sub_scene->name().c_str());
-  int ret = sub_scene->Initialize();
-  if (ret < 0) {
-    LOGGER.Error("Failed to initialize the sub scene (scene: %s)",
-                 sub_scene->name().c_str());
-    delete sub_scene;
-    return -1;
-  }
-  current_scene_ = sub_scene;
+  scene_pool_.push_back(sub_scene);
 
   sub_scene = new EllieShooting2DIngame();
   if (sub_scene == nullptr) {
     LOGGER.Error("Failed to allocate for sub scene object");
     return -1;
   }
-  sub_scenes_.insert(SubScenesItem(sub_scene->name(), sub_scene));
+  scene_pool_.push_back(sub_scene);
 
+  SceneFlow flow = SceneFlow(nullptr, scene_pool_[0]);
+  SceneEdge edge = SceneEdge(flow, 0);
+  scene_graph_.push_back(edge);
+  flow = SceneFlow(scene_pool_[0], scene_pool_[1]);
+  edge = SceneEdge(flow, 0);
+  scene_graph_.push_back(edge);
+
+  int ret = GraphDrivenScene::OnInitial();
+  if (ret < 0) {
+    for (auto it = scene_pool_.begin(); it != scene_pool_.end(); ++it) {
+      delete *it;
+    }
+    scene_pool_.clear();
+    return ret;
+  }
   return 0;
 }
 
 void EllieShooting2D::OnFinal() {
-  if (current_scene_ != nullptr) {
-    current_scene_->Finalize();
-    LOGGER.Info("Clean up the current sub scene (scene: %s)",
-                current_scene_->name().c_str());
-    current_scene_ = nullptr;
+  GraphDrivenScene::OnFinal();
+  for (auto it = scene_pool_.begin(); it != scene_pool_.end(); ++it) {
+    delete *it;
   }
-  for (auto it = sub_scenes_.begin(); it != sub_scenes_.end(); ++it) {
-    delete it->second;
-  }
-  sub_scenes_.clear();
+  scene_pool_.clear();
+  scene_graph_.clear();
 }
-
-void EllieShooting2D::OnUpdate(float elapsed_time) {
-  struct SceneEdge {
-    std::string start;
-    std::string end;
-  };
-  static const SceneEdge kSceneGraph[] = { { "Title", "Ingame" }, };
-
-  if (current_scene_ != nullptr) {
-    current_scene_->Update(elapsed_time);
-
-    if (current_scene_->finished()) {
-      current_scene_->Finalize();
-      LOGGER.Info("Clean up the current sub scene (scene: %s)",
-                  current_scene_->name().c_str());
-      EllieBaseGameScene *prev_scene_ = current_scene_;
-      current_scene_ = nullptr;
-
-      for (int i = 0; i < ARRAYSIZE(kSceneGraph); ++i) {
-        if (kSceneGraph[i].start == prev_scene_->name()) {
-          EllieBaseGameScene *sub_scene = sub_scenes_.at(kSceneGraph[i].end);
-
-          LOGGER.Info("Set up the next sub scene (scene: %s)",
-                      sub_scene->name().c_str());
-          int ret = sub_scene->Initialize();
-          if (ret < 0) {
-            LOGGER.Error(
-                "Failed to initialize next sub scene (scene: %s, error: %d)",
-                current_scene_->name().c_str(), ret);
-          }
-          current_scene_ = sub_scene;
-        }
-      }
-    }
-  }
-}
-

@@ -15,6 +15,12 @@ class Camera {
   Camera(const glm::vec3& pos, const glm::vec3& at, const glm::vec3& up);
   virtual ~Camera();
 
+  void Reset() {
+    set_pos(default_pos_);
+    set_at(default_at_);
+    set_up(default_up_);
+  }
+
   const glm::vec3 &pos() const {
     return pos_;
   }
@@ -47,6 +53,9 @@ class Camera {
   }
 
  protected:
+  glm::vec3 default_pos_;
+  glm::vec3 default_at_;
+  glm::vec3 default_up_;
   glm::vec3 pos_;
   glm::vec3 at_;
   glm::vec3 up_;

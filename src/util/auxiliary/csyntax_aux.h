@@ -8,6 +8,10 @@
 #define UNUSED(_arg) do { (void)(_arg); } while(0)
 #endif
 
+#ifndef SAFE_STR
+#define SAFE_STR(_str) ((_str == nullptr) ? "(null)" : _str)
+#endif
+
 #ifdef _MSC_VER
 #include <Windows.h>
 #else
