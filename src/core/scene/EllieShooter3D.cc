@@ -145,6 +145,7 @@ int EllieShooter3DIngame::OnInitial() {
     CleanObjects();
     return -1;
   }
+  bt_world_->setGravity(glm_aux::toBtVec3(glm::vec3()));
 
   spawn_timer_ = 0.0f;
 
@@ -166,12 +167,13 @@ void EllieShooter3DIngame::OnFinal() {
 }
 
 void EllieShooter3DIngame::OnUpdate(float elapsed_time) {
+  /* For camera */
   camera_controller_.Update(elapsed_time);
 
+  /* For entity objects */
   for (auto it = zombies_.begin(); it != zombies_.end(); ++it) {
-    (*it)->Update(elapsed_time, camera_.pos());
+    (*it)->Update(camera_.pos(), 1.0f / elapsed_time);
   }
-
   if (zombies_.size() < kMaxZombies) {
     spawn_timer_ += elapsed_time;
     if (spawn_timer_ > kZombieSpawnInterval) {
@@ -196,8 +198,10 @@ void EllieShooter3DIngame::OnUpdate(float elapsed_time) {
     }
   }
 
+  /* For physics with Bullet */
   bt_world_->stepSimulation(elapsed_time, 60);
 
+  /* For physics, collision detection and collided reaction */
   for (auto it = bullets_.begin(); it != bullets_.end();) {
     ShooterBullet *bullet = *it;
     bullet->Update(elapsed_time);

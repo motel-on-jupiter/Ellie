@@ -24,10 +24,10 @@ class CubicEntityMotionState : public btMotionState, boost::noncopyable {
     worldTrans.setRotation(glm_aux::toBtQuat(entity_.rot()));
   }
   virtual void setWorldTransform(const btTransform& worldTrans) {
-    entity_.Move(
+    entity_.MoveTo(
         glm_aux::fromBtVec3(worldTrans.getOrigin())
             - glm_aux::y_dir() * entity_.scale() * 0.5f);
-    entity_.Rotate(glm_aux::fromBtQuat(worldTrans.getRotation()));
+    entity_.RotateTo(glm_aux::fromBtQuat(worldTrans.getRotation()));
   }
 
  private:
@@ -48,6 +48,16 @@ class CubicEntityPhysics : public CubicEntityMixIn {
 
   virtual bool Initialize();
   virtual void Finalize();
+
+  virtual void SetVelocity(const glm::vec3 &velocity) {
+    bt_body()->setLinearVelocity(glm_aux::toBtVec3(velocity));
+  }
+  virtual void SetAngularVelocity(const glm::vec3 &velocity) {
+    bt_body()->setAngularVelocity(glm_aux::toBtVec3(velocity));
+  }
+  virtual void SetAngularVelocity(const glm::quat &rotation) {
+    bt_body()->setAngularVelocity(btVector3(glm::pitch(rotation), glm::yaw(rotation), glm::roll(rotation)));
+  }
 
   btRigidBody *bt_body() {
     return bt_body_;

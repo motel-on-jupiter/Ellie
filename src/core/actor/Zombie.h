@@ -19,7 +19,7 @@ class Zombie : public CubicEntity, public EntityCubeDraw,
   virtual ~Zombie();
 
   virtual bool Initialize();
-  void Update(float elapsed_time, const glm::vec3 &player_pos);
+  void Update(const glm::vec3 &player_pos, float fps);
 
   void TakeDamage();
   bool IsDead() const {

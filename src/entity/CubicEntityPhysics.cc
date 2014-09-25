@@ -25,9 +25,6 @@ bool CubicEntityPhysics::Initialize() {
     CleanObjects();
     return false;
   }
-  bt_body_->setCollisionFlags(
-      bt_body_->getCollisionFlags() | btCollisionObject::CF_KINEMATIC_OBJECT);
-  bt_body_->setActivationState(DISABLE_DEACTIVATION);
   return true;
 }
 

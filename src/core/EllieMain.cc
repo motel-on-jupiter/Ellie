@@ -88,6 +88,9 @@ int EllieMain() {
   int glut_argc = 0;
   glutInit(&glut_argc, {});
 
+  // Initialize global flag for Bullet
+  gDisableDeactivation = true;
+
   // Initialize the tweaker library
   if (TwInit(TW_OPENGL, NULL) == 0) {
     LOGGER.Error("Failed to initialize the tweaker library (errmsg: %s)",

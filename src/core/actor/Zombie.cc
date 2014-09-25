@@ -33,12 +33,13 @@ bool Zombie::Initialize() {
   return true;
 }
 
-void Zombie::Update(float elapsed_time, const glm::vec3 &player_pos) {
-  glm::vec3 to_player = player_pos * glm::vec3(1.0f, 0.0f, 1.0f) - pos();
+void Zombie::Update(const glm::vec3 &player_pos, float fps) {
+  glm::vec3 to_player = player_pos - pos();
+  to_player.y = 0.0f;
   float to_player_dist2 = glm::length2(to_player);
   if (to_player_dist2 > glm_aux::epsilon()) {
     glm::vec3 to_player_dir = glm::normalize(to_player);
-    Move(to_player_dir * kMoveSpeed * elapsed_time);
+    SetVelocity(to_player_dir * kMoveSpeed);
 
     glm::vec3 dir = rot() * glm_aux::z_dir();
     float to_player_cos = glm::dot(to_player_dir, dir);
@@ -47,11 +48,11 @@ void Zombie::Update(float elapsed_time, const glm::vec3 &player_pos) {
     if (to_player_cos > 1.0f - glm_aux::epsilon()) {
       need_to_turn = false;
     } else {
-      turn_angle = kTurnSpeed * elapsed_time;
+      turn_angle = kTurnSpeed;
       need_to_turn = true;
       if (to_player_cos > -1.0f + glm_aux::epsilon()) {
         need_to_turn = true;
-        float to_player_angle = acos(to_player_cos);
+        float to_player_angle = acos(to_player_cos) * fps;
         if (abs(to_player_angle) < turn_angle) {
           turn_angle = to_player_angle;
         }
@@ -59,7 +60,7 @@ void Zombie::Update(float elapsed_time, const glm::vec3 &player_pos) {
       }
     }
     if (need_to_turn) {
-      Rotate(glm::angleAxis(turn_angle, glm_aux::y_dir()));
+      SetAngularVelocity(glm_aux::y_dir() * turn_angle);
     }
   }
 }
