@@ -55,9 +55,9 @@ void GraphDrivenScene::OnFinal() {
   graph_iter_.Finalize();
 }
 
-void GraphDrivenScene::OnUpdate(float elapsed_time) {
+void GraphDrivenScene::OnStep(float elapsed_time) {
   if (graph_iter_.current() != nullptr) {
-    graph_iter_.current()->Update(elapsed_time);
+    graph_iter_.current()->Step(elapsed_time);
     if (graph_iter_.current()->finished()) {
       std::string prev_name = graph_iter_.current()->name();
       if (graph_iter_.Next(0)) {

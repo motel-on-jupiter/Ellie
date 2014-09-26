@@ -217,7 +217,7 @@ void EllieShooting2DIngame::OnFinal() {
   ccrAbort(ccr_param_);
 }
 
-void EllieShooting2DIngame::OnUpdate(float elapsed_time) {
+void EllieShooting2DIngame::OnStep(float elapsed_time) {
   if (!scene_pausing_) {
     DirectEnemies(elapsed_time);
 

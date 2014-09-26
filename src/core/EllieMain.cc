@@ -164,12 +164,12 @@ int EllieMain() {
           break;
       }
     }
-    if (escape_loop || !game.ongoing()) {
+    if (escape_loop || !game.on_going()) {
       break;
     }
 
     // Update the game
-    game.Update(kGameLoopIntervalSec * tweaker_ctx.system_time_speed);
+    game.Step(kGameLoopIntervalSec * tweaker_ctx.system_time_speed);
 
     // Draw the objects
     game.Draw(kWindowSize);

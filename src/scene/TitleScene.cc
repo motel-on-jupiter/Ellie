@@ -61,7 +61,7 @@ int TitleScene::OnInitial() {
 void TitleScene::OnFinal() {
 }
 
-void TitleScene::OnUpdate(float elapsed_time) {
+void TitleScene::OnStep(float elapsed_time) {
   UNUSED(elapsed_time);
 }
 

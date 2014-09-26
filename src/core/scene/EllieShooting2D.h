@@ -33,7 +33,6 @@ class EllieShooting2DIngame : public BaseScene {
   EllieShooting2DIngame();
   virtual ~EllieShooting2DIngame();
 
-  virtual void OnUpdate(float elapsed_time);
   virtual void Draw(const glm::vec2 &window_size);
   virtual void OnKeyDown(const SDL_KeyboardEvent &keyboard);
   virtual void OnKeyUp(const SDL_KeyboardEvent &keyboard);
@@ -43,6 +42,7 @@ class EllieShooting2DIngame : public BaseScene {
  protected:
   virtual int OnInitial();
   virtual void OnFinal();
+  virtual void OnStep(float elapsed_time);
 
  private:
   static const float kShotInterval;

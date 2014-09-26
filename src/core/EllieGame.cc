@@ -18,7 +18,7 @@ EllieGame::EllieGame()
       current_scene_(nullptr),
       font_(nullptr),
       cursor_(0),
-      ongoing_(false) {
+      on_going_(false) {
 }
 
 EllieGame::~EllieGame() {
@@ -41,7 +41,7 @@ int EllieGame::Initialize() {
     LOGGER.Error("Failed to create shooter 3d scene object");
   }
   scenes_.push_back(scene);
-  ongoing_ = true;
+  on_going_ = true;
   return 0;
 }
 
@@ -58,21 +58,21 @@ void EllieGame::Finalize() {
     TTF_CloseFont(font_);
     font_ = nullptr;
   }
-  ongoing_ = false;
+  on_going_ = false;
 }
 
-void EllieGame::Update(float elapsed_time) {
-  if (!ongoing_) {
+void EllieGame::Step(float elapsed_time) {
+  if (!on_going_) {
     return;
   }
 
   if (current_scene_ != nullptr) {
-    current_scene_->Update(elapsed_time);
+    current_scene_->Step(elapsed_time);
   }
 }
 
 void EllieGame::Draw(const glm::vec2 &window_size) {
-  if (!ongoing_) {
+  if (!on_going_) {
     return;
   }
 
@@ -107,7 +107,7 @@ void EllieGame::Draw(const glm::vec2 &window_size) {
 }
 
 int EllieGame::OnKeyDown(const SDL_KeyboardEvent &keyboard) {
-  if (!ongoing_) {
+  if (!on_going_) {
     return 0;
   }
 
@@ -139,7 +139,7 @@ int EllieGame::OnKeyDown(const SDL_KeyboardEvent &keyboard) {
         break;
       }
       case SDLK_ESCAPE:
-        ongoing_ = false;
+        on_going_ = false;
         break;
     }
   } else {
@@ -165,7 +165,7 @@ int EllieGame::OnKeyDown(const SDL_KeyboardEvent &keyboard) {
 }
 
 void EllieGame::OnKeyUp(const SDL_KeyboardEvent &keyboard) {
-  if (!ongoing_) {
+  if (!on_going_) {
     return;
   }
 
@@ -184,7 +184,7 @@ void EllieGame::OnKeyUp(const SDL_KeyboardEvent &keyboard) {
 }
 
 void EllieGame::OnMouseButtonDown(const SDL_MouseButtonEvent &button) {
-  if (!ongoing_) {
+  if (!on_going_) {
     return;
   }
   if (current_scene_ != nullptr) {
@@ -193,7 +193,7 @@ void EllieGame::OnMouseButtonDown(const SDL_MouseButtonEvent &button) {
 }
 
 void EllieGame::OnMouseMotion(const SDL_MouseMotionEvent &motion) {
-  if (!ongoing_) {
+  if (!on_going_) {
     return;
   }
   if (current_scene_ != nullptr) {

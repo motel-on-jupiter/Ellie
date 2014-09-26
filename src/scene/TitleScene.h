@@ -20,7 +20,7 @@ class TitleScene : public BaseScene {
  protected:
   virtual int OnInitial();
   virtual void OnFinal();
-  virtual void OnUpdate(float elapsed_time);
+  virtual void OnStep(float elapsed_time);
 };
 
 #endif /* TITLE_SCENE_H_ */

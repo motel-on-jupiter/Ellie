@@ -16,15 +16,15 @@ class EllieGame {
 
   int Initialize();
   void Finalize();
-  void Update(float elapsed_time);
+  void Step(float elapsed_time);
   void Draw(const glm::vec2 &window_size);
   int OnKeyDown(const SDL_KeyboardEvent &keyboard);
   void OnKeyUp(const SDL_KeyboardEvent &keyboard);
   void OnMouseButtonDown(const SDL_MouseButtonEvent &button);
   void OnMouseMotion(const SDL_MouseMotionEvent &motion);
 
-  bool ongoing() const {
-    return ongoing_;
+  bool on_going() const {
+    return on_going_;
   }
 
  private:
@@ -32,7 +32,7 @@ class EllieGame {
   BaseScene *current_scene_;
   TTF_Font *font_;
   unsigned int cursor_;
-  bool ongoing_;
+  bool on_going_;
 };
 
 #endif /* ELLIE_GAME_H_ */

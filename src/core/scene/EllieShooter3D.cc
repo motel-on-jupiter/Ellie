@@ -166,7 +166,7 @@ void EllieShooter3DIngame::OnFinal() {
   CleanObjects();
 }
 
-void EllieShooter3DIngame::OnUpdate(float elapsed_time) {
+void EllieShooter3DIngame::OnStep(float elapsed_time) {
   /* For camera */
   camera_controller_.Update(elapsed_time);
 

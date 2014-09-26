@@ -24,9 +24,9 @@ class BaseScene {
   void Finalize() {
     OnFinal();
   }
-  void Update(float elapsed_time) {
+  void Step(float elapsed_time) {
     scene_time_ += elapsed_time;
-    OnUpdate(elapsed_time);
+    OnStep(elapsed_time);
   }
 
   virtual void Draw(const glm::vec2 &window_size) = 0;
@@ -48,7 +48,7 @@ class BaseScene {
  protected:
   virtual int OnInitial() = 0;
   virtual void OnFinal() = 0;
-  virtual void OnUpdate(float elapsed_time) = 0;
+  virtual void OnStep(float elapsed_time) = 0;
 
   void set_finished(bool finished) {
     finished_ = finished;
