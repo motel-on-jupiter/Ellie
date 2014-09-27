@@ -6,8 +6,8 @@
 
 #include <boost/noncopyable.hpp>
 #include "entity/CubicEntity.h"
-#include "util/auxiliary/glm_aux.h"
-#include "util/wrapper/bullet_wrap.h"
+#include "auxiliary/glm_aux.h"
+#include "wrapping/bullet_wrap.h"
 
 class CubicEntityMotionState : public btMotionState, boost::noncopyable {
  public:

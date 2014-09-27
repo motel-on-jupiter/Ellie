@@ -2,8 +2,8 @@
  * Copyright (C) 2014 The Motel On Jupiter
  */
 #include "scene/GraphDrivenScene.h"
-#include "util/auxiliary/csyntax_aux.h"
-#include "util/logging/Logger.h"
+#include "auxiliary/csyntax_aux.h"
+#include "logging/Logger.h"
 
 GraphDrivenScene::GraphDrivenScene(const char *name, const SceneGraph &graph)
     : BaseScene(name),

@@ -4,8 +4,8 @@
 #include "core/stage/GridStage3D.h"
 #include <glm/gtx/quaternion.hpp>
 #include "graphics/GLMaterialColor.h"
-#include "util/sampler/color_sampler.h"
-#include "util/wrapper/glgraphics_wrap.h"
+#include "sampler/color_sampler.h"
+#include "wrapping/glgraphics_wrap.h"
 
 GridStage3D::GridStage3D(const glm::vec3 &scale)
     : scale_(scale) {

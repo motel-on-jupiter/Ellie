@@ -10,13 +10,13 @@
 #include "scene/GraphDrivenScene.h"
 #include "scene/SceneGraph.h"
 #include "scene/TitleScene.h"
-#include "util/auxiliary/assert_aux.h"
-#include "util/auxiliary/csyntax_aux.h"
-#include "util/auxiliary/glm_aux.h"
-#include "util/auxiliary/math_aux.h"
-#include "util/sampler/color_sampler.h"
-#include "util/logging/Logger.h"
-#include "util/wrapper/glgraphics_wrap.h"
+#include "auxiliary/assert_aux.h"
+#include "auxiliary/csyntax_aux.h"
+#include "auxiliary/glm_aux.h"
+#include "auxiliary/math_aux.h"
+#include "sampler/color_sampler.h"
+#include "logging/Logger.h"
+#include "wrapping/glgraphics_wrap.h"
 
 ShooterPlayer::ShooterPlayer(const glm::vec3 &pos, const glm::quat &rot)
     : CubicEntity(pos, rot, glm::vec3(1.0f, 1.75f, 0.3f)),

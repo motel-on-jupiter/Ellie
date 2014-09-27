@@ -6,7 +6,7 @@
 
 #include <boost/noncopyable.hpp>
 #include <glm/gtx/quaternion.hpp>
-#include "util/auxiliary/math_aux.h"
+#include "auxiliary/math_aux.h"
 
 class CubicEntity {
  public:

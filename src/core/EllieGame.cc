@@ -11,7 +11,7 @@
 #include "core/scene/EllieShooter3D.h"
 #include "core/scene/EllieShooting2D.h"
 #include "scene/BaseScene.h"
-#include "util/logging/Logger.h"
+#include "logging/Logger.h"
 
 EllieGame::EllieGame()
     : scenes_(),

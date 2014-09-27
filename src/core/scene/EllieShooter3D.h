@@ -14,7 +14,7 @@
 #include "scene/SceneGraph.h"
 #include "entity/CubicEntityDraw.h"
 #include "entity/CubicEntityPhysics.h"
-#include "util/wrapper/bullet_wrap.h"
+#include "wrapping/bullet_wrap.h"
 
 #include "entity/CubicEntity.h"
 #include "entity/CubicEntityDraw.h"

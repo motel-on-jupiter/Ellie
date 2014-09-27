@@ -5,7 +5,7 @@
 #define PLANARENTITY_H_
 
 #include <boost/noncopyable.hpp>
-#include "util/auxiliary/glm_aux.h"
+#include "auxiliary/glm_aux.h"
 
 class PlanarEntity {
  public:

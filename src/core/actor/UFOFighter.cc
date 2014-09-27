@@ -4,8 +4,8 @@
 #include "UFOFighter.h"
 #include "entity/PlanarEntity.h"
 #include "entity/PlanarEntityDraw.h"
-#include "util/sampler/color_sampler.h"
-#include "util/wrapper/coroutine_wrap.h"
+#include "sampler/color_sampler.h"
+#include "wrapping/coroutine_wrap.h"
 
 UFOFighter::UFOFighter()
 : PlanarEntity(glm::vec2(0.0f), 0.0f, glm::vec2(10.0f)),

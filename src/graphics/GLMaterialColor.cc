@@ -2,7 +2,7 @@
  * Copyright (C) 2014 The Motel on Jupiter
  */
 #include "graphics/GLMaterialColor.h"
-#include "util/wrapper/glgraphics_wrap.h"
+#include "wrapping/glgraphics_wrap.h"
 
 void glMaterial(GLenum face, const GLMaterialColor &material_color) {
   glMaterialfv(face, GL_AMBIENT, glm::value_ptr(material_color.ambient));

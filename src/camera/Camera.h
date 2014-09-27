@@ -5,8 +5,8 @@
 #define CAMERA_H_
 
 #include <boost/noncopyable.hpp>
-#include "util/auxiliary/glm_aux.h"
-#include "util/wrapper/glm_wrap.h"
+#include "auxiliary/glm_aux.h"
+#include "wrapping/glm_wrap.h"
 
 class Camera {
  public:

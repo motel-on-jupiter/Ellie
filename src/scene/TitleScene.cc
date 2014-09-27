@@ -3,8 +3,8 @@
  */
 #include "scene/TitleScene.h"
 #include "scene/BaseScene.h"
-#include "util/auxiliary/csyntax_aux.h"
-#include "util/wrapper/glgraphics_wrap.h"
+#include "auxiliary/csyntax_aux.h"
+#include "wrapping/glgraphics_wrap.h"
 
 TitleScene::TitleScene(const char *name)
     : BaseScene(name) {

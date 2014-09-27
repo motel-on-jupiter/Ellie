@@ -5,11 +5,11 @@
 #include "scene/BaseScene.h"
 #include "scene/SceneGraph.h"
 #include "scene/TitleScene.h"
-#include "util/auxiliary/csyntax_aux.h"
-#include "util/sampler/color_sampler.h"
-#include "util/logging/Logger.h"
-#include "util/wrapper/coroutine_wrap.h"
-#include "util/wrapper/glgraphics_wrap.h"
+#include "auxiliary/csyntax_aux.h"
+#include "sampler/color_sampler.h"
+#include "logging/Logger.h"
+#include "wrapping/coroutine_wrap.h"
+#include "wrapping/glgraphics_wrap.h"
 
 const size_t EllieShooting2DStage::kNumXMappingStars = 10;
 const size_t EllieShooting2DStage::kNumYMappingStars = 10;

@@ -52,21 +52,21 @@
     <ClCompile Include="..\src\scene\GraphDrivenScene.cc" />
     <ClCompile Include="..\src\scene\SceneGraph.cc" />
     <ClCompile Include="..\src\scene\TitleScene.cc" />
-    <ClCompile Include="..\src\util\auxiliary\assert_aux.cc" />
-    <ClCompile Include="..\src\util\auxiliary\GLINIReader.cpp" />
-    <ClCompile Include="..\src\util\auxiliary\glm_aux.cc" />
-    <ClCompile Include="..\src\util\auxiliary\math_aux.cc" />
-    <ClCompile Include="..\src\util\sampler\color_sampler.cc" />
-    <ClCompile Include="..\src\util\logging\emitter\DebuggerConsoleLogEmitter.cc" />
-    <ClCompile Include="..\src\util\logging\emitter\FileLogEmitter.cc" />
-    <ClCompile Include="..\src\util\logging\emitter\LogEmitter.cc" />
-    <ClCompile Include="..\src\util\logging\emitter\MessageBoxLogEmitter.cc" />
-    <ClCompile Include="..\src\util\logging\emitter\PipeLogEmitter.cc" />
-    <ClCompile Include="..\src\util\logging\Logger.cc" />
-    <ClCompile Include="..\src\util\measurement\FPSCounter.cc" />
-    <ClCompile Include="..\src\util\wrapper\atb_wrap.cc" />
-    <ClCompile Include="..\src\util\wrapper\glgraphics_wrap.cc" />
-    <ClCompile Include="..\src\util\wrapper\sdl_wrap.cc" />
+    <ClCompile Include="..\src\auxiliary\assert_aux.cc" />
+    <ClCompile Include="..\src\auxiliary\GLINIReader.cpp" />
+    <ClCompile Include="..\src\auxiliary\glm_aux.cc" />
+    <ClCompile Include="..\src\auxiliary\math_aux.cc" />
+    <ClCompile Include="..\src\sampler\color_sampler.cc" />
+    <ClCompile Include="..\src\logging\emitter\DebuggerConsoleLogEmitter.cc" />
+    <ClCompile Include="..\src\logging\emitter\FileLogEmitter.cc" />
+    <ClCompile Include="..\src\logging\emitter\LogEmitter.cc" />
+    <ClCompile Include="..\src\logging\emitter\MessageBoxLogEmitter.cc" />
+    <ClCompile Include="..\src\logging\emitter\PipeLogEmitter.cc" />
+    <ClCompile Include="..\src\logging\Logger.cc" />
+    <ClCompile Include="..\src\measurement\FPSCounter.cc" />
+    <ClCompile Include="..\src\wrapping\atb_wrap.cc" />
+    <ClCompile Include="..\src\wrapping\glgraphics_wrap.cc" />
+    <ClCompile Include="..\src\wrapping\sdl_wrap.cc" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\src\camera\Camera.h" />
@@ -94,28 +94,28 @@
     <ClInclude Include="..\src\scene\GraphDrivenScene.h" />
     <ClInclude Include="..\src\scene\SceneGraph.h" />
     <ClInclude Include="..\src\scene\TitleScene.h" />
-    <ClInclude Include="..\src\util\auxiliary\assert_aux.h" />
-    <ClInclude Include="..\src\util\auxiliary\csyntax_aux.h" />
-    <ClInclude Include="..\src\util\auxiliary\GLINIReader.h" />
-    <ClInclude Include="..\src\util\auxiliary\glm_aux.h" />
-    <ClInclude Include="..\src\util\auxiliary\math_aux.h" />
-    <ClInclude Include="..\src\util\sampler\color_sampler.h" />
-    <ClInclude Include="..\src\util\logging\emitter\DebuggerConsoleLogEmitter.h" />
-    <ClInclude Include="..\src\util\logging\emitter\FileLogEmitter.h" />
-    <ClInclude Include="..\src\util\logging\emitter\LogEmitter.h" />
-    <ClInclude Include="..\src\util\logging\emitter\MessageBoxLogEmitter.h" />
-    <ClInclude Include="..\src\util\logging\emitter\PipeLogEmitter.h" />
-    <ClInclude Include="..\src\util\logging\Logger.h" />
-    <ClInclude Include="..\src\util\measurement\FPSCounter.h" />
-    <ClInclude Include="..\src\util\wrapper\atb_wrap.h" />
-    <ClInclude Include="..\src\util\wrapper\bullet_wrap.h" />
-    <ClInclude Include="..\src\util\wrapper\crtdbg_wrap.h" />
-    <ClInclude Include="..\src\util\wrapper\glgraphics_wrap.h" />
-    <ClInclude Include="..\src\util\wrapper\glm_wrap.h" />
-    <ClInclude Include="..\src\util\wrapper\sdl_wrap.h" />
+    <ClInclude Include="..\src\auxiliary\assert_aux.h" />
+    <ClInclude Include="..\src\auxiliary\csyntax_aux.h" />
+    <ClInclude Include="..\src\auxiliary\GLINIReader.h" />
+    <ClInclude Include="..\src\auxiliary\glm_aux.h" />
+    <ClInclude Include="..\src\auxiliary\math_aux.h" />
+    <ClInclude Include="..\src\sampler\color_sampler.h" />
+    <ClInclude Include="..\src\logging\emitter\DebuggerConsoleLogEmitter.h" />
+    <ClInclude Include="..\src\logging\emitter\FileLogEmitter.h" />
+    <ClInclude Include="..\src\logging\emitter\LogEmitter.h" />
+    <ClInclude Include="..\src\logging\emitter\MessageBoxLogEmitter.h" />
+    <ClInclude Include="..\src\logging\emitter\PipeLogEmitter.h" />
+    <ClInclude Include="..\src\logging\Logger.h" />
+    <ClInclude Include="..\src\measurement\FPSCounter.h" />
+    <ClInclude Include="..\src\wrapping\atb_wrap.h" />
+    <ClInclude Include="..\src\wrapping\bullet_wrap.h" />
+    <ClInclude Include="..\src\wrapping\crtdbg_wrap.h" />
+    <ClInclude Include="..\src\wrapping\glgraphics_wrap.h" />
+    <ClInclude Include="..\src\wrapping\glm_wrap.h" />
+    <ClInclude Include="..\src\wrapping\sdl_wrap.h" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="..\src\util\logging\Logger.inl" />
+    <None Include="..\src\logging\Logger.inl" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{1AA04D48-AD99-4B2A-8058-B840FC91770A}</ProjectGuid>

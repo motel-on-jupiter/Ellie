@@ -3,7 +3,7 @@
  */
 #include "camera/FirstPersonCameraController.h"
 #include <glm/gtx/rotate_vector.hpp>
-#include "util/auxiliary/csyntax_aux.h"
+#include "auxiliary/csyntax_aux.h"
 
 FirstPersonCameraController::FirstPersonCameraController(Camera &camera,
                                                          float translate_speed,

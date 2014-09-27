@@ -3,11 +3,11 @@
  */
 
 #include "core/EllieMain.h"
-#include "util/auxiliary/csyntax_aux.h"
-#include "util/logging/emitter/DebuggerConsoleLogEmitter.h"
-#include "util/logging/emitter/FileLogEmitter.h"
-#include "util/logging/Logger.h"
-#include "util/wrapper/crtdbg_wrap.h"
+#include "auxiliary/csyntax_aux.h"
+#include "logging/emitter/DebuggerConsoleLogEmitter.h"
+#include "logging/emitter/FileLogEmitter.h"
+#include "logging/Logger.h"
+#include "wrapping/crtdbg_wrap.h"
 
 #define kDebugAlloc (-1)
 

@@ -3,8 +3,8 @@
  */
 #include "scene/BaseScene.h"
 #include "scene/SceneGraph.h"
-#include "util/auxiliary/csyntax_aux.h"
-#include "util/logging/Logger.h"
+#include "auxiliary/csyntax_aux.h"
+#include "logging/Logger.h"
 
 bool SceneGraphIterator::Initiaize() {
   return NextImpl(nullptr, -1);
