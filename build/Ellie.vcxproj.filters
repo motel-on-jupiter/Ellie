@@ -22,7 +22,7 @@
     <Filter Include="src\pch">
       <UniqueIdentifier>{d7c0f536-fae8-494c-8ac7-a0a536401dad}</UniqueIdentifier>
     </Filter>
-    <Filter Include="src\util\catalogue">
+    <Filter Include="src\util\sampler">
       <UniqueIdentifier>{4a7ea003-d04b-4a16-ac2f-f66a4a0eb8a7}</UniqueIdentifier>
     </Filter>
     <Filter Include="src\core">
@@ -108,8 +108,8 @@
     <ClCompile Include="..\src\pch\precompile.cc">
       <Filter>src\pch</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\util\catalogue\color_sample.cc">
-      <Filter>src\util\catalogue</Filter>
+    <ClCompile Include="..\src\util\sampler\color_sampler.cc">
+      <Filter>src\util\sampler</Filter>
     </ClCompile>
     <ClCompile Include="..\src\util\logging\Logger.cc">
       <Filter>src\util\logging</Filter>
@@ -269,8 +269,8 @@
     <ClInclude Include="..\src\pch\precompile.h">
       <Filter>src\pch</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\util\catalogue\color_sample.h">
-      <Filter>src\util\catalogue</Filter>
+    <ClInclude Include="..\src\util\sampler\color_sampler.h">
+      <Filter>src\util\sampler</Filter>
     </ClInclude>
     <ClInclude Include="..\src\core\EllieGame.h">
       <Filter>src\core</Filter>

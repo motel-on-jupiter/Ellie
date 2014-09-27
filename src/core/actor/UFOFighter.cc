@@ -4,7 +4,7 @@
 #include "UFOFighter.h"
 #include "entity/PlanarEntity.h"
 #include "entity/PlanarEntityDraw.h"
-#include "util/catalogue/color_sample.h"
+#include "util/sampler/color_sampler.h"
 #include "util/wrapper/coroutine_wrap.h"
 
 UFOFighter::UFOFighter()

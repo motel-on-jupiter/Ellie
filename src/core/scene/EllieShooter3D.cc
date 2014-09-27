@@ -14,7 +14,7 @@
 #include "util/auxiliary/csyntax_aux.h"
 #include "util/auxiliary/glm_aux.h"
 #include "util/auxiliary/math_aux.h"
-#include "util/catalogue/color_sample.h"
+#include "util/sampler/color_sampler.h"
 #include "util/logging/Logger.h"
 #include "util/wrapper/glgraphics_wrap.h"
 

@@ -8,7 +8,7 @@
 #include "graphics/GLMaterialColor.h"
 #include "util/auxiliary/glm_aux.h"
 #include "util/auxiliary/math_aux.h"
-#include "util/catalogue/color_sample.h"
+#include "util/sampler/color_sampler.h"
 
 const glm::vec3 Zombie::kSize = glm::vec3(1.0f, 1.75f, 0.3f);
 const unsigned int Zombie::kPatience = 5;

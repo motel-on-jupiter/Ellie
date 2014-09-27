@@ -56,7 +56,7 @@
     <ClCompile Include="..\src\util\auxiliary\GLINIReader.cpp" />
     <ClCompile Include="..\src\util\auxiliary\glm_aux.cc" />
     <ClCompile Include="..\src\util\auxiliary\math_aux.cc" />
-    <ClCompile Include="..\src\util\catalogue\color_sample.cc" />
+    <ClCompile Include="..\src\util\sampler\color_sampler.cc" />
     <ClCompile Include="..\src\util\logging\emitter\DebuggerConsoleLogEmitter.cc" />
     <ClCompile Include="..\src\util\logging\emitter\FileLogEmitter.cc" />
     <ClCompile Include="..\src\util\logging\emitter\LogEmitter.cc" />
@@ -99,7 +99,7 @@
     <ClInclude Include="..\src\util\auxiliary\GLINIReader.h" />
     <ClInclude Include="..\src\util\auxiliary\glm_aux.h" />
     <ClInclude Include="..\src\util\auxiliary\math_aux.h" />
-    <ClInclude Include="..\src\util\catalogue\color_sample.h" />
+    <ClInclude Include="..\src\util\sampler\color_sampler.h" />
     <ClInclude Include="..\src\util\logging\emitter\DebuggerConsoleLogEmitter.h" />
     <ClInclude Include="..\src\util\logging\emitter\FileLogEmitter.h" />
     <ClInclude Include="..\src\util\logging\emitter\LogEmitter.h" />

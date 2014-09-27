@@ -4,7 +4,7 @@
 #include "F22Fighter.h"
 #include "entity/PlanarEntity.h"
 #include "entity/PlanarEntityDraw.h"
-#include "util/catalogue/color_sample.h"
+#include "util/sampler/color_sampler.h"
 
 FighterBullet::FighterBullet()
 : PlanarEntity(glm::vec2(0.0f), 0.0f, glm::vec2(2.0f)),
