@@ -38,7 +38,6 @@ class CubicEntityPhysics : public CubicEntityMixIn {
  public:
   CubicEntityPhysics(CubicEntity &entity)
       : CubicEntityMixIn(entity),
-        bt_shape_(nullptr),
         bt_motion_(nullptr),
         bt_body_(nullptr) {
   }
@@ -46,7 +45,7 @@ class CubicEntityPhysics : public CubicEntityMixIn {
     CleanObjects();
   }
 
-  virtual bool Initialize();
+  virtual bool Initialize(btCollisionShape &shape);
   virtual void Finalize();
 
   virtual void SetVelocity(const glm::vec3 &velocity) {
@@ -56,7 +55,9 @@ class CubicEntityPhysics : public CubicEntityMixIn {
     bt_body()->setAngularVelocity(glm_aux::toBtVec3(velocity));
   }
   virtual void SetAngularVelocity(const glm::quat &rotation) {
-    bt_body()->setAngularVelocity(btVector3(glm::pitch(rotation), glm::yaw(rotation), glm::roll(rotation)));
+    bt_body()->setAngularVelocity(
+        btVector3(glm::pitch(rotation), glm::yaw(rotation),
+                  glm::roll(rotation)));
   }
 
   btRigidBody *bt_body() {
@@ -64,11 +65,10 @@ class CubicEntityPhysics : public CubicEntityMixIn {
   }
 
  private:
-  void CubicEntityPhysics::CleanObjects();
+  void CleanObjects();
 
-  btCollisionShape *bt_shape_;
   btMotionState *bt_motion_;
-  btRigidBody* bt_body_;
+  btRigidBody *bt_body_;
 };
 
 #endif /* CUBIC_ENTITY_PHYSICS_H_ */

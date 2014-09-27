@@ -5,10 +5,8 @@
 #define CAMERA_H_
 
 #include <boost/noncopyable.hpp>
-#include <glm/gtc/matrix_transform.hpp>
-#include <glm/gtc/type_ptr.hpp>
-#include <glm/gtx/norm.hpp>
 #include "util/auxiliary/glm_aux.h"
+#include "util/wrapper/glm_wrap.h"
 
 class Camera {
  public:
@@ -51,6 +49,9 @@ class Camera {
     }
     return glm::normalize(forward);
   }
+  glm::quat BuildRotation() const {
+    return glm_aux::angleBetweenVectors(glm_aux::z_dir(), BuildForwardDir());
+  }
 
  protected:
   glm::vec3 default_pos_;
@@ -62,19 +63,24 @@ class Camera {
 };
 
 class BaseCameraController : public boost::noncopyable {
-public:
-  BaseCameraController(Camera &camera) : camera_(camera) {}
-  virtual ~BaseCameraController() {}
+ public:
+  BaseCameraController(Camera &camera)
+      : camera_(camera) {
+  }
+  virtual ~BaseCameraController() {
+  }
 
   virtual void Update(float elapsed_time) = 0;
   virtual void OnKeyDown(const SDL_KeyboardEvent &keyboard) = 0;
   virtual void OnKeyUp(const SDL_KeyboardEvent &keyboard) = 0;
   virtual void OnMouseMotion(const SDL_MouseMotionEvent &motion) = 0;
 
-protected:
-  Camera &camera() { return camera_; }
+ protected:
+  Camera &camera() {
+    return camera_;
+  }
 
-private:
+ private:
   Camera &camera_;
 };
 

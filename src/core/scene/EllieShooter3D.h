@@ -16,6 +16,22 @@
 #include "entity/CubicEntityPhysics.h"
 #include "util/wrapper/bullet_wrap.h"
 
+#include "entity/CubicEntity.h"
+#include "entity/CubicEntityDraw.h"
+#include "entity/CubicEntityPhysics.h"
+
+class ShooterPlayer : public CubicEntity, public CubicEntityPhysics {
+ public:
+  ShooterPlayer(const glm::vec3 &pos, const glm::quat &rot);
+  virtual ~ShooterPlayer();
+
+  virtual bool Initialize();
+  virtual void Finalize();
+
+ private:
+  btSphereShape *colli_shape_;
+};
+
 class ShooterBullet : public CubicEntity, public EntitySphereDraw {
  public:
   static const float kSpeed;
@@ -70,6 +86,7 @@ class EllieShooter3DIngame : public BaseScene {
   btDiscreteDynamicsWorld* bt_world_;
   Camera &camera_;
   FirstPersonCameraController camera_controller_;
+  ShooterPlayer *player_;
   std::vector<Zombie *> zombies_;
   std::vector<ShooterBullet *> bullets_;
   float spawn_timer_;

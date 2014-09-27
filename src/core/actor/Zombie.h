@@ -11,6 +11,7 @@
 class Zombie : public CubicEntity, public EntityCubeDraw,
     public CubicEntityPhysics {
  public:
+  static const glm::vec3 kSize;
   static const unsigned int kPatience;
   static const float kMoveSpeed;
   static const float kTurnSpeed;
@@ -27,6 +28,7 @@ class Zombie : public CubicEntity, public EntityCubeDraw,
   }
 
  private:
+  btBoxShape *colli_shape_;
   unsigned int total_damage_;
 };
 

@@ -17,6 +17,7 @@
 #include <glm/gtc/type_ptr.hpp>
 
 #include <glm/gtx/compatibility.hpp>
+#include <glm/gtx/norm.hpp>
 #include <glm/gtx/rotate_vector.hpp>
 #pragma warning(push)
 #pragma warning(disable:4189)

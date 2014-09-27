@@ -10,23 +10,32 @@
 #include "util/auxiliary/math_aux.h"
 #include "util/catalogue/color_sample.h"
 
+const glm::vec3 Zombie::kSize = glm::vec3(1.0f, 1.75f, 0.3f);
 const unsigned int Zombie::kPatience = 5;
 const float Zombie::kMoveSpeed = 0.3f;
 const float Zombie::kTurnSpeed = 0.7f;
 
 Zombie::Zombie(const glm::vec3 &pos, const glm::quat &rot)
-    : CubicEntity(pos, rot, glm::vec3(1.0f, 1.75f, 0.3f)),
+    : CubicEntity(pos, rot, kSize),
       EntityCubeDraw(*static_cast<CubicEntity *>(this), true,
                      GLMaterialColor(X11Color::to_fvec(X11Color::kTeal))),
       CubicEntityPhysics(*static_cast<CubicEntity *>(this)),
+      colli_shape_(nullptr),
       total_damage_(0) {
 }
 
 Zombie::~Zombie() {
+  delete colli_shape_;
 }
 
 bool Zombie::Initialize() {
-  if (!CubicEntityPhysics::Initialize()) {
+  colli_shape_ = new btBoxShape(glm_aux::toBtVec3(kSize * 0.5f));
+  if (colli_shape_ == nullptr) {
+    return false;
+  }
+  if (!CubicEntityPhysics::Initialize(*colli_shape_)) {
+    delete colli_shape_;
+    colli_shape_ = nullptr;
     return false;
   }
   total_damage_ = 0;
@@ -67,5 +76,11 @@ void Zombie::Update(const glm::vec3 &player_pos, float fps) {
 
 void Zombie::TakeDamage() {
   ++total_damage_;
-  set_material_color(GLMaterialColor(glm::lerp(X11Color::to_fvec(X11Color::kTeal), X11Color::to_fvec(X11Color::kDeepPink), static_cast<float>(total_damage_) / static_cast<float>(kPatience))));
+  set_material_color(
+      GLMaterialColor(
+          glm::lerp(
+              X11Color::to_fvec(X11Color::kTeal),
+              X11Color::to_fvec(X11Color::kDeepPink),
+              static_cast<float>(total_damage_)
+                  / static_cast<float>(kPatience))));
 }

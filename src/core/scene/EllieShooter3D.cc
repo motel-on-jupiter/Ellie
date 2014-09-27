@@ -2,6 +2,10 @@
  * Copyright (C) 2014 The Motel On Jupiter
  */
 #include "EllieShooter3D.h"
+#include "core/actor/Zombie.h"
+#include "entity/CubicEntity.h"
+#include "entity/CubicEntityDraw.h"
+#include "entity/CubicEntityPhysics.h"
 #include "scene/BaseScene.h"
 #include "scene/GraphDrivenScene.h"
 #include "scene/SceneGraph.h"
@@ -13,6 +17,36 @@
 #include "util/catalogue/color_sample.h"
 #include "util/logging/Logger.h"
 #include "util/wrapper/glgraphics_wrap.h"
+
+ShooterPlayer::ShooterPlayer(const glm::vec3 &pos, const glm::quat &rot)
+    : CubicEntity(pos, rot, glm::vec3(1.0f, 1.75f, 0.3f)),
+      CubicEntityPhysics(*static_cast<CubicEntity *>(this)),
+      colli_shape_(nullptr) {
+}
+
+ShooterPlayer::~ShooterPlayer() {
+  delete colli_shape_;
+}
+
+bool ShooterPlayer::Initialize() {
+  colli_shape_ = new btSphereShape(0.5f);
+  if (colli_shape_ == nullptr) {
+    LOGGER.Error("Failed to allocate collision shape object");
+    return false;
+  }
+  if (!CubicEntityPhysics::Initialize(*colli_shape_)) {
+    delete colli_shape_;
+    colli_shape_ = nullptr;
+    return false;
+  }
+  return true;
+}
+
+void ShooterPlayer::Finalize() {
+  CubicEntityPhysics::Finalize();
+  delete colli_shape_;
+  colli_shape_ = nullptr;
+}
 
 const float ShooterBullet::kSpeed = 150.0f;
 
@@ -38,6 +72,7 @@ EllieShooter3DIngame::EllieShooter3DIngame(Camera &camera)
       bt_world_(nullptr),
       camera_(camera),
       camera_controller_(camera_, 5.0f, 0.015f),
+      player_(nullptr),
       zombies_(),
       bullets_(),
       spawn_timer_(0.0f) {
@@ -147,28 +182,38 @@ int EllieShooter3DIngame::OnInitial() {
   }
   bt_world_->setGravity(glm_aux::toBtVec3(glm::vec3()));
 
+  player_ = new ShooterPlayer(camera_.pos(), camera_.BuildRotation());
+  if (player_ == nullptr) {
+    LOGGER.Error("Failed to allocate for player object");
+    CleanObjects();
+    return -1;
+  }
+  if (!player_->Initialize()) {
+    LOGGER.Error("Failed to initialize player object");
+    CleanObjects();
+    return -1;
+  }
+  bt_world_->addRigidBody(player_->bt_body());
+  player_->bt_body()->setUserPointer(player_);
+
   spawn_timer_ = 0.0f;
 
   return 0;
 }
 
 void EllieShooter3DIngame::OnFinal() {
-  for (auto it = bullets_.begin(); it != bullets_.end(); ++it) {
-    delete *it;
-  }
-  bullets_.clear();
-  for (auto it = zombies_.begin(); it != zombies_.end(); ++it) {
-    bt_world_->removeRigidBody((*it)->bt_body());
-    (*it)->Finalize();
-    delete *it;
-  }
-  zombies_.clear();
   CleanObjects();
 }
 
 void EllieShooter3DIngame::OnStep(float elapsed_time) {
-  /* For camera */
+  /* For camera and player */
+  glm::vec3 before_camera_pos = camera_.pos();
+  //glm::quat before_camera_rot = camera_.BuildRotation();
   camera_controller_.Update(elapsed_time);
+  glm::vec3 player_velocity = (camera_.pos() - before_camera_pos) /=
+      elapsed_time;
+  player_velocity.y = 0.0f;
+  player_->SetVelocity(player_velocity);
 
   /* For entity objects */
   for (auto it = zombies_.begin(); it != zombies_.end(); ++it) {
@@ -229,6 +274,7 @@ void EllieShooter3DIngame::OnStep(float elapsed_time) {
     }
     ++it;
   }
+  camera_.set_pos(player_->pos());
   for (auto it = zombies_.begin(); it != zombies_.end();) {
     if ((*it)->IsDead()) {
       bt_world_->removeRigidBody((*it)->bt_body());
@@ -242,6 +288,26 @@ void EllieShooter3DIngame::OnStep(float elapsed_time) {
 }
 
 void EllieShooter3DIngame::CleanObjects() {
+  for (auto it = bullets_.begin(); it != bullets_.end(); ++it) {
+    delete *it;
+  }
+  bullets_.clear();
+  for (auto it = zombies_.begin(); it != zombies_.end(); ++it) {
+    if (bt_world_ != nullptr) {
+      bt_world_->removeRigidBody((*it)->bt_body());
+    }
+    (*it)->Finalize();
+    delete *it;
+  }
+  zombies_.clear();
+  if (player_ != nullptr) {
+    if (bt_world_ != nullptr) {
+      bt_world_->removeRigidBody(player_->bt_body());
+    }
+    player_->Finalize();
+    delete player_;
+    player_ = nullptr;
+  }
   delete bt_world_;
   bt_world_ = nullptr;
   delete bt_solver_;
